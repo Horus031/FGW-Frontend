@@ -3,7 +3,6 @@ import { Route, type RouteObject } from "react-router-dom"
 
 // If using relative paths:
 const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"));
-const AuthTemplate = React.lazy(() => import("../pages/AuthTemplate"));
 const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"));
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
@@ -20,14 +19,8 @@ export const routes: RouteObject[] = [
         element: withSuspense(HomePage),
     },
     {
-        path: "/auth",
-        element: withSuspense(AuthTemplate),
-        children: [
-            {
-                path: "Login",
-                element: withSuspense(LoginPage)
-            },
-        ]
+        path: "/login",
+        element: withSuspense(LoginPage),
     }
 ]
 
