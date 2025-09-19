@@ -5,10 +5,10 @@ const LoginPage = () => {
     <div className="bg-[#00033D] min-h-screen relative overflow-hidden">
       <div className="flex flex-col lg:flex-row items-center justify-between h-screen z-10 relative">
         <div className="absolute mx-auto top-6 lg:left-1/8 lg:top-1/4">
-          <img className="size-64" src="/images/logoWithName.svg" alt="" />
+          <img className="size-64 lg:size-96" src="/images/logoWithName.svg" alt="" />
         </div>
 
-        <div className="absolute bottom-0 w-full h-fit px-8 py-16 rounded-t-lg lg:right-0 lg:w-5/12 lg:h-full bg-white lg:p-16 lg:rounded-tl-lg lg:rounded-bl-xl">
+        <div className="absolute bottom-0 w-full h-fit px-8 py-16 rounded-t-3xl lg:right-0 lg:w-5/12 lg:h-full bg-white lg:p-16 lg:rounded-t-none lg:rounded-tl-3xl lg:rounded-bl-3xl">
           <div className="flex flex-col justify-center h-full gap-36">
             <LoginForm />
 
