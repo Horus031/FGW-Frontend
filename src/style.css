@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@theme {
+  /* Elementary Colors */
+  --color-primary: #00033D;
+  --color-secondary: #005EB8;
+  
+  /* Accessibility Colors */
+  --color-danger: #FF5454;
+  --color-approve: #25C16C;
+  --color-pending: #FFC821;
+  --color-turquoise: #228575;
+}
