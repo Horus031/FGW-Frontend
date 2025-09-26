@@ -1,53 +1,48 @@
-// import { useState } from "react";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "./ui/select";
-// import { Button } from "./ui/button";
-// import GoogleIcon from "./icons/GoogleIcons";
-// import FPTIcon from "./icons/FPTIcon";
-// import { useGoogleLogin } from "@react-oauth/google";
-// import jwt_decode from "jwt-decode";
-
-// interface GoogleJwt {
-//   email: string;
-//   name: string;
-//   picture: string;
-// }
-
 const LoginForm = () => {
-  // const [loginTabs, setLoginTabs] = useState("Student");
-
-  // const handleTabs = (tabName: string) => {
-  //   setLoginTabs(tabName);
-  // };
-
-  // const login = useGoogleLogin({
-  //   onSuccess: (tokenResponse) => {
-  //     console.log("Google login success:", tokenResponse);
-
-  //   },
-  //   onError: (error) => console.error("Login Failed:", error),
-  // });
-
   return (
-    <div className="absolute bg-white px-14 py-12 left-0 right-0 top-0 w-fit">
-        <div className="flex flex-col gap-12">
-          <img src="/images/Login/Logo.svg" alt="" />
+    <div className="absolute top-1/2 left-1/2 bg-white px-14 py-12 rounded-xl -translate-1/2 w-xl">
+      <div className="flex flex-col justify-center items-center gap-12 w-full">
+        <img src="/images/Login/Logo.svg" alt="" className="w-40" />
 
-          <div>
-            <h2 className="font-public text-2xl font-bold">Academic Portal</h2>
+        <div className="flex flex-col gap-8 w-full">
+          <div className="font-public flex flex-col items-center gap-6">
+            <h2 className="font-public text-2xl font-bold text-primary">
+              Academic Portal
+            </h2>
+
+            <button
+              // onClick={() => login()}
+              className="flex justify-center w-full gap-2 bg-secondary font-medium cursor-pointer text-lg px-6 py-3 text-white rounded-md"
+            >
+              <img src="/images/Login/GoogleIcon.svg" alt="" />
+              Login with you email
+            </button>
+          </div>
+
+          <span className="bg-grey-400 border"></span>
+
+          <div className="flex flex-col items-center text-[#00033D] text-sm gap-2">
+            <span className="hidden lg:block">
+              Mobile App for Student and Parent is ready at
+            </span>
+            <div className="hidden lg:flex gap-2 p-2">
+              <button className="cursor-pointer">
+                <img src="/images/appstore.svg" alt="" />
+              </button>
+              <button className="cursor-pointer">
+                <img src="/images/chplay.svg" alt="" />
+              </button>
+            </div>
+            <span>
+              &copy; Powered by{" "}
+              <span className="text-blue-500 underline">Greenwich Vietnam</span>{" "}
+              | <span className="text-blue-500 underline">CMS</span>{" "}
+            </span>
           </div>
         </div>
+      </div>
     </div>
   );
 };
-
-{/* <Button onClick={() => login()} className="bg-[#005EB8] font-normal cursor-pointer">
-            <GoogleIcon /> Sign in with FPT Gmail
-          </Button> */}
 
 export default LoginForm;
