@@ -27,10 +27,10 @@ const LoginForm = () => {
             </span>
             <div className="hidden lg:flex gap-2 p-2">
               <button className="cursor-pointer">
-                <img src="/images/appstore.svg" alt="" />
+                <img src="/images/Login/AppStoreButton.svg" alt="" />
               </button>
               <button className="cursor-pointer">
-                <img src="/images/chplay.svg" alt="" />
+                <img src="/images/Login/GooglePlayButton.svg" alt="" />
               </button>
             </div>
             <span>
