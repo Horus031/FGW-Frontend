@@ -35,8 +35,8 @@ const LoginForm = () => {
             </div>
             <span>
               &copy; Powered by{" "}
-              <span className="text-blue-500 underline">Greenwich Vietnam</span>{" "}
-              | <span className="text-blue-500 underline">CMS</span>{" "}
+              <span className="text-secondary underline">Greenwich Vietnam</span>{" "}
+              | <span className="text-secondary underline">CMS</span>{" "}
             </span>
           </div>
         </div>

@@ -11,7 +11,7 @@ import { Home, User } from "lucide-react";
 
 const ProfilePage = () => {
   return (
-    <div className="container mx-auto py-7 font-public space-y-8">
+    <div className="space-y-8">
       <div className="flex flex-col">
         <div className="flex flex-col gap-4">
           <Breadcrumb>
