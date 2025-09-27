@@ -1,6 +1,6 @@
-import { Input } from './ui/input'
+import { Input } from '../ui/input'
 import { Bell, ChevronDown, Search } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { NavLink } from 'react-router-dom'
 
 const Header = () => {

@@ -1,4 +1,10 @@
-const ProgressCircle = () => {
+type ProgressCircleProps = {
+    percent: number;
+}
+
+const ProgressCircle = (props: ProgressCircleProps) => {
+    const { percent } = props
+
   return (
     <div>
       <div className="relative size-23">
@@ -23,7 +29,7 @@ const ProgressCircle = () => {
             className="stroke-current text-approve"
             strokeWidth={4}
             strokeDasharray={100}
-            strokeDashoffset={75}
+            strokeDashoffset={percent}
             strokeLinecap="round"
           />
         </svg>
