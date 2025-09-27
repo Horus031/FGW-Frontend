@@ -15,7 +15,7 @@
   /* Accessibility Colors */
   --color-danger: #ff5454;
   --color-approve: #25c16c;
-  --color-pending: #ffc821;
+  --color-pending: #25C16C;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
