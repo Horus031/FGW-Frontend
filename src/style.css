@@ -122,6 +122,24 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.table-cell {
+  @apply text-left px-6 py-3 border border-gray-400;
+}
+
+.table-cell:first-child {
+  @apply rounded-tl-md rounded-bl-md
+}
+
+.table-cell:last-child {
+  @apply rounded-tr-md rounded-br-md
+}
+
+table {
+  @apply border-collapse w-full rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray]
+}
+
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
