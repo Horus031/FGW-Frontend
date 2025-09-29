@@ -1,6 +1,6 @@
 const MarkTable = () => {
   return (
-    <table className="w-full border border-gray-600 rounded-lg">
+    <table className="rounded-table w-full border border-gray-600 rounded-lg">
       <thead className="bg-gray-200/25">
         <tr className="text-gray-600 text-base font-bold">
           <th className="table-cell font-semibold">Grade category</th>

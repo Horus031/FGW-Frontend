@@ -8,6 +8,7 @@ const MainLayout = React.lazy(() => import("../layouts/MainLayout"))
 const ProfilePage = React.lazy(() => import("../pages/HomeTemplate/ProfilePage"))
 const AttendancePage = React.lazy(() => import("../pages/HomeTemplate/AttendancePage"))
 const MarkPage = React.lazy(() => import("../pages/HomeTemplate/MarkPage"))
+const ClassOverviewPage = React.lazy(() => import("../pages/HomeTemplate/ClassOverviewPage"))
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -37,6 +38,10 @@ export const routes: RouteObject[] = [
           {
             path: "mark",
             element: withSuspense(MarkPage)
+          },
+          {
+            path: "class",
+            element: withSuspense(ClassOverviewPage)
           }
         ]
     },
