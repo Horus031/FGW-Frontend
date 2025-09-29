@@ -30,7 +30,7 @@ const PageTitle = (props: PageTitleProps) => {
         </Breadcrumb>
 
         <div className="space-y-2">
-            <h2 className="text-3xl text-primary font-semibold text-capitalize">{title}</h2>
+            <h2 className="text-3xl text-primary font-bold text-capitalize">{title}</h2>
             {subtitle && <p className="text-gray-400">{subtitle}</p>}
         </div>
       </div>

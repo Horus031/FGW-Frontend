@@ -134,12 +134,16 @@
   @apply rounded-tr-md rounded-br-md
 }
 
-table {
+.custom-table {
+  @apply text-left px-4 py-4 border border-gray-400;
+}
+
+.rounded-table {
   @apply border-collapse w-full rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray]
 }
 
 
-
+ 
 @layer base {
   * {
     @apply border-border outline-ring/50;
