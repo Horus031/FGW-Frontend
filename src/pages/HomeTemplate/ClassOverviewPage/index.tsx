@@ -2,8 +2,22 @@ import ScheduleDetailCard from "@/components/ClassOverviewPage/ScheduleDetailCar
 import PageTitle from "@/components/shared/PageTitle"
 import Table, { type ColumnConfig } from "@/components/shared/Table";
 
+type Member = {
+  name: string;
+  id: string;
+  avatar: string;
+};
+
+type RowData = {
+  no: number;
+  member: Member;
+  ID: string;
+  email: string;
+  note: string;
+};
+
 const ClassOverviewPage = () => {
-    const columns: ColumnConfig[] = [
+    const columns: ColumnConfig<RowData>[] = [
         { key: 'no', title: 'No.', width: '88px' },
         {
             key: 'member',

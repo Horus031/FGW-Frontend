@@ -135,7 +135,7 @@
 }
 
 .custom-table {
-  @apply text-left px-4 py-4 border border-gray-400;
+  @apply px-4 py-4 border border-gray-400;
 }
 
 .rounded-table {
