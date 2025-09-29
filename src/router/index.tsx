@@ -9,7 +9,8 @@ const ProfilePage = React.lazy(() => import("../pages/HomeTemplate/ProfilePage")
 const AttendancePage = React.lazy(() => import("../pages/HomeTemplate/AttendancePage"))
 const MarkPage = React.lazy(() => import("../pages/HomeTemplate/MarkPage"))
 const ClassOverviewPage = React.lazy(() => import("../pages/HomeTemplate/ClassOverviewPage"))
-const RequestPage = React.lazy(() => import("../pages/HomeTemplate/RequestPage"))
+const SendRequestPage = React.lazy(() => import("../pages/HomeTemplate/SendRequestPage"))
+const RequestStatusPage = React.lazy(() => import("../pages/HomeTemplate/RequestStatusPage"))
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -46,7 +47,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: "request/:requestType",
-            element: withSuspense(RequestPage)
+            element: withSuspense(SendRequestPage)
+          },
+          {
+            path: "req-status",
+            element: withSuspense(RequestStatusPage)
           }
         ]
     },

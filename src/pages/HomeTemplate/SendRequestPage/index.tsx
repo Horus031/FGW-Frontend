@@ -6,7 +6,7 @@ type RequestPageParams = {
   requestType: string;
 };
 
-const RequestPage = () => {
+const SendRequestPage = () => {
   const { requestType } = useParams<RequestPageParams>();
 
   return (
@@ -31,4 +31,4 @@ const RequestPage = () => {
   );
 };
 
-export default RequestPage;
+export default SendRequestPage;
