@@ -2,8 +2,8 @@ import React from "react"
 import { Route, type RouteObject } from "react-router-dom"
 
 // If using relative paths:
-const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"));
-const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"));
+const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"))
+const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"))
 const MainLayout = React.lazy(() => import("../layouts/MainLayout"))
 const ProfilePage = React.lazy(() => import("../pages/HomeTemplate/ProfilePage"))
 const AttendancePage = React.lazy(() => import("../pages/HomeTemplate/AttendancePage"))
@@ -11,10 +11,11 @@ const MarkPage = React.lazy(() => import("../pages/HomeTemplate/MarkPage"))
 const ClassOverviewPage = React.lazy(() => import("../pages/HomeTemplate/ClassOverviewPage"))
 const SendRequestPage = React.lazy(() => import("../pages/HomeTemplate/SendRequestPage"))
 const RequestStatusPage = React.lazy(() => import("../pages/HomeTemplate/RequestStatusPage"))
+import LoadingPage from "../components/shared/LoadingPage";
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+    <React.Suspense fallback={<LoadingPage/>}>
       <Component/>
     </React.Suspense>
   )
