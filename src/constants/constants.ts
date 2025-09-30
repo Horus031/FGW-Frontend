@@ -19,3 +19,44 @@ export const verificationOptions = [
   { value: "Giấy xác nhận vay vốn", label: "Giấy xác nhận vay vốn" },
   { value: "Cấp lại thẻ SV", label: "Cấp lại thẻ SV" },
 ];
+
+export const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+export const timeSlots = [
+  {
+    start: "08:00", 
+    end: "09:30"
+  },
+  {
+    start: "9:30", 
+    end: "11:00"
+  },
+  {
+    start: "12:00", 
+    end: "13:30"
+  },
+  {
+    start: "13:30", 
+    end: "15:00"
+  },
+  {
+    start: "15:30", 
+    end: "17:00"
+  },
+  {
+    start: "17:00", 
+    end: "18:30"
+  },
+  {
+    start: "17:30", 
+    end: "19:00"
+  },
+  {
+    start: "19:00", 
+    end: "20:30"
+  },
+  {
+    start: "20:30", 
+    end: "22:00"
+  },
+]
