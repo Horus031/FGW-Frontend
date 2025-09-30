@@ -15,6 +15,7 @@ type CourseSchedule = {
   startTime: string;
   endTime: string;
   dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  date: string; // Format: "YYYY-MM-DD" - the specific date of the course
   room?: string;
   instructor?: string;
 };
@@ -38,6 +39,7 @@ const ScheduleContainer = () => {
 
   const daysInWeek = useDaysInWeek(weeks);
 
+  // Mock data - replace with API call that returns courses for the selected week
   const courseSchedules: CourseSchedule[] = [
     {
       class: "COS1204",
@@ -46,6 +48,7 @@ const ScheduleContainer = () => {
       startTime: "08:00",
       endTime: "09:30",
       dayOfWeek: 0, // Monday
+      date: "2025-09-29", // Monday of first week Jan 2025
       room: "A101",
       instructor: "SonND24",
     },
@@ -56,6 +59,7 @@ const ScheduleContainer = () => {
       startTime: "08:00",
       endTime: "09:30",
       dayOfWeek: 2, // Wednesday
+      date: "2025-10-01", // Wednesday of first week Jan 2025
       room: "A101",
       instructor: "SonND24",
     },
@@ -66,6 +70,7 @@ const ScheduleContainer = () => {
       startTime: "9:30",
       endTime: "11:00",
       dayOfWeek: 1, // Tuesday
+      date: "2025-09-30", // Tuesday of first week Jan 2025
       room: "B202",
       instructor: "SonND24",
     },
@@ -76,6 +81,7 @@ const ScheduleContainer = () => {
       startTime: "12:00",
       endTime: "13:30",
       dayOfWeek: 1, // Tuesday
+      date: "2025-09-30", // Tuesday of first week Jan 2025
       room: "B202",
       instructor: "SonND24",
     },
@@ -86,6 +92,7 @@ const ScheduleContainer = () => {
       startTime: "13:30",
       endTime: "15:00",
       dayOfWeek: 1, // Tuesday
+      date: "2025-09-30", // Tuesday of first week Jan 2025
       room: "B202",
       instructor: "SonND24",
     },
@@ -96,8 +103,9 @@ const ScheduleContainer = () => {
       startTime: "12:00",
       endTime: "13:30",
       dayOfWeek: 0, // Monday
+      date: "2025-09-29", // Monday of first week Jan 2025
       instructor: "SonND24",
-      room: "B202"
+      room: "B202",
     },
     {
       class: "COS1204",
@@ -106,62 +114,158 @@ const ScheduleContainer = () => {
       startTime: "15:30",
       endTime: "17:00",
       dayOfWeek: 3, // Thursday
+      date: "2025-10-02", // Thursday of first week Jan 2025
       room: "C305",
+    },
+    // Example courses for a different week (second week of Jan 2025)
+    {
+      class: "COS1204",
+      courseName: "Math 101",
+      status: "true",
+      startTime: "08:00",
+      endTime: "09:30",
+      dayOfWeek: 0, // Monday
+      date: "2025-09-29", // Monday of second week Jan 2025
+      room: "D401",
+      instructor: "JohnD",
+    },
+    {
+      class: "COS1204",
+      courseName: "Chemistry",
+      status: "true",
+      startTime: "11:00",
+      endTime: "12:30",
+      dayOfWeek: 4, // Friday
+      date: "2025-10-03", // Friday of second week Jan 2025
+      room: "E501",
+      instructor: "SarahK",
     },
   ];
 
-  const scheduleData: ScheduleRowData[] = timeSlots.map(({ start, end }, index) => {
-    const row: ScheduleRowData = {
-      timeSlot: `Slot ${index + 1} ${start} - ${end}`,
-    };
+  // Filter courses to only show those within the selected week
+  const filteredCourses = weeks
+    ? courseSchedules.filter((course) => {
+        const courseDate = new Date(course.date);
+        const weekStart = new Date(weeks.start);
+        const weekEnd = new Date(weeks.end);
 
-    daysInWeek.forEach((_, index) => {
-      const dayKey = dayNames[index].toLowerCase() as keyof Omit<
-        ScheduleRowData,
-        "timeSlot"
-      >;
+        // Reset time parts for accurate date comparison
+        courseDate.setHours(0, 0, 0, 0);
+        weekStart.setHours(0, 0, 0, 0);
+        weekEnd.setHours(23, 59, 59, 999);
 
-      // Match course by both time slot AND day of week
-      const courseForSlot = courseSchedules.find(
-        (course) =>
-          course.startTime === start &&
-          course.endTime === end &&
-          course.dayOfWeek === index
-      );
+        return courseDate >= weekStart && courseDate <= weekEnd;
+      })
+    : [];
 
-      if (courseForSlot) {
-        row[dayKey] = courseForSlot;
-      }
-    });
+  const scheduleData: ScheduleRowData[] = timeSlots.map(
+    ({ start, end }, index) => {
+      const row: ScheduleRowData = {
+        timeSlot: `Slot ${index + 1}`,
+      };
 
-    return row;
-  });
+      daysInWeek.forEach((dayDate, index) => {
+        const dayKey = dayNames[index].toLowerCase() as keyof Omit<
+          ScheduleRowData,
+          "timeSlot"
+        >;
+
+        // Match course by time slot, day of week, AND specific date
+        const courseForSlot = filteredCourses.find((course) => {
+          const courseDate = new Date(course.date);
+          const currentDayDate = new Date(dayDate);
+
+          // Reset time parts for accurate date comparison
+          courseDate.setHours(0, 0, 0, 0);
+          currentDayDate.setHours(0, 0, 0, 0);
+
+          return (
+            course.startTime === start &&
+            course.endTime === end &&
+            course.dayOfWeek === index &&
+            courseDate.getTime() === currentDayDate.getTime()
+          );
+        });
+
+        if (courseForSlot) {
+          row[dayKey] = courseForSlot;
+        }
+      });
+
+      return row;
+    }
+  );
 
   const columns: ColumnConfig<ScheduleRowData>[] = [
     {
       key: "timeSlot",
       title: "Time",
-      width: "88px",
+      width: "120px",
+      render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
+        const index = scheduleData.findIndex((row) => row.timeSlot === value);
+        const { start, end } = timeSlots[index];
+        return (
+          <div>
+            {value as string}
+            <br />
+            {start} - {end}
+          </div>
+        );
+      },
     },
-    ...dayNames.map((dayName) => ({
+    ...dayNames.map((dayName, index) => ({
       key: dayName.toLowerCase() as keyof ScheduleRowData,
-      title: dayName,
+      title: (
+        <div>
+          <span>{dayName}</span>
+          <br />
+          {daysInWeek[index]?.getDate()}
+        </div>
+      ),
       width: "170px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const course = value as CourseSchedule | undefined;
         return course ? (
-          <div className={`flex flex-col p-2 gap-2 font-semibold rounded-lg border ${course.status === "true" ? 'border-approve' : course.status === "false" ? "border-danger" : "border-gray-500" }`}>
+          <div
+            className={`flex flex-col p-2 gap-2 font-semibold rounded-lg border ${
+              course.status === "true"
+                ? "border-approve"
+                : course.status === "false"
+                ? "border-danger"
+                : "border-gray-500"
+            }`}
+          >
             <div className="flex items-center justify-between border-b border-gray-300 pb-2">
-              <span className="text-secondary font-semibold">{course.class}</span>
-              <Badge className={`text-[10px] rounded-sm ${course.status === "true" ? 'border-approve text-approve bg-approve/10' : course.status === "false" ? "border-danger text-danger bg-danger/10" : "border-gray-500 text-gray-500 bg-gray-500/10"}`}>{course.status === "true" ? "Attended" : course.status === 'false' ? "Absent" : "Not yet"}</Badge>
+              <span className="text-secondary font-semibold">
+                {course.class}
+              </span>
+              <Badge
+                className={`text-[10px] rounded-sm ${
+                  course.status === "true"
+                    ? "border-approve text-approve bg-approve/10"
+                    : course.status === "false"
+                    ? "border-danger text-danger bg-danger/10"
+                    : "border-gray-500 text-gray-500 bg-gray-500/10"
+                }`}
+              >
+                {course.status === "true"
+                  ? "Attended"
+                  : course.status === "false"
+                  ? "Absent"
+                  : "Not yet"}
+              </Badge>
             </div>
             <span>{course.courseName}</span>
             <div className="flex items-center justify-between">
               {course.room && (
-                <span className="flex items-center gap-1"><MapPin size={12}/> {course.room}</span>
+                <span className="flex items-center gap-1">
+                  <MapPin size={12} /> {course.room}
+                </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-1"><User size={12}/> {course.instructor}</span>
+                <span className="flex items-center gap-1">
+                  <User size={12} /> {course.instructor}
+                </span>
               )}
             </div>
           </div>
@@ -170,11 +274,22 @@ const ScheduleContainer = () => {
     })),
   ];
 
+  console.log(daysInWeek);
+
   return (
     <div className="flex flex-col gap-4">
       <ScheduleSelect handleSetWeeks={handleSetWeeks} />
 
-      <Table columns={columns} data={scheduleData} centered color="bg-primary" textColor="text-white" textSize="text-xs" height="h-[148px]" bordered/>
+      <Table
+        columns={columns}
+        data={scheduleData}
+        centered
+        color="bg-primary"
+        textColor="text-white"
+        textSize="text-xs"
+        height="h-[148px]"
+        bordered
+      />
     </div>
   );
 };

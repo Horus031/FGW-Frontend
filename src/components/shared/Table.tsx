@@ -1,6 +1,6 @@
 export type ColumnConfig<T> = {
   key: Extract<keyof T, Array<T> | string | number>;
-  title: string;
+  title: string | React.ReactNode;
   width?: string;
   render?: (value: T[keyof T], row: T) => React.ReactNode;
 };

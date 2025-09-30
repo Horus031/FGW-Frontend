@@ -34,6 +34,7 @@ const ScheduleSelect = (props: ScheduleSelectProps) => {
     parsed.end = new Date(parsed.end);
 
     setSelectedWeek(parsed);
+    handleSetWeeks(parsed);
   };
 
   const renderDaysInWeek = () => {
