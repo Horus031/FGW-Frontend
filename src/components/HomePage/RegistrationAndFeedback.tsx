@@ -4,7 +4,7 @@ const RegistrationAndFeedback = () => {
       <div className="grid grid-cols-2 gap-8">
         {/* Registration Section */}
         <div>
-          <h4 className="text-xl font-bold text-gray-900 mb-2">Registration</h4>
+          <h5 className="font-semibold mb-2" style={{ color: '#00033D', fontSize: '25px' }}>Registration</h5>
           <div className="w-full h-1 bg-[#3ABFF0] mb-4"></div>
           <div className="space-y-3">
             <button className="hover:opacity-50 transition-opacity cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
@@ -24,7 +24,7 @@ const RegistrationAndFeedback = () => {
 
         {/* Feedback Section */}
         <div>
-          <h4 className="text-xl font-bold text-gray-900 mb-2">Feedback</h4>
+          <h5 className="font-semibold mb-2" style={{ color: '#00033D', fontSize: '25px' }}>Feedback</h5>
           <div className="w-full h-1 bg-[#3ABFF0] mb-4"></div>
           <div className="space-y-3">
             <button className="hover:opacity-50 transition-opacity cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">

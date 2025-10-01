@@ -34,7 +34,7 @@ const NewsSection = () => {
     <div className="space-y-8">
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold" style={{ color: '#00033D', fontSize: '25px' }}>News</h3>
+          <h5 className="font-semibold" style={{ color: '#00033D', fontSize: '25px' }}>News</h5>
           <button className="cursor-pointer font-semibold hover:opacity-50 transition-opacity" style={{ color: '#005EB8', fontSize: '14px' }}>
             See more
           </button>
