@@ -26,7 +26,7 @@ export const routes: RouteObject[] = [
         element: withSuspense(MainLayout),
         children: [
           {
-            path: "home",
+            path: "",
             element: withSuspense(HomePage)
           },
           {
