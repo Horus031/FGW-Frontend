@@ -1,4 +1,4 @@
-import Logo from "../../../public/images/loading/greenwich.svg"; 
+import Logo from "/images/loading/greenwich.svg"; 
 
 const LoadingPage = () => {
   return (
