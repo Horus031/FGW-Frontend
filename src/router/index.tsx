@@ -2,6 +2,7 @@ import React from "react"
 import { Route, type RouteObject } from "react-router-dom"
 
 // If using relative paths:
+const CourseOverview = React.lazy(() => import("../pages/HomeTemplate/CourseOverview"))
 const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"))
 const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"))
 const MainLayout = React.lazy(() => import("../layouts/MainLayout"))
@@ -59,6 +60,10 @@ export const routes: RouteObject[] = [
           {
             path: "schedule",
             element: withSuspense(SchedulePage)
+          },
+          {
+            path: "CourseOverview",
+            element: withSuspense(CourseOverview)
           }
         ]
     },
