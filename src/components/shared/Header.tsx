@@ -2,6 +2,7 @@ import { Input } from '../ui/input'
 import { Bell, ChevronDown, Search } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { NavLink } from 'react-router-dom'
+import LogoWithName from '../icons/LogoWithName'
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center gap-14 basis-8/12'>
             <div>
-                <img src="/images/Login/Logo.svg" alt="" className='w-36' />
+                <LogoWithName/>
             </div>
 
             <div className='flex items-center gap-9 text-primary font-semibold text-lg h-full'>

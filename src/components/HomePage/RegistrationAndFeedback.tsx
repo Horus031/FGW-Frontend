@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const RegistrationAndFeedback = () => {
   return (
     <div>
@@ -12,15 +14,15 @@ const RegistrationAndFeedback = () => {
             <button className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
               Course Re-registration
             </button>
-            <button className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
+            <NavLink to="/request/document" className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
               Document Requests
-            </button>
-            <button className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
+            </NavLink>
+            <NavLink to="/request/verification" className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
               Student Status Verification
-            </button>
-            <button className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
+            </NavLink>
+            <NavLink to="/req-status" className="hover:opacity-50  cursor-pointer block text-blue-600 hover:text-blue-700 transition-colors text-left">
               View My Requests
-            </button>
+            </NavLink>
           </div>
         </div>
 

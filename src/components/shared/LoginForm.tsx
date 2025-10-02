@@ -1,8 +1,13 @@
+import AppStoreButton from "../icons/AppStoreButton";
+import GoogleIcon from "../icons/GoogleIcons";
+import GooglePlayButton from "../icons/GooglePlayButton";
+import LogoWithName from "../icons/LogoWithName";
+
 const LoginForm = () => {
   return (
     <div className="absolute top-1/2 left-1/2 bg-white px-14 py-12 rounded-xl -translate-1/2 w-xl">
       <div className="flex flex-col justify-center items-center gap-12 w-full">
-        <img src="/images/Login/Logo.svg" alt="" className="w-40" />
+        <LogoWithName/>
 
         <div className="flex flex-col gap-8 w-full">
           <div className="font-public flex flex-col items-center gap-6">
@@ -14,7 +19,7 @@ const LoginForm = () => {
               // onClick={() => login()}
               className="flex justify-center w-full gap-2 bg-secondary font-medium cursor-pointer text-lg px-6 py-3 text-white rounded-md"
             >
-              <img src="/images/Login/GoogleIcon.svg" alt="" />
+              <GoogleIcon/>
               Login with you email
             </button>
           </div>
@@ -27,10 +32,10 @@ const LoginForm = () => {
             </span>
             <div className="hidden lg:flex gap-2 p-2">
               <button className="cursor-pointer">
-                <img src="/images/Login/AppStoreButton.svg" alt="" />
+                <AppStoreButton/>
               </button>
               <button className="cursor-pointer">
-                <img src="/images/Login/GooglePlayButton.svg" alt="" />
+                <GooglePlayButton/>
               </button>
             </div>
             <span>

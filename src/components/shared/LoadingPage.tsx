@@ -1,9 +1,9 @@
-import Logo from "/images/loading/greenwich.svg"; 
+import GreenwichLogo from "../icons/GreenwichLogo";
 
 const LoadingPage = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <img src={Logo} alt="Logo" className="w-20 h-20 animate-spin" />
+      <GreenwichLogo className="animate-spin "/>
     </div>
   );
 };

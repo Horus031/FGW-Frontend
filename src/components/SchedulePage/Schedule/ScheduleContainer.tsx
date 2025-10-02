@@ -7,7 +7,7 @@ import { dayNames, timeSlots } from "@/constants/constants";
 import Table from "@/components/shared/Table";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, User } from "lucide-react";
-import type { CourseSchedule } from "@/types/course";
+import type { CourseSchedule } from "@/models/course";
 
 
 
