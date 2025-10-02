@@ -32,9 +32,9 @@ const ScheduleContainer = () => {
 
   const courseSchedules: CourseSchedule[] = [
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "DESI1219.3",
-      status: "true",
+      status: "present",
       startTime: "08:00",
       endTime: "09:30",
       dayOfWeek: 0,
@@ -43,9 +43,9 @@ const ScheduleContainer = () => {
       instructor: "SonND24",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "COMP1841",
-      status: "true",
+      status: "present",
       startTime: "08:00",
       endTime: "09:30",
       dayOfWeek: 2,
@@ -54,9 +54,9 @@ const ScheduleContainer = () => {
       instructor: "SonND24",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "COMP1234",
-      status: "false",
+      status: "absent",
       startTime: "9:30",
       endTime: "11:00",
       dayOfWeek: 1,
@@ -65,9 +65,9 @@ const ScheduleContainer = () => {
       instructor: "SonND24",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "COMP1234",
-      status: "false",
+      status: "absent",
       startTime: "12:00",
       endTime: "13:30",
       dayOfWeek: 1,
@@ -76,9 +76,9 @@ const ScheduleContainer = () => {
       instructor: "SonND24",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "COMP1234",
-      status: "false",
+      status: "absent",
       startTime: "13:30",
       endTime: "15:00",
       dayOfWeek: 1,
@@ -87,9 +87,9 @@ const ScheduleContainer = () => {
       instructor: "SonND24",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "COMP1652",
-      status: "true",
+      status: "present",
       startTime: "12:00",
       endTime: "13:30",
       dayOfWeek: 0,
@@ -98,7 +98,7 @@ const ScheduleContainer = () => {
       room: "B202",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "Physics",
       status: "pending",
       startTime: "15:30",
@@ -109,9 +109,9 @@ const ScheduleContainer = () => {
       instructor: "SarahK",
     },
     {
-      class: "COS1204",
+      classCode: "COS1204",
       courseName: "Chemistry",
-      status: "true",
+      status: "present",
       startTime: "11:00",
       endTime: "12:30",
       dayOfWeek: 4,
@@ -189,29 +189,29 @@ const ScheduleContainer = () => {
         return course ? (
           <div
             className={`flex flex-col p-2 gap-2 font-semibold rounded-lg border ${
-              course.status === "true"
+              course.status === "present"
                 ? "border-approve"
-                : course.status === "false"
+                : course.status === "absent"
                 ? "border-danger"
                 : "border-gray-500"
             }`}
           >
             <div className="flex items-center justify-between border-b border-gray-300 pb-2">
               <span className="text-secondary font-semibold">
-                {course.class}
+                {course.classCode}
               </span>
               <Badge
                 className={`text-[10px] rounded-sm ${
-                  course.status === "true"
+                  course.status === "present"
                     ? "border-approve text-approve bg-approve/10"
-                    : course.status === "false"
+                    : course.status === "absent"
                     ? "border-danger text-danger bg-danger/10"
                     : "border-gray-500 text-gray-500 bg-gray-500/10"
                 }`}
               >
-                {course.status === "true"
+                {course.status === "present"
                   ? "Attended"
-                  : course.status === "false"
+                  : course.status === "absent"
                   ? "Absent"
                   : "Not yet"}
               </Badge>
