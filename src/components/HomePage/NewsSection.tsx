@@ -51,17 +51,13 @@ const NewsSection = () => {
               <div className="flex-1 min-w-0">
                 <div className="mb-1">
                   {item.author && (
-                    <span
-                      className="font-semibold text-primary text-sm"
-                    >
+                    <span className="font-semibold text-primary text-sm">
                       {item.author}
                     </span>
                   )}
                 </div>
                 <div className="text-primary mb-2 flex items-center gap-2 min-w-0">
-                  {item.date && (
-                    <span className="text-base">{item.date}</span>
-                  )}
+                  {item.date && <span className="text-base">{item.date}</span>}
                   <span className="">•</span>
                   <h4 className="font-semibold text-lg truncate flex-1 min-w-0">
                     {item.title}
