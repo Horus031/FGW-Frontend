@@ -11,7 +11,9 @@ const MarkPage = React.lazy(() => import("../pages/HomeTemplate/MarkPage"))
 const ClassOverviewPage = React.lazy(() => import("../pages/HomeTemplate/ClassOverviewPage"))
 const SendRequestPage = React.lazy(() => import("../pages/HomeTemplate/SendRequestPage"))
 const RequestStatusPage = React.lazy(() => import("../pages/HomeTemplate/RequestStatusPage"))
+const SchedulePage = React.lazy(() => import("../pages/HomeTemplate/SchedulePage"))
 import LoadingPage from "../components/shared/LoadingPage";
+
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -53,6 +55,10 @@ export const routes: RouteObject[] = [
           {
             path: "req-status",
             element: withSuspense(RequestStatusPage)
+          },
+          {
+            path: "schedule",
+            element: withSuspense(SchedulePage)
           }
         ]
     },
