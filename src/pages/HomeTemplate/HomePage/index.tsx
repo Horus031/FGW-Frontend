@@ -6,7 +6,7 @@ import RegistrationAndFeedback from "../../../components/HomePage/RegistrationAn
 
 const HomePage = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-public">
       {/* Welcome Text */}
       <WelcomeSection />
 
@@ -15,7 +15,7 @@ const HomePage = () => {
 
       {/* Two Column Grid Below */}
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 gap-31.5">
           {/* Left Column */}
           <NewsSection />
 
