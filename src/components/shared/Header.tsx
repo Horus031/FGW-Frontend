@@ -14,7 +14,7 @@ const Header = () => {
 
             <div className='flex items-center gap-9 text-primary font-semibold text-lg h-full'>
                 <NavLink to="/" className='p-2 hover:bg-gray-200 cursor-pointer'>Home</NavLink>
-                <button className='p-2 hover:bg-gray-200 cursor-pointer'>Schedule</button>
+                <NavLink to="/schedule" className='p-2 hover:bg-gray-200 cursor-pointer'>Schedule</NavLink>
                 <button className='p-2 hover:bg-gray-200 cursor-pointer'>Library</button>
             </div>
         </div>
