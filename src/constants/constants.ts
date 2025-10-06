@@ -1,4 +1,5 @@
-export const documentOptions = [
+
+export const DOCUMENT_OPTIONS = [
   { value: "Interim Academic Transcript", label: "Interim Academic Transcript" },
   { value: "Interruption of Study", label: "Interruption of Study" },
   { value: "Recheck of your mark", label: "Recheck of your mark" },
@@ -9,7 +10,7 @@ export const documentOptions = [
   { value: "Other Requests", label: "Other Requests" },
 ];
 
-export const verificationOptions = [
+export const VERIFICATION_OPTIONS = [
   { value: "Interruption of Study", label: "Interruption of Study" },
   { value: "Hoãn nghĩa vụ quân sự", label: "Hoãn nghĩa vụ quân sự" },
   { value: "Giấy giới thiệu", label: "Giấy giới thiệu" },
@@ -20,9 +21,9 @@ export const verificationOptions = [
   { value: "Cấp lại thẻ SV", label: "Cấp lại thẻ SV" },
 ];
 
-export const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+export const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
-export const timeSlots = [
+export const TIME_SLOTS = [
   {
     start: "08:00", 
     end: "09:30"
@@ -58,5 +59,138 @@ export const timeSlots = [
   {
     start: "20:30", 
     end: "22:00"
+  },
+]
+
+export const FEEDBACK_QUESTIONS = [
+  {
+    title: "Regarding the teacher's punctuality",
+    subtitle: "Sự đúng giờ của giảng viên trong giờ học",
+    options: [
+      {
+        value: "1",
+        label: "Always punctual",
+        trans: "Luôn đúng giờ"
+      },
+      {
+        value: "2",
+        label: "Mostly punctual",
+        trans: "Phần lớn đúng giờ"
+      },
+      {
+        value: "3",
+        label: "Rarely punctual",
+        trans: "Ít khi đúng giờ"
+      },
+      {
+        value: "4",
+        label: "Not at all punctual",
+        trans: "Không bao giờ đúng giờ"
+      }
+    ]
+  },
+  {
+    title: "Teaching skills of teacher",
+    subtitle: "Kỹ năng sư phạm của giảng viên",
+    options: [
+      {
+        value: "1",
+        label: "Very Good",
+        trans: "Tốt"
+      },
+      {
+        value: "2",
+        label: "Good",
+        trans: "Khá"
+      },
+      {
+        value: "3",
+        label: "Average",
+        trans: "Trung bình"
+      },
+      {
+        value: "4",
+        label: "Poor",
+        trans: "Kém"
+      }
+    ]
+  },
+  {
+    title: "The teacher adequately covers the topics required by the syllabus",
+    subtitle: "Đảm bảo khối lượng môn học theo chương trình",
+    options: [
+      {
+        value: "1",
+        label: "Fully covered",
+        trans: "Đảm bảo hoàn toàn"
+      },
+      {
+        value: "2",
+        label: "Mostly covered",
+        trans: "Đảm bảo phần lớn"
+      },
+      {
+        value: "3",
+        label: "Partially covered",
+        trans: "Chỉ đảm bảo một phần"
+      },
+      {
+        value: "4",
+        label: "Not at all covered",
+        trans: "Không đảm bảo"
+      }
+    ]
+  },
+  {
+    title: "Support from the teacher – guidance for practical exercises, answering questions out side of class",
+    subtitle: "Hỗ trợ của giảng viên trong và ngoài giờ – trả lời Email, hướng dẫn thực hành, giải đáp thắc mắc…",
+    options: [
+      {
+        value: "1",
+        label: "Very Good",
+        trans: "Tốt"
+      },
+      {
+        value: "2",
+        label: "Good",
+        trans: "Khá"
+      },
+      {
+        value: "3",
+        label: "Average",
+        trans: "Trung bình"
+      },
+      {
+        value: "4",
+        label: "Poor",
+        trans: "Kém"
+      }
+    ]
+  },
+  {
+    title: "Teacher's response to student's questions in class",
+    subtitle: "Đáp ứng của giảng viên về những thắc mắc của học viên trong giờ học",
+    options: [
+      {
+        value: "1",
+        label: "Answered immediately or just after the session",
+        trans: "Trả lời ngay hoặc trả lời vào cuối buổi học"
+      },
+      {
+        value: "2",
+        label: "Answered in the next session",
+        trans: "Trả lời vào buổi học sau"
+      },
+      {
+        value: "3",
+        label: "Some queries left unanswered",
+        trans: "Một số câu hỏi không được trả lời"
+      },
+      {
+        value: "4",
+        label: "Most queries left unanswered",
+        trans: "Phần lớn câu hỏi không được trả lời"
+      }
+    ]
   },
 ]

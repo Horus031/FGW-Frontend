@@ -1,5 +1,7 @@
 import React from "react"
 import { Route, type RouteObject } from "react-router-dom"
+import LoadingPage from "../components/shared/LoadingPage";
+
 
 // If using relative paths:
 const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"))
@@ -12,7 +14,7 @@ const ClassOverviewPage = React.lazy(() => import("../pages/HomeTemplate/ClassOv
 const SendRequestPage = React.lazy(() => import("../pages/HomeTemplate/SendRequestPage"))
 const RequestStatusPage = React.lazy(() => import("../pages/HomeTemplate/RequestStatusPage"))
 const SchedulePage = React.lazy(() => import("../pages/HomeTemplate/SchedulePage"))
-import LoadingPage from "../components/shared/LoadingPage";
+const StudentFeedbackPage = React.lazy(() => import("../pages/HomeTemplate/StudentFeedbackPage"));
 
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
@@ -59,6 +61,10 @@ export const routes: RouteObject[] = [
           {
             path: "schedule",
             element: withSuspense(SchedulePage)
+          },
+          {
+            path: "feedback",
+            element: withSuspense(StudentFeedbackPage)
           }
         ]
     },
