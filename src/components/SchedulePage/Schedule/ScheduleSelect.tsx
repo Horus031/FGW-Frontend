@@ -7,10 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import { type Weeks } from "@/hooks/useWeeksInYear";
+import { type Weeks } from "../../../hooks/useWeeksInYear";
 import { Button } from "../../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import useWeeksInYear from "@/hooks/useWeeksInYear";
+import useWeeksInYear from "../../../hooks/useWeeksInYear";
+
 
 type ScheduleSelectProps = {
   handleSetWeeks: (weeks: Weeks | null) => void;
@@ -22,6 +23,7 @@ const ScheduleSelect = (props: ScheduleSelectProps) => {
   const [selectedWeek, setSelectedWeek] = useState<Weeks | null>(null);
 
   const weeks = useWeeksInYear(Number(selectedYear));
+
 
   const handleYearChange = (value: string) => {
     setSelectedYear(value);

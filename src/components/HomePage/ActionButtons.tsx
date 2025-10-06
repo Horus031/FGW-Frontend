@@ -38,7 +38,7 @@ const ActionButtons = () => {
             <br />
             Booking
           </span>
-          <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform stroke-3" />
+          <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform  stroke-3" />
         </NavLink>
 
         <button className="cursor-pointer bg-teal-400 text-gray-900 p-6 rounded-xl hover:bg-teal-500 transition-colors flex items-center justify-between group">

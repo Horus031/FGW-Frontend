@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { Weeks } from "./useWeeksInYear";
-import { dayNames } from "@/constants/constants";
+import { DAY_NAMES } from "../constants/constants";
 
 const useDaysInWeek = (props: Weeks | null) => {
   return useMemo(() => {
@@ -11,7 +11,7 @@ const useDaysInWeek = (props: Weeks | null) => {
         // Get the first day of the week
       let DayOfWeek = new Date(data.start);
 
-      dayNames.map((_, index) => {
+      DAY_NAMES.map((_, index) => {
         // Push the first day of the week at the first loop
         if (index == 0) {
           daysInWeek.push(DayOfWeek);

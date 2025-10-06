@@ -1,13 +1,13 @@
-import type { ColumnConfig } from "@/components/shared/Table";
-import ScheduleSelect from "./ScheduleSelect";
 import { useState } from "react";
-import type { Weeks } from "@/hooks/useWeeksInYear";
-import useDaysInWeek from "@/hooks/useDaysInWeek";
-import { dayNames, timeSlots } from "@/constants/constants";
-import Table from "@/components/shared/Table";
-import { Badge } from "@/components/ui/badge";
+import type { CourseSchedule } from "../../../models/course";
+import type { Weeks } from "../../../hooks/useWeeksInYear";
+import useDaysInWeek from "../../../hooks/useDaysInWeek";
+import { DAY_NAMES, TIME_SLOTS } from "../../../constants/constants";
+import type { ColumnConfig } from "../../shared/Table";
+import { Badge } from "../../ui/badge";
 import { MapPin, User } from "lucide-react";
-import type { CourseSchedule } from "@/models/course";
+import ScheduleSelect from "./ScheduleSelect";
+import Table from "../../shared/Table";
 
 
 
@@ -121,21 +121,22 @@ const ScheduleContainer = () => {
     },
   ];
 
-  const scheduleData: ScheduleRowData[] = timeSlots.map(
+  const scheduleData: ScheduleRowData[] = TIME_SLOTS.map(
     ({ start, end }, index) => {
       const row: ScheduleRowData = {
         timeSlot: `Slot ${index + 1}`,
       };
 
       daysInWeek.forEach((dayDate, index) => {
-        const dayKey = dayNames[index].toLowerCase() as keyof Omit<
+        const dayKey = DAY_NAMES[index].toLowerCase() as keyof Omit<
           ScheduleRowData,
           "timeSlot"
         >;
 
+
         const courseForSlot = courseSchedules.find((course) => {
-          const courseDate = new Date(course.date);
-          const currentDayDate = new Date(dayDate);
+          const courseDate = new Date(course.date); // Ngày course đang lặp
+          const currentDayDate = new Date(dayDate); // Ngày của tuần
 
           courseDate.setHours(0, 0, 0, 0);
           currentDayDate.setHours(0, 0, 0, 0);
@@ -164,7 +165,7 @@ const ScheduleContainer = () => {
       width: "120px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
-        const { start, end } = timeSlots[index];
+        const { start, end } = TIME_SLOTS[index];
         return (
           <div>
             {value as string}
@@ -174,7 +175,7 @@ const ScheduleContainer = () => {
         );
       },
     },
-    ...dayNames.map((dayName, index) => ({
+    ...DAY_NAMES.map((dayName, index) => ({
       key: dayName.toLowerCase() as keyof ScheduleRowData,
       title: (
         <div>
@@ -235,7 +236,6 @@ const ScheduleContainer = () => {
     })),
   ];
 
-  console.log(daysInWeek);
 
   return (
     <div className="flex flex-col gap-4">

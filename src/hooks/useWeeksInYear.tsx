@@ -35,6 +35,8 @@ const useWeeksInYear = (props: number) => {
       date.setDate(date.getDate() + 7);
     }
 
+    console.log(weeks);
+
     return weeks;
   }, [props]);
 };

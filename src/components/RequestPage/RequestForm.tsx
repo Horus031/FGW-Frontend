@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { documentOptions, verificationOptions } from "@/constants/constants";
+import { VERIFICATION_OPTIONS, DOCUMENT_OPTIONS } from "../../constants/constants";
 
 type RequestFormProps = {
   requestType: string;
@@ -21,7 +21,7 @@ const RequestForm = (props: RequestFormProps) => {
   const { requestType } = props;
   const [file, setFile] = useState<File | null>(null);
   const requestOptions =
-    requestType === "verification" ? verificationOptions : documentOptions;
+    requestType === "verification" ? VERIFICATION_OPTIONS : DOCUMENT_OPTIONS;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
