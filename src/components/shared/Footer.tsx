@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className="py-5 border-t-1 border-gray-300 text-primary">
-      <div className="container mx-auto flex flex-col gap-6">
+      <div className="md:container md:mx-auto px-8 flex flex-col gap-6">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3 text-sm">
             <span>
