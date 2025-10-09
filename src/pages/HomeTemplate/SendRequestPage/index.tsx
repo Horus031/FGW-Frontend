@@ -1,6 +1,7 @@
-import RequestForm from "@/components/RequestPage/RequestForm";
-import PageTitle from "@/components/shared/PageTitle";
 import { useParams } from "react-router-dom";
+
+import RequestForm from "../../../components/RequestPage/RequestForm";
+import PageTitle from "../../../components/shared/PageTitle";
 
 type RequestPageParams = {
   requestType: string;

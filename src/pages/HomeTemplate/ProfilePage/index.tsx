@@ -1,6 +1,7 @@
 // import ProgressCircle from "@/components/ProgressCircle";
-import PageTitle from "@/components/shared/PageTitle";
-import ProfileCard from "@/components/ProfilePage/ProfileCard";
+
+import PageTitle from "../../../components/shared/PageTitle";
+import ProfileCard from "../../../components/ProfilePage/ProfileCard";
 
 
 const ProfilePage = () => {
