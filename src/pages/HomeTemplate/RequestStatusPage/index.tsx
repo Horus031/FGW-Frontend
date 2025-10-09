@@ -1,6 +1,7 @@
-import PageTitle from "@/components/shared/PageTitle";
-import { type ColumnConfig } from "@/components/shared/Table";
-import Table from "@/components/shared/Table";
+
+import PageTitle from "../../../components/shared/PageTitle";
+import { type ColumnConfig } from "../../../components/shared/Table";
+import Table from "../../../components/shared/Table";
 
 type RequestData = {
   refId: number;
