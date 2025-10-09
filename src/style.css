@@ -135,11 +135,11 @@
 }
 
 .custom-table {
-  @apply px-4 py-4 border border-gray-400;
+  @apply px-2 py-2 border border-gray-400;
 }
 
 .rounded-table {
-  @apply border-collapse w-full rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray]
+  @apply border-collapse rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray]
 }
 
 

@@ -15,7 +15,7 @@ import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="fixed top-0 min-w-screen py-3 bg-white z-50 border-b border-gray-300 font-public">
+    <div className="fixed top-0 min-w-screen py-3 px-8 bg-white z-50 border-b border-gray-300 font-public">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-14 basis-8/12">
           <div>
