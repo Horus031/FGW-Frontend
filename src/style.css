@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,14 +8,14 @@
 @theme inline {
   /* Elementary Colors */
   --color-primary: #00033d;
-  --color-secondary: #005EB8;
-  --color-bright: #3ABFF0;
-  --color-turquoise: #3ADDC2;
+  --color-secondary: #005eb8;
+  --color-bright: #3abff0;
+  --color-turquoise: #3addc2;
 
   /* Accessibility Colors */
   --color-danger: #ff5454;
   --color-approve: #25c16c;
-  --color-pending: #25C16C;
+  --color-pending: #25c16c;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -127,23 +127,21 @@
 }
 
 .table-cell:first-child {
-  @apply rounded-tl-md rounded-bl-md
+  @apply rounded-tl-md rounded-bl-md;
 }
 
 .table-cell:last-child {
-  @apply rounded-tr-md rounded-br-md
+  @apply rounded-tr-md rounded-br-md;
 }
 
 .custom-table {
-  @apply px-2 py-2 border border-gray-400;
+  @apply py-2 px-2 border border-gray-400;
 }
 
 .rounded-table {
-  @apply border-collapse rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray]
+  @apply border-collapse rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray];
 }
 
-
- 
 @layer base {
   * {
     @apply border-border outline-ring/50;

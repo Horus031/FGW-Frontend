@@ -25,11 +25,11 @@ const Table = <T extends object>(props: TableProps<T>) => {
    
 
   return (
-    <table className={`w-full col-md-12 ${centered === true ? "text-center" : "text-left"} ${bordered ? "rounded-table" : ""} rounded-lg`}>
+    <table className={`lg:w-fit xl:w-full col-md-12 ${centered === true ? "text-center" : "text-left"} ${bordered ? "rounded-table" : ""} rounded-lg`}>
       <thead className={`${color || "bg-blue-100"}`}>  
         <tr className={`${textColor ? textColor : "text-primary"} text-base`}>
           {columns.map((col) => (
-            <th className="custom-table font-medium" key={col.key} style={{ width: col.width || 'auto' }}>
+            <th className="custom-table py-2 font-medium" key={col.key} style={{ width: col.width || 'auto' }}>
               {col.title}
             </th>
           ))}
@@ -39,7 +39,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
         {data.map((row, rowIdx) => (
           <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""}`} key={rowIdx}>
             {columns.map((col) => (
-              <td className="custom-table w-24" key={String(col.key)}>
+              <td className="custom-table" key={String(col.key)}>
                 {col.render
                   ? col.render(row[col.key], row)
                   : (row[col.key] as React.ReactNode)}

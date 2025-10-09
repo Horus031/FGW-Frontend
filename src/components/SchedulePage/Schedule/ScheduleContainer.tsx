@@ -181,15 +181,15 @@ const ScheduleContainer = () => {
     {
       key: "timeSlot",
       title: "Time",
-      width: "88px",
+      width: "90px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
         const { start, end } = TIME_SLOTS[index];
         return (
-          <div>
-            {value as string}
+          <div className="lg:text-xs xl:text-sm">
+            <span>{value as string}</span>
             <br />
-            {start} - {end}
+            <span className="text-nowrap">{start} - {end}</span>
           </div>
         );
       },
@@ -197,18 +197,18 @@ const ScheduleContainer = () => {
     ...DAY_NAMES.map((dayName, index) => ({
       key: dayName.toLowerCase() as keyof ScheduleRowData,
       title: (
-        <div className="w-7 mx-auto">
+        <div className="mx-auto">
           <span>{dayName}</span>
           <br />
           {daysInWeek[index]?.getDate()}
         </div>
       ),
-      width: "150px",
+      width: "130px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`flex flex-col gap-2 font-semibold rounded-lg border w-fit py-1 px-3 mx-auto ${
+            className={`lg:w-full 2xl:max-w-36 lg:min-h-14 xl:min-h-20 flex flex-col justify-between gap-1 font-semibold rounded-sm border p-1 mx-auto ${
               course.status === "present"
                 ? "border-approve"
                 : course.status === "absent"
@@ -216,12 +216,12 @@ const ScheduleContainer = () => {
                 : "border-gray-500"
             }`}
           >
-            <div className="flex sm:flex-col 2xl:flex-row items-center justify-between">
-              <span className="text-secondary font-semibold">
+            <div className="flex items-center justify-between lg:text-[8px] xl:text-xs">
+              <span className="text-secondary font-semibold lg:text-[10px] xl:text-xs">
                 {course.classCode}
               </span>
               <Badge
-                className={`text-[10px] rounded-sm ${
+                className={`px-1 lg:text-[8px] xl:text-xs font-medium rounded-sm ${
                   course.status === "present"
                     ? "border-approve text-approve bg-approve/10"
                     : course.status === "absent"
@@ -236,15 +236,15 @@ const ScheduleContainer = () => {
                   : "Not yet"}
               </Badge>
             </div>
-            <span>{course.courseName}</span>
-            <div className="flex sm:flex-col 2xl:flex-row items-center 2xl:gap-3">
+            <span className="lg:text-[10px] xl:text-xs">{course.courseName}</span>
+            <div className="flex items-center justify-between lg:gap-1 xl:text-xs">
               {course.room && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
                   <MapPin size={12} /> {course.room}
                 </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
                   <User size={12} /> {course.instructor}
                 </span>
               )}
