@@ -9,7 +9,7 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <Header/>
 
-      <main className="flex-1 py-30 container mx-auto font-public">
+      <main className="flex-1 py-30 md:container md:mx-auto px-8 font-public">
         <Outlet/>
       </main>
 

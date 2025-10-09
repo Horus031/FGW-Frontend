@@ -9,8 +9,6 @@ import { MapPin, User } from "lucide-react";
 import ScheduleSelect from "./ScheduleSelect";
 import Table from "../../shared/Table";
 
-
-
 type ScheduleRowData = {
   timeSlot: string;
   monday?: CourseSchedule;
@@ -112,10 +110,32 @@ const ScheduleContainer = () => {
       classCode: "COS1204",
       courseName: "Chemistry",
       status: "present",
-      startTime: "11:00",
-      endTime: "12:30",
+      startTime: "12:00",
+      endTime: "13:30",
       dayOfWeek: 4,
       date: "2025-10-03",
+      room: "E501",
+      instructor: "SarahK",
+    },
+    {
+      classCode: "COS1204",
+      courseName: "Chemistry",
+      status: "present",
+      startTime: "12:00",
+      endTime: "13:30",
+      dayOfWeek: 5,
+      date: "2025-10-04",
+      room: "E501",
+      instructor: "SarahK",
+    },
+    {
+      classCode: "COS1204",
+      courseName: "Chemistry",
+      status: "present",
+      startTime: "12:00",
+      endTime: "13:30",
+      dayOfWeek: 6,
+      date: "2025-10-05",
       room: "E501",
       instructor: "SarahK",
     },
@@ -132,7 +152,6 @@ const ScheduleContainer = () => {
           ScheduleRowData,
           "timeSlot"
         >;
-
 
         const courseForSlot = courseSchedules.find((course) => {
           const courseDate = new Date(course.date); // Ngày course đang lặp
@@ -162,7 +181,7 @@ const ScheduleContainer = () => {
     {
       key: "timeSlot",
       title: "Time",
-      width: "120px",
+      width: "88px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
         const { start, end } = TIME_SLOTS[index];
@@ -178,18 +197,18 @@ const ScheduleContainer = () => {
     ...DAY_NAMES.map((dayName, index) => ({
       key: dayName.toLowerCase() as keyof ScheduleRowData,
       title: (
-        <div>
+        <div className="w-7 mx-auto">
           <span>{dayName}</span>
           <br />
           {daysInWeek[index]?.getDate()}
         </div>
       ),
-      width: "170px",
+      width: "150px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`flex flex-col p-2 gap-2 font-semibold rounded-lg border ${
+            className={`flex flex-col gap-2 font-semibold rounded-lg border w-fit py-1 px-3 mx-auto ${
               course.status === "present"
                 ? "border-approve"
                 : course.status === "absent"
@@ -197,7 +216,7 @@ const ScheduleContainer = () => {
                 : "border-gray-500"
             }`}
           >
-            <div className="flex items-center justify-between border-b border-gray-300 pb-2">
+            <div className="flex sm:flex-col 2xl:flex-row items-center justify-between">
               <span className="text-secondary font-semibold">
                 {course.classCode}
               </span>
@@ -218,7 +237,7 @@ const ScheduleContainer = () => {
               </Badge>
             </div>
             <span>{course.courseName}</span>
-            <div className="flex items-center justify-between">
+            <div className="flex sm:flex-col 2xl:flex-row items-center 2xl:gap-3">
               {course.room && (
                 <span className="flex items-center gap-1">
                   <MapPin size={12} /> {course.room}
@@ -236,21 +255,22 @@ const ScheduleContainer = () => {
     })),
   ];
 
-
   return (
     <div className="flex flex-col gap-4">
       <ScheduleSelect handleSetWeeks={handleSetWeeks} />
 
-      <Table
-        columns={columns}
-        data={scheduleData}
-        centered
-        color="bg-primary"
-        textColor="text-white"
-        textSize="text-xs"
-        height="h-[148px]"
-        bordered
-      />
+      <div className="w-full">
+        <Table
+          columns={columns}
+          data={scheduleData}
+          centered
+          color="bg-primary"
+          textColor="text-white"
+          textSize="text-sm"
+          height="h-[94px]"
+          bordered
+        />
+      </div>
     </div>
   );
 };
