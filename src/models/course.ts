@@ -38,3 +38,14 @@ export type CourseMark = Pick<Course, "courseName" | "classCode" | "grade" | "gr
   termLabel: string;
 };
 
+export type ScheduleRowData = {
+  timeSlot: string;
+  monday?: CourseSchedule;
+  tuesday?: CourseSchedule;
+  wednesday?: CourseSchedule;
+  thursday?: CourseSchedule;
+  friday?: CourseSchedule;
+  saturday?: CourseSchedule;
+  sunday?: CourseSchedule;
+};
+
