@@ -5,7 +5,7 @@ import BookingCalendar from "../../../components/shared/Calendar";
 import SlotButton from "../../../components/RoomBookingPage/BookingSlots";
 
 const BookingForm = () => {
-  const [selectedDate, setSelectedDate] = useState("8 Oct 2025");
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<number[]>([]);
 
   const slots = [
@@ -29,17 +29,17 @@ const BookingForm = () => {
   const handleSubmit = () => { };
 
 
+
   return (
     <div className="space-y-6 max-w-4xl ml-0">
       {/* Date and Slot Selection - Flex Layout */}
       <div className="flex gap-6">
         {/* Date Selection */}
         <div className="flex-shrink-0 w-64">
-          <label className="text-base font-semibold text-primary">Select day</label>
-          <BookingCalendar
-            value={selectedDate}
-            onChange={setSelectedDate}
-          />
+          <div className="flex flex-col gap-3">
+            <label className="text-base font-semibold text-primary">Select day</label>
+            <BookingCalendar value={selectedDate} onChange={setSelectedDate} />
+          </div>
         </div>
 
         {/* Slot Selection */}
@@ -59,12 +59,13 @@ const BookingForm = () => {
           </div>
         </div>
       </div>
-      <label className="text-base font-semibold text-primary">
-        Purpose
-      </label>
-      {/* Textarea */}
-      <Textarea placeholder="Lý do đặt phòng" />
-
+      <div className="flex flex-col gap-3">
+        <label className="text-base font-semibold text-primary">
+          Purpose
+        </label>
+        {/* Textarea */}
+        <Textarea className="h-64" placeholder="Choose verification's status" />
+      </div>
       {/* Submit Button */}
       <div className="flex justify-center pt-4">
         <Button
