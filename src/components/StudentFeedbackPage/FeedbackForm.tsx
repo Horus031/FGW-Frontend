@@ -39,7 +39,7 @@ const FeedbackForm = () => {
 
   return (
     <form onSubmit={handleOnSubmit} className="flex flex-col gap-8">
-      <div className="grid grid-cols-3 gap-8">
+      <div className="flex flex-col gap-8">
         <div className="px-5 py-6 border border-gray-300 rounded-lg col-span-2">
           {renderQuestions()}
         </div>
@@ -55,7 +55,7 @@ const FeedbackForm = () => {
           <textarea
             name="remarks"
             id=""
-            className="w-full h-40 border border-gray-300 rounded-lg p-2 text-base focus:outline-0"
+            className="w-1/2 h-40 border border-gray-300 rounded-lg p-2 text-base focus:outline-0"
           ></textarea>
           <button className="w-fit bg-secondary px-6 py-3 text-white font-semibold rounded-lg cursor-pointer hover:bg-secondary/90 active:scale-90">
             Submit
