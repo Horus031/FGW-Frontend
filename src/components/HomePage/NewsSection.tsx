@@ -35,7 +35,7 @@ const NewsSection = () => {
     <div className="space-y-8">
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h5 className="font-semibold text-primary text-2xl">News</h5>
+          <h5 className="font-semibold text-primary text-3xl">News</h5>
           <button className="cursor-pointer font-semibold hover:opacity-50 transition-opacity text-secondary text-sm">
             See more
           </button>
@@ -51,13 +51,13 @@ const NewsSection = () => {
               <div className="flex-1 min-w-0">
                 <div className="mb-1">
                   {item.author && (
-                    <span className="font-semibold text-primary text-sm">
+                    <span className="font-semibold text-sm text-[var(--color-secondary)]">
                       {item.author}
                     </span>
                   )}
                 </div>
                 <div className="text-primary mb-2 flex items-center gap-2 min-w-0">
-                  {item.date && <span className="text-base">{item.date}</span>}
+                  {item.date && <span className="text-base text-[var(--color-gray)]">{item.date}</span>}
                   <span className="">•</span>
                   <h4 className="font-semibold text-lg truncate flex-1 min-w-0">
                     {item.title}

@@ -6,7 +6,7 @@ const RegistrationAndFeedback = () => {
       <div className="grid grid-cols-2 gap-8">
         {/* Registration Section */}
         <div>
-          <h5 className="font-semibold mb-2 text-primary text-2xl">
+          <h5 className="font-semibold mb-2 text-primary text-3xl">
             Registration
           </h5>
           <div className="w-full h-1 bg-[#3ABFF0] mb-4"></div>
@@ -29,7 +29,7 @@ const RegistrationAndFeedback = () => {
         {/* Feedback Section */}
         <div>
           <h5
-            className="font-semibold mb-2 text-primary text-2xl"
+            className="font-semibold mb-2 text-primary text-3xl"
           >
             Feedback
           </h5>

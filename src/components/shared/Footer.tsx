@@ -29,24 +29,24 @@ const Footer = () => {
             <div>
               <div className="flex flex-col gap-2">
                 <span className="font-semibold">
-                  Training & Operation Office
+                  Finance Office
                 </span>
 
                 <div className="flex flex-col gap-1">
-                  <span>Email: acad.gre.hcm@fe.edu.vn</span>
-                  <span>Hotline: 028.7300.6622 (press 3)</span>
+                  <span>Email: ctsvfgwhcm@fe.edu.vn</span>
+                  <span>Hotline: 028.7300.6622 (press 5)</span>
                 </div>
               </div>
             </div>
             <div>
               <div className="flex flex-col gap-2">
                 <span className="font-semibold">
-                  Training & Operation Office
+                  Student Front Office:
                 </span>
 
                 <div className="flex flex-col gap-1">
-                  <span>Email: acad.gre.hcm@fe.edu.vn</span>
-                  <span>Hotline: 028.7300.6622 (press 3)</span>
+                  <span>Email: ctsvfgwhcm@fe.edu.vn</span>
+                  <span>Hotline: 028.7300.6622 (press 0)</span>
                 </div>
               </div>
             </div>

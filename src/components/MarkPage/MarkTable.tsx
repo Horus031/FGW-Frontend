@@ -12,40 +12,40 @@ const MarkTable = () => {
       </thead>
       <tbody className="text-primary text-base font-bold border h-28">
         <tr className="">
-            <td rowSpan={5} className="table-cell uppercase font-medium">
+            <td rowSpan={5} className="table-cell uppercase">
                 Final Exam
             </td>
-            <td className="table-cell uppercase font-medium">Listening FE</td>
-            <td className="table-cell font-medium">8.0%</td>
-            <td className="table-cell font-medium">8.3</td>
-            <td className="table-cell font-medium"></td>
+            <td className="table-cell uppercase">Listening FE</td>
+            <td className="table-cell">8.0%</td>
+            <td className="table-cell">8.3</td>
+            <td className="table-cell"></td>
         </tr>
         <tr>
-            <td className="table-cell uppercase font-medium">Speaking FE</td>
-            <td className="table-cell font-medium">25.0%</td>
-            <td className="table-cell font-medium">7.5</td>
-            <td className="table-cell font-medium"></td>
+            <td className="table-cell uppercase">Speaking FE</td>
+            <td className="table-cell">25.0%</td>
+            <td className="table-cell">7.5</td>
+            <td className="table-cell"></td>
         </tr>
         <tr>
-            <td className="table-cell uppercase font-medium">Writing FE</td>
-            <td className="table-cell font-medium">10.0%</td>
-            <td className="table-cell font-medium">7.8</td>
-            <td className="table-cell font-medium"></td>
+            <td className="table-cell uppercase">Writing FE</td>
+            <td className="table-cell">10.0%</td>
+            <td className="table-cell">7.8</td>
+            <td className="table-cell"></td>
         </tr>
         <tr>
-            <td className="table-cell uppercase font-medium">Reading FE</td>
-            <td className="table-cell font-medium">16.0%</td>
-            <td className="table-cell font-medium">4.5</td>
-            <td className="table-cell font-medium"></td>
+            <td className="table-cell uppercase">Reading FE</td>
+            <td className="table-cell">16.0%</td>
+            <td className="table-cell">4.5</td>
+            <td className="table-cell"></td>
         </tr>
         <tr>
-            <td className="table-cell font-medium">Total</td>
-            <td className="table-cell font-medium">40.0%</td>
-            <td className="table-cell font-medium">6.5</td>
-            <td className="table-cell font-medium"></td>
+            <td className="table-cell">Total</td>
+            <td className="table-cell">40.0%</td>
+            <td className="table-cell">6.5</td>
+            <td className="table-cell"></td>
         </tr>
         <tr className="">
-          <td rowSpan={2} className="table-cell uppercase font-medium">
+          <td rowSpan={2} className="table-cell uppercase">
             Course Total
           </td>
           <td className="table-cell uppercase">Average</td>
