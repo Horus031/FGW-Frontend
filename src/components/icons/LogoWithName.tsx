@@ -1,8 +1,6 @@
-type LogoWithNameProps = {
-    className?: string;
-}
+import type { IconType } from "./iconTypes";
 
-const LogoWithName = (props: LogoWithNameProps) => (
+const LogoWithName = (props: IconType) => (
   <svg
     width={158}
     height={66}

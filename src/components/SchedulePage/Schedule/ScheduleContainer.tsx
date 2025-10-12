@@ -1,15 +1,13 @@
-import type { ColumnConfig } from "@/components/shared/Table";
-import ScheduleSelect from "./ScheduleSelect";
 import { useState } from "react";
-import type { Weeks } from "@/hooks/useWeeksInYear";
-import useDaysInWeek from "@/hooks/useDaysInWeek";
-import { dayNames, timeSlots } from "@/constants/constants";
-import Table from "@/components/shared/Table";
-import { Badge } from "@/components/ui/badge";
+import type { CourseSchedule } from "../../../models/course";
+import type { Weeks } from "../../../hooks/useWeeksInYear";
+import useDaysInWeek from "../../../hooks/useDaysInWeek";
+import { DAY_NAMES, TIME_SLOTS } from "../../../constants/constants";
+import type { ColumnConfig } from "../../shared/Table";
+import { Badge } from "../../ui/badge";
 import { MapPin, User } from "lucide-react";
-import type { CourseSchedule } from "@/models/course";
-
-
+import ScheduleSelect from "./ScheduleSelect";
+import Table from "../../shared/Table";
 
 type ScheduleRowData = {
   timeSlot: string;
@@ -112,30 +110,52 @@ const ScheduleContainer = () => {
       classCode: "COS1204",
       courseName: "Chemistry",
       status: "present",
-      startTime: "11:00",
-      endTime: "12:30",
+      startTime: "12:00",
+      endTime: "13:30",
       dayOfWeek: 4,
       date: "2025-10-03",
       room: "E501",
       instructor: "SarahK",
     },
+    {
+      classCode: "COS1204",
+      courseName: "Chemistry",
+      status: "present",
+      startTime: "12:00",
+      endTime: "13:30",
+      dayOfWeek: 5,
+      date: "2025-10-04",
+      room: "E501",
+      instructor: "SarahK",
+    },
+    {
+      classCode: "COS1204",
+      courseName: "Chemistry",
+      status: "present",
+      startTime: "12:00",
+      endTime: "13:30",
+      dayOfWeek: 6,
+      date: "2025-10-05",
+      room: "E501",
+      instructor: "SarahK",
+    },
   ];
 
-  const scheduleData: ScheduleRowData[] = timeSlots.map(
+  const scheduleData: ScheduleRowData[] = TIME_SLOTS.map(
     ({ start, end }, index) => {
       const row: ScheduleRowData = {
         timeSlot: `Slot ${index + 1}`,
       };
 
       daysInWeek.forEach((dayDate, index) => {
-        const dayKey = dayNames[index].toLowerCase() as keyof Omit<
+        const dayKey = DAY_NAMES[index].toLowerCase() as keyof Omit<
           ScheduleRowData,
           "timeSlot"
         >;
 
         const courseForSlot = courseSchedules.find((course) => {
-          const courseDate = new Date(course.date);
-          const currentDayDate = new Date(dayDate);
+          const courseDate = new Date(course.date); // Ngày course đang lặp
+          const currentDayDate = new Date(dayDate); // Ngày của tuần
 
           courseDate.setHours(0, 0, 0, 0);
           currentDayDate.setHours(0, 0, 0, 0);
@@ -161,34 +181,34 @@ const ScheduleContainer = () => {
     {
       key: "timeSlot",
       title: "Time",
-      width: "120px",
+      width: "90px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
-        const { start, end } = timeSlots[index];
+        const { start, end } = TIME_SLOTS[index];
         return (
-          <div>
-            {value as string}
+          <div className="lg:text-xs xl:text-sm">
+            <span>{value as string}</span>
             <br />
-            {start} - {end}
+            <span className="text-nowrap">{start} - {end}</span>
           </div>
         );
       },
     },
-    ...dayNames.map((dayName, index) => ({
+    ...DAY_NAMES.map((dayName, index) => ({
       key: dayName.toLowerCase() as keyof ScheduleRowData,
       title: (
-        <div>
+        <div className="mx-auto">
           <span>{dayName}</span>
           <br />
           {daysInWeek[index]?.getDate()}
         </div>
       ),
-      width: "170px",
+      width: "130px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`flex flex-col p-2 gap-2 font-semibold rounded-lg border ${
+            className={`lg:w-full 2xl:max-w-36 lg:min-h-14 xl:min-h-20 flex flex-col justify-between gap-1 font-semibold rounded-sm border p-1 mx-auto ${
               course.status === "present"
                 ? "border-approve"
                 : course.status === "absent"
@@ -196,12 +216,12 @@ const ScheduleContainer = () => {
                 : "border-gray-500"
             }`}
           >
-            <div className="flex items-center justify-between border-b border-gray-300 pb-2">
-              <span className="text-secondary font-semibold">
+            <div className="flex items-center justify-between lg:text-[8px] xl:text-xs">
+              <span className="text-secondary font-semibold lg:text-[10px] xl:text-xs">
                 {course.classCode}
               </span>
               <Badge
-                className={`text-[10px] rounded-sm ${
+                className={`px-1 lg:text-[8px] xl:text-xs font-medium rounded-sm ${
                   course.status === "present"
                     ? "border-approve text-approve bg-approve/10"
                     : course.status === "absent"
@@ -216,15 +236,15 @@ const ScheduleContainer = () => {
                   : "Not yet"}
               </Badge>
             </div>
-            <span>{course.courseName}</span>
-            <div className="flex items-center justify-between">
+            <span className="lg:text-[10px] xl:text-xs">{course.courseName}</span>
+            <div className="flex items-center justify-between lg:gap-1 xl:text-xs">
               {course.room && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
                   <MapPin size={12} /> {course.room}
                 </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
                   <User size={12} /> {course.instructor}
                 </span>
               )}
@@ -235,22 +255,22 @@ const ScheduleContainer = () => {
     })),
   ];
 
-  console.log(daysInWeek);
-
   return (
     <div className="flex flex-col gap-4">
       <ScheduleSelect handleSetWeeks={handleSetWeeks} />
 
-      <Table
-        columns={columns}
-        data={scheduleData}
-        centered
-        color="bg-primary"
-        textColor="text-white"
-        textSize="text-xs"
-        height="h-[148px]"
-        bordered
-      />
+      <div className="w-full">
+        <Table
+          columns={columns}
+          data={scheduleData}
+          centered
+          color="bg-primary"
+          textColor="text-white"
+          textSize="text-sm"
+          height="h-[94px]"
+          bordered
+        />
+      </div>
     </div>
   );
 };

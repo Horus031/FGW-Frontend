@@ -7,25 +7,29 @@ import RegistrationAndFeedback from "../../../components/HomePage/RegistrationAn
 const HomePage = () => {
   return (
     <div className="space-y-8 font-public">
-      {/* Welcome Text */}
       <WelcomeSection />
 
-      {/* Full Width Carousel */}
-      <CarouselSection />
+      <div className="grid grid-cols-2 gap-8">
+        <div className="space-y-4">
+          {/* Full Width Carousel */}
+          <CarouselSection />
 
-      {/* Two Column Grid Below */}
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 lg:gap-31.5">
-          {/* Left Column */}
           <NewsSection />
+        </div>
 
-          {/* Right Column */}
-          <div className="space-y-8">
-            {/* Action Buttons Section */}
-            <ActionButtons />
+        {/* Two Column Grid Below */}
+        <div className="">
+          <div className="md:gap-8 lg:gap-31.5">
+            {/* Left Column */}
 
-            {/* Registration and Feedback Section */}
-            <RegistrationAndFeedback />
+            {/* Right Column */}
+            <div className="space-y-8">
+              {/* Action Buttons Section */}
+              <ActionButtons />
+
+              {/* Registration and Feedback Section */}
+              <RegistrationAndFeedback />
+            </div>
           </div>
         </div>
       </div>

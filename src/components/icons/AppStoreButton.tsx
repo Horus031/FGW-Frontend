@@ -1,8 +1,6 @@
-type AppStoreButtonProps = {
-    className?: string;
-}
+import type { IconType } from "./iconTypes";
 
-const AppStoreButton = (props: AppStoreButtonProps) => (
+const AppStoreButton = (props: IconType) => (
   <svg
     width={160}
     height={100}

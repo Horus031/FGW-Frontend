@@ -1,14 +1,30 @@
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
+
+
 const CarouselSection = () => {
   return (
-    <div className="mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="relative rounded-2x1">
-        <img
-          src="/images/Homepage/Carousel.png"
-          alt="Greenwich University"
-          className="w-full h-96 object-cover object-right"
-        />
-        <div className="absolute"></div>
-      </div>
+    <div className="mx-auto">
+      <Carousel
+        className="w-full"
+      >
+        <CarouselContent>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="p-1">
+                <img src="/images/Homepage/Carousel.png" alt="" className="w-full h-80"/>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="translate-x-16 cursor-pointer" />
+        <CarouselNext className="-translate-x-16 cursor-pointer" />
+      </Carousel>
     </div>
   );
 };

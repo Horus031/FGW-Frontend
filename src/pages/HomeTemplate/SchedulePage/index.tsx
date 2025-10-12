@@ -1,5 +1,6 @@
-import TabsContainer from "@/components/SchedulePage/TabsContainer"
-import PageTitle from "@/components/shared/PageTitle"
+
+import TabsContainer from "../../../components/SchedulePage/TabsContainer"
+import PageTitle from "../../../components/shared/PageTitle"
 
 const SchedulePage = () => {
   return (

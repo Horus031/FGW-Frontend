@@ -25,11 +25,11 @@ const Table = <T extends object>(props: TableProps<T>) => {
    
 
   return (
-    <table className={`w-full ${centered === true ? "text-center" : "text-left"} ${bordered ? "rounded-table" : ""} rounded-lg`}>
+    <table className={`lg:w-fit xl:w-full col-md-12 ${centered === true ? "text-center" : "text-left"} ${bordered ? "rounded-table" : ""} rounded-lg`}>
       <thead className={`${color || "bg-blue-100"}`}>  
         <tr className={`${textColor ? textColor : "text-primary"} text-base`}>
           {columns.map((col) => (
-            <th className="custom-table font-medium" key={col.key} style={{ width: col.width || 'auto' }}>
+            <th className="custom-table py-2 font-medium" key={col.key} style={{ width: col.width || 'auto' }}>
               {col.title}
             </th>
           ))}

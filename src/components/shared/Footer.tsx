@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className="py-5 border-t-1 border-gray-300 text-primary">
-      <div className="container mx-auto flex flex-col gap-6">
+      <div className="md:container md:mx-auto px-8 flex flex-col gap-6">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-3 text-sm">
             <span>
@@ -29,24 +29,24 @@ const Footer = () => {
             <div>
               <div className="flex flex-col gap-2">
                 <span className="font-semibold">
-                  Training & Operation Office
+                  Finance Office
                 </span>
 
                 <div className="flex flex-col gap-1">
-                  <span>Email: acad.gre.hcm@fe.edu.vn</span>
-                  <span>Hotline: 028.7300.6622 (press 3)</span>
+                  <span>Email: ctsvfgwhcm@fe.edu.vn</span>
+                  <span>Hotline: 028.7300.6622 (press 5)</span>
                 </div>
               </div>
             </div>
             <div>
               <div className="flex flex-col gap-2">
                 <span className="font-semibold">
-                  Training & Operation Office
+                  Student Front Office:
                 </span>
 
                 <div className="flex flex-col gap-1">
-                  <span>Email: acad.gre.hcm@fe.edu.vn</span>
-                  <span>Hotline: 028.7300.6622 (press 3)</span>
+                  <span>Email: ctsvfgwhcm@fe.edu.vn</span>
+                  <span>Hotline: 028.7300.6622 (press 0)</span>
                 </div>
               </div>
             </div>

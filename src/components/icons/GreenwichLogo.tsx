@@ -1,8 +1,6 @@
-type GreenwichLogoProps = {
-  className?: string;
-};
+import type { IconType } from "./iconTypes";
 
-const GreenwichLogo = (props: GreenwichLogoProps) => (
+const GreenwichLogo = (props: IconType) => (
   <svg
     width={80}
     height={80}

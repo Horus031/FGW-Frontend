@@ -1,8 +1,6 @@
-type GooglePlayButtonProps = {
-    className?: string;
-}
+import type { IconType } from "./iconTypes";
 
-const GooglePlayButton = (props: GooglePlayButtonProps) => (
+const GooglePlayButton = (props: IconType) => (
   <svg
     width={148}
     height={51}
