@@ -98,7 +98,7 @@ const CourseOverview = () => {
       </div>
       {/* Course cards grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sampleCourses.map((course, index) => (
+        {sampleCourses.map((course, _index) => (
           <CourseOverviewCard
             key={course.classCode}
             course={course}
