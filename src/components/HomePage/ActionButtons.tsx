@@ -30,7 +30,7 @@ const ActionButtons = () => {
         </NavLink>
 
         <NavLink
-          to="/room"
+          to="/booking"
           className="cursor-pointer bg-teal-400 text-gray-900 p-6 rounded-xl hover:bg-teal-500 transition-colors flex items-center justify-between group"
         >
           <span className="font-semibold text-left">
@@ -41,15 +41,6 @@ const ActionButtons = () => {
           <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform  stroke-3" />
         </NavLink>
 
-        <button className="cursor-pointer bg-teal-400 text-gray-900 p-6 rounded-xl hover:bg-teal-500 transition-colors flex items-center justify-between group">
-          <span className="font-semibold text-left">Wallet</span>
-          <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform stroke-3" />
-        </button>
-
-        <button className="cursor-pointer bg-teal-400 text-gray-900 p-6 rounded-xl hover:bg-teal-500 transition-colors flex items-center justify-between group">
-          <span className="font-semibold text-left">See all</span>
-          <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform stroke-3" />
-        </button>
       </div>
     </div>
   );
