@@ -1,9 +1,9 @@
 const FilterButton = () => {
   return (
     <button className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-      <span className="text-sm font-medium text-gray-700">Filter</span>
+      <span className="text-sm font-semibold text-[var(--color-primary)]">Filter</span>
       <svg
-        className="w-4 h-4 text-gray-700"
+        className="w-4 h-4 text-[var(--color-primary)]"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

@@ -77,7 +77,6 @@ const CourseOverview = () => {
 
   return (
     <div className="max-w-7xl mx-auto pt-6">
-      {/* Flex container: search (left) + filter (right) */}
       <div className="flex items-center mb-6">
         {/* Search bar */}
         <div className="relative w-full max-w-sm">
@@ -90,13 +89,12 @@ const CourseOverview = () => {
             className="pl-10 font-medium"
           />
         </div>
-
         {/* Filter button */}
-        <div className="ml-4"> {/* small left gap */}
+        <div className="ml-4">
           <FilterButton />
         </div>
       </div>
-      {/* Course cards grid */}
+      {/* Course cards*/}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sampleCourses.map((course, _index) => (
           <CourseOverviewCard
