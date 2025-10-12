@@ -72,7 +72,7 @@ export const routes: RouteObject[] = [
         element: withSuspense(RoomBookingPage)
       },
       {
-        path: "course-overview/:courseId",
+        path: "course-overview",
         element: withSuspense(CourseOverview)
       }
     ]

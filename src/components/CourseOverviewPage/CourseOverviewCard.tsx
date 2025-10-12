@@ -1,4 +1,4 @@
-import React from 'react';
+
 import type { Course } from '../../models/course'
 import type { UserInfo } from '../../models/user'
 import type { Term } from '../../models/term'
@@ -20,7 +20,7 @@ const CourseOverviewCard = ({
   const remainingCount = students.length - maxVisibleAvatars;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full max-w-sm">
+    <div className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full max-w-sm">
       {/* Header */}
       <div className="mb-3">
         <p className="text-sm text-gray-600 mb-1">{term?.label || course.courseTerm}</p>

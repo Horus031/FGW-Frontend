@@ -1,17 +1,20 @@
 import CourseOverviewCard from '../../../components/CourseOverviewPage/CourseOverviewCard';
 import type { Course } from '../../../models/course';
 import type { UserInfo } from '../../../models/user';
+import { Search } from "lucide-react";
+import { Input } from "../../../components/ui/input";
+import FilterButton from '../../../components/shared/Filter';
 
-const App = () => {
+const CourseOverview = () => {
   const sampleStudents: Pick<UserInfo, "avatar">[] = [
-    { avatar: 'https://via.placeholder.com/32?text=TN' },
-    { avatar: 'https://via.placeholder.com/32?text=HD' },
-    { avatar: 'https://via.placeholder.com/32?text=NL' },
-    { avatar: 'https://via.placeholder.com/32?text=TH' },
-    { avatar: 'https://via.placeholder.com/32?text=PV' },
-    { avatar: 'https://via.placeholder.com/32?text=LT' },
-    { avatar: 'https://via.placeholder.com/32?text=HM' },
-    { avatar: 'https://via.placeholder.com/32?text=NK' }
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
+    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' }
   ];
 
   const sampleCourses: Course[] = [
@@ -45,8 +48,28 @@ const App = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto pt-6">
+      {/* Flex container: search (left) + filter (right) */}
+      <div className="flex items-center mb-6">
+        {/* Search bar */}
+        <div className="relative w-full max-w-sm">
+          <Search
+            className="absolute top-1/2 -translate-y-1/2 left-2 text-gray-500"
+            size={24}
+          />
+          <Input
+            placeholder="Search..."
+            className="pl-10 font-medium"
+          />
+        </div>
+
+        {/* Filter button */}
+        <div className="ml-4"> {/* small left gap */}
+          <FilterButton />
+        </div>
+      </div>
+      {/* Course cards grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sampleCourses.map((course, index) => (
           <CourseOverviewCard
             key={course.classCode}
@@ -59,4 +82,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default CourseOverview;
