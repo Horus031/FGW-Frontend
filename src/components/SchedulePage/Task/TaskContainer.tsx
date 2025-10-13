@@ -1,6 +1,6 @@
 import Pagination from "../../shared/Pagination"
 import FilterButton from "../../shared/Filter"
-import TaskCard from "./TaskCard";
+import TaskCard from "./Taskcard";
 import type { Task } from "../../../models/task";
 
 const TaskContainer = () => {

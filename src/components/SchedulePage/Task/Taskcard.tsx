@@ -1,7 +1,7 @@
 import { MoreVertical, User, BookOpen, ArrowRight } from 'lucide-react';
 import TaskDetail from './TaskDetail';
 import { useState } from 'react';
-import type { Task } from './../../../models/task';
+import type { Task } from '../../../models/task';
 import type { StatusConfig } from '../../../models/task';
 
 
