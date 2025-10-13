@@ -1,23 +1,14 @@
 import { MoreVertical, User, BookOpen, ArrowRight } from 'lucide-react';
+import TaskDetail from './TaskDetail';
+import { useState } from 'react';
+import type { Task } from './../../../models/task';
+import type { StatusConfig } from '../../../models/task';
 
-type TaskStatus = 'new' | 'missing' | 'attempted' | null;
 
-interface TaskCardProps {
-  status: TaskStatus;
-  title: string;
-  student: string;
-  course: string;
-  dueDate: string;
-}
+const TaskCard = (task: Task) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { status, title, studentgroup, course, dueDate } = task;
 
-interface StatusConfig {
-  badge: string | null;
-  bgColor: string;
-  borderColor: string;
-  badgeColor: string;
-}
-
-const TaskCard = ({ status, title, student, course, dueDate }: TaskCardProps ) => {
   const getStatusConfig = (): StatusConfig => {
     switch (status) {
       case 'new':
@@ -65,7 +56,10 @@ const TaskCard = ({ status, title, student, course, dueDate }: TaskCardProps ) =
           )}
           <h3 className="text-base font-semibold text-primary">{title}</h3>
         </div>
-        <button className="text-primary cursor-pointer p-1">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="text-primary cursor-pointer p-1"
+        >
           <MoreVertical size={20} />
         </button>
       </div>
@@ -73,7 +67,7 @@ const TaskCard = ({ status, title, student, course, dueDate }: TaskCardProps ) =
       {/* Student Info */}
       <div className="flex items-center gap-2 mb-2 text-sm text-[var(--color-gray-weak)]">
         <User size={16} />
-        <span>{student}</span>
+        <span>{studentgroup}</span>
       </div>
 
       {/* Course Info */}
@@ -83,16 +77,21 @@ const TaskCard = ({ status, title, student, course, dueDate }: TaskCardProps ) =
       </div>
 
       {/* Footer */}
-    <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-4 border-gray-200">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-4 border-gray-200">
         <button
-        className="cursor-pointer flex items-center gap-2 px-2 py-1 border-2 border-gray-900 rounded-lg text-base font-semibold bg-white text-primary whitespace-nowrap"
+          className="cursor-pointer flex items-center gap-2 px-2 py-1 border-2 border-gray-900 rounded-lg text-base font-semibold bg-white text-primary whitespace-nowrap"
         >
-            Submit on Moodle
-            <ArrowRight size={16} />
+          Submit on Moodle
+          <ArrowRight size={16} />
         </button>
         <span className="text-sm text-[var(--color-gray-weak)]">Due to {dueDate}</span>
       </div>
+      <TaskDetail
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        task={task}
+      />
     </div>
   );
 };
-export { TaskCard };
+export default TaskCard 

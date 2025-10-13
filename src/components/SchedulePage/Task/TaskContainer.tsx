@@ -1,26 +1,17 @@
 import Pagination from "../../shared/Pagination"
 import FilterButton from "../../shared/Filter"
-import { TaskCard } from "./Taskcard";
-
-interface Task {
-  id: number;
-  status: 'new' | 'missing' | 'attempted' | null;
-  title: string;
-  student: string;
-  course: string;
-  dueDate: string;
-}
-
+import TaskCard from "./TaskCard";
+import type { Task } from "../../../models/task";
 
 const TaskContainer = () => {
 
   const tasks: Task[] = [
-    { id: 1, status: 'new', title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
-    { id: 2, status: null, title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
-    { id: 3, status: 'missing', title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
-    { id: 4, status: 'missing', title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
-    { id: 5, status: 'attempted', title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
-    { id: 6, status: 'attempted', title: 'Submit Dissertation', student: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025' },
+    { id: 1, status: 'new', title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
+    { id: 2, status: null, title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
+    { id: 3, status: 'missing', title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
+    { id: 4, status: 'missing', title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
+    { id: 5, status: 'attempted', title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
+    { id: 6, status: 'attempted', title: 'Submit Dissertation', studentgroup: 'SonND24', course: 'DESI1240.2 - Design Research Project', dueDate: '17 Mar 2025', requirements: ['Cover page', 'Abstract', 'Research findings', 'References'] },
   ];
 
   return (
