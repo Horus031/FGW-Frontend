@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { TaskDetailProps } from '../../../models/task';
-import CalendarIcon from '../../icons/calendar';
+import CalendarIcon from '../../icons/CalendarIcon';
 import BookIcon from '../../icons/Book';
 import GroupIcon from '../../icons/Group';
 
