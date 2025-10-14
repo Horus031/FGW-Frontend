@@ -21,27 +21,41 @@ const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) =>
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
                     <div className="p-6 border-b border-gray-200">
-                        {/* Header (badge + close button) */}
-                        <div className="relative mb-4">
-                            {/* content row keeps left-aligned badge/title */}
-                            <div className="flex items-start gap-3">
-                                {StatusConfig.badge && (
-                                    <span className={`${StatusConfig.badgeColor} text-sm font-medium px-2.5 py-1 rounded`}>
-                                        {StatusConfig.badge}
-                                    </span>
-                                )}
+                        {/* If there's no badge, title and close button share one line */}
+                        {!StatusConfig.badge ? (
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
+                                <button
+                                    onClick={onClose}
+                                    aria-label="Close task detail"
+                                    className="text-gray-400 hover:text-gray-600 text-xl font-bold cursor-pointer"
+                                >
+                                    X
+                                </button>
                             </div>
+                        ) : (
+                            <>
+                                {/* If there's a badge, show it above the title and keep X in the corner */}
+                                <div className="relative mb-4">
+                                    <div className="flex items-start gap-3">
+                                        <span
+                                            className={`${StatusConfig.badgeColor} text-sm font-medium px-2.5 py-1 rounded`}
+                                        >
+                                            {StatusConfig.badge}
+                                        </span>
+                                    </div>
 
-                            {/* absolute-positioned close button in top-right of this header */}
-                            <button
-                                onClick={onClose}
-                                aria-label="Close task detail"
-                                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600 z-10"
-                            >
-                                X
-                            </button>
-                        </div>
-                        <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
+                                    <button
+                                        onClick={onClose}
+                                        aria-label="Close task detail"
+                                        className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600 z-10 font-bold "
+                                    >
+                                        X
+                                    </button>
+                                </div>
+                                <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
+                            </>
+                        )}
                     </div>
                     <div className="p-6">
                         <div className="grid grid-cols-3 gap-4 mb-6">

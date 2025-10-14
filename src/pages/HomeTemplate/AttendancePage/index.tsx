@@ -8,10 +8,9 @@ const AttendancePage = () => {
       <PageTitle
         title="Attendance Report"
         breadcrumb="Attendance"
-        subtitle="Check your attendance progress"
       />
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-row gap-8 justify-between">
         <AttendanceCourseSelect />
 
         <AttendanceDetails />

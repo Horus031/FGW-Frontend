@@ -3,13 +3,13 @@ import TermSelect from '../shared/TermSelect'
 
 const AttendanceCourseSelect = () => {
   return (
-    <div className='flex flex-col gap-4'>
-      <TermSelect/>
+    <div className='flex flex-col gap-4 w-xl'>
+      <TermSelect />
 
-      <div className='grid grid-cols-3 gap-11'>
-        <CourseCard percent={75} active={true}/>
+      <div className='grid grid-rows-3 gap-5'>
+        <CourseCard percent={75} active={true} />
         <CourseCard percent={75} />
-        <CourseCard percent={75}/>
+        <CourseCard percent={75} />
       </div>
     </div>
   )
