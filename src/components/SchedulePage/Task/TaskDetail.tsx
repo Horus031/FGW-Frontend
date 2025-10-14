@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import type { Task } from './../../../models/task';
-
-interface TaskDetailProps {
-    isOpen: boolean;
-    onClose: () => void;
-    task: Task;
-}
+import type { TaskDetailProps } from '../../../models/task';
 
 const TaskDetail = ({ isOpen, onClose, task }: TaskDetailProps) => {
     const [remindMe, setRemindMe] = useState(false);

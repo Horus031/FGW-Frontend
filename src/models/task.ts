@@ -16,3 +16,9 @@ export interface StatusConfig {
   borderColor: string;
   badgeColor: string;
 }
+
+export interface TaskDetailProps {
+    isOpen: boolean;
+    onClose: () => void;
+    task: Task;
+}
