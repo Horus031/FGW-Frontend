@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import type { TaskDetailProps } from '../../../models/task';
+import CalendarIcon from '../../icons/calendar';
+import BookIcon from '../../icons/Book';
+import GroupIcon from '../../icons/Group';
 
-const TaskDetail = ({ isOpen, onClose, task }: TaskDetailProps) => {
+const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) => {
     const [remindMe, setRemindMe] = useState(false);
 
     if (!isOpen) return null;
@@ -18,32 +21,61 @@ const TaskDetail = ({ isOpen, onClose, task }: TaskDetailProps) => {
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
                     <div className="p-6 border-b border-gray-200">
-                        <div className="flex items-start justify-between mb-4">
-                            <span className="inline-block px-3 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded border border-blue-200">
-                                {task.status || 'New'}
-                            </span>
-                            <button onClick={onClose} className="cursor-pointer text-gray-400 hover:text-gray-600">X</button>
+                        {/* Header (badge + close button) */}
+                        <div className="relative mb-4">
+                            {/* content row keeps left-aligned badge/title */}
+                            <div className="flex items-start gap-3">
+                                {StatusConfig.badge && (
+                                    <span className={`${StatusConfig.badgeColor} text-sm font-medium px-2.5 py-1 rounded`}>
+                                        {StatusConfig.badge}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* absolute-positioned close button in top-right of this header */}
+                            <button
+                                onClick={onClose}
+                                aria-label="Close task detail"
+                                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600 z-10"
+                            >
+                                X
+                            </button>
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
                     </div>
                     <div className="p-6">
                         <div className="grid grid-cols-3 gap-4 mb-6">
-                            <div>
-                                <div className="text-sm text-gray-600 mb-1 font-medium">Course</div>
-                                <a href="#" className="text-blue-600 hover:underline font-medium">{task.course}</a>
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <BookIcon className="font-semibold" />
+                                    <span className="text-sm text-black font-medium">Module</span>
+                                </div>
+                                <a href="#" className="text-blue-600 hover:underline font-medium">
+                                    {task.course}
+                                </a>
                             </div>
-                            <div>
-                                <div className="text-sm text-gray-600 mb-1 font-medium">Class</div>
-                                <a href="#" className="text-blue-600 hover:underline font-medium">{task.studentgroup}</a>
+
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <GroupIcon className="text-gray-600" />
+                                    <span className="text-sm text-black font-medium">Class</span>
+                                </div>
+                                <a href="#" className="text-blue-600 hover:underline font-medium">
+                                    {task.studentgroup}
+                                </a>
                             </div>
-                            <div>
-                                <div className="text-sm text-gray-600 mb-1 font-medium">Deadline</div>
-                                <p className="text-gray-900 font-medium">{task.dueDate}</p>
+
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <CalendarIcon className="font-semibold" />
+                                    <span className="text-sm text-black font-medium">Deadline</span>
+                                </div>
+                                <p className="text-gray-weak font-medium">{task.dueDate}</p>
                             </div>
                         </div>
-                        <div className="flex items-center justify-between py-4 border-y border-gray-200 mb-6 ">
-                            <span className="text-gray-900 font-medium">Remind me</span>
-                            <button onClick={() => setRemindMe(!remindMe)} className={`cursor-pointer relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${remindMe ? 'bg-blue-600' : 'bg-gray-300'}`}>
+                        <div className="flex items-center py-4 border-y border-gray-200 mb-6 ">
+                            <span className="text-gray-900 font-medium pr-5">Remind me</span>
+                            <button onClick={() => setRemindMe(!remindMe)} className={`cursor-pointer relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${remindMe ? 'bg-primary' : 'bg-gray-300'}`}>
                                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${remindMe ? 'translate-x-6' : 'translate-x-1'}`} />
                             </button>
                         </div>

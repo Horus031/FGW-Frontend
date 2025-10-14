@@ -21,4 +21,5 @@ export interface TaskDetailProps {
     isOpen: boolean;
     onClose: () => void;
     task: Task;
+    StatusConfig: StatusConfig;
 }

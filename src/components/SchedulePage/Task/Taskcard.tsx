@@ -15,28 +15,28 @@ const TaskCard = (task: Task) => {
         return {
           badge: 'New',
           bgColor: 'bg-blue-50',
-          borderColor: 'border-blue-200',
+          borderColor: 'border-blue-800',
           badgeColor: 'bg-blue-100 text-blue-700'
         };
       case 'missing':
         return {
           badge: 'Missing',
           bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
+          borderColor: 'border-red-800',
           badgeColor: 'bg-red-100 text-red-700'
         };
       case 'attempted':
         return {
           badge: 'Attempted',
           bgColor: 'bg-green-50',
-          borderColor: 'border-green-200',
+          borderColor: 'border-green-800',
           badgeColor: 'bg-green-100 text-green-700'
         };
       default:
         return {
           badge: null,
           bgColor: 'bg-white',
-          borderColor: 'border-gray-200',
+          borderColor: 'border-gray-800',
           badgeColor: ''
         };
     }
@@ -90,6 +90,7 @@ const TaskCard = (task: Task) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         task={task}
+        StatusConfig={config}
       />
     </div>
   );
