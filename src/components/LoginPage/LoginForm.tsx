@@ -5,7 +5,7 @@ import LogoWithName from "../icons/LogoWithName";
 
 const LoginForm = () => {
   return (
-    <div className="absolute top-1/2 left-1/2 bg-white px-14 py-12 rounded-xl -translate-1/2 w-xl">
+    <div className="absolute top-1/2 left-1/2 mx-auto bg-white px-14 py-12 rounded-xl -translate-1/2  w-xl">
       <div className="flex flex-col justify-center items-center gap-12 w-full">
         <LogoWithName/>
 

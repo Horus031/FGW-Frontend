@@ -196,10 +196,10 @@ const ScheduleContainer = () => {
           <div
             className={`lg:w-full 2xl:max-w-36 lg:min-h-14 xl:min-h-20 flex flex-col justify-between gap-1 font-semibold rounded-sm border p-1 mx-auto ${
               course.status === "present"
-                ? "border-approve"
+                ? "border-approve bg-approve/5"
                 : course.status === "absent"
-                ? "border-danger"
-                : "border-gray-500"
+                ? "border-danger bg-danger/5"
+                : "border-gray-500 bg-gray-500/5"
             }`}
           >
             <div className="flex items-center justify-between lg:text-[8px] xl:text-xs">
@@ -227,12 +227,12 @@ const ScheduleContainer = () => {
             </span>
             <div className="flex items-center justify-between lg:gap-1 xl:text-xs">
               {course.room && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
                   <MapPin size={12} /> {course.room}
                 </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
                   <User size={12} /> {course.instructor}
                 </span>
               )}
