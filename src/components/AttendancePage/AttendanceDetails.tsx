@@ -1,5 +1,31 @@
+import AttendanceSlotDetail from "./AttendanceSlot";
+import type { AttendanceSlot } from "../../models/attendance";
 
-import AttendanceSlot from "./AttendanceSlot";
+
+
+const data: AttendanceSlot[] = [
+  {
+    date: "Thu - Jan 09, 2024", status: "present", slot: "Slot 4", code: "TDS1502",
+  },
+  {
+    date: "Wed - Jan 08, 2024", status: "absent", slot: "Slot 3", code: "TDS1502",
+  },
+  {
+    date: "Tue - Jan 07, 2024", status: "present", slot: "Slot 2", code: "TDS1502",
+  },
+  {
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+  },
+  {
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+  },
+  {
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+  },
+  {
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+  },
+];
 
 const AttendanceDetails = () => {
   return (
@@ -24,14 +50,10 @@ const AttendanceDetails = () => {
       </div>
 
 
-      <div className="grid grid-rows-6">
-        <AttendanceSlot />
-        <AttendanceSlot />
-        <AttendanceSlot />
-        <AttendanceSlot />
-        <AttendanceSlot />
-        <AttendanceSlot />
+      <div className="flex flex-col overflow-y-auto max-h-[500px]">
+        <AttendanceSlotDetail data={data} />
       </div>
+
     </div>
   );
 };

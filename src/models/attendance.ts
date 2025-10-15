@@ -1,11 +1,17 @@
 import type { ScheduleStatus } from "./course";
 
 export type AttendanceSlot = {
-  slotName: string;
+  slot: string;
   date: string;
   status: ScheduleStatus;
-  classCode: string;
+  code: string;
 };
+
+
+export type AttendanceSlotProps = {
+  data: AttendanceSlot[];
+}
+
 
 // Module Details section (detailed view for selected course)
 export type CourseAttendanceDetails = {
