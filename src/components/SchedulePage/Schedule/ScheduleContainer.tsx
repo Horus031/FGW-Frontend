@@ -1,32 +1,16 @@
-import { useState } from "react";
-import type { CourseSchedule } from "../../../models/course";
-import type { Weeks } from "../../../hooks/useWeeksInYear";
+import type { CourseSchedule, ScheduleRowData } from "../../../models/course";
 import useDaysInWeek from "../../../hooks/useDaysInWeek";
 import { DAY_NAMES, TIME_SLOTS } from "../../../constants/constants";
 import type { ColumnConfig } from "../../shared/Table";
 import { Badge } from "../../ui/badge";
 import { MapPin, User } from "lucide-react";
+import { useWeekStore } from "../../../store/week";
 import ScheduleSelect from "./ScheduleSelect";
 import Table from "../../shared/Table";
 
-type ScheduleRowData = {
-  timeSlot: string;
-  monday?: CourseSchedule;
-  tuesday?: CourseSchedule;
-  wednesday?: CourseSchedule;
-  thursday?: CourseSchedule;
-  friday?: CourseSchedule;
-  saturday?: CourseSchedule;
-  sunday?: CourseSchedule;
-};
-
 const ScheduleContainer = () => {
-  const [weeks, setWeeks] = useState<Weeks | null>(null);
-  const handleSetWeeks = (weeks: Weeks | null) => {
-    setWeeks(weeks);
-  };
-
-  const daysInWeek = useDaysInWeek(weeks);
+  const { selectedWeek } = useWeekStore();
+  const daysInWeek = useDaysInWeek(selectedWeek);
 
   const courseSchedules: CourseSchedule[] = [
     {
@@ -189,7 +173,9 @@ const ScheduleContainer = () => {
           <div className="lg:text-xs xl:text-sm">
             <span>{value as string}</span>
             <br />
-            <span className="text-nowrap">{start} - {end}</span>
+            <span className="text-nowrap">
+              {start} - {end}
+            </span>
           </div>
         );
       },
@@ -210,10 +196,10 @@ const ScheduleContainer = () => {
           <div
             className={`lg:w-full 2xl:max-w-36 lg:min-h-14 xl:min-h-20 flex flex-col justify-between gap-1 font-semibold rounded-sm border p-1 mx-auto ${
               course.status === "present"
-                ? "border-approve"
+                ? "border-approve bg-approve/5"
                 : course.status === "absent"
-                ? "border-danger"
-                : "border-gray-500"
+                ? "border-danger bg-danger/5"
+                : "border-gray-500 bg-gray-500/5"
             }`}
           >
             <div className="flex items-center justify-between lg:text-[8px] xl:text-xs">
@@ -236,15 +222,17 @@ const ScheduleContainer = () => {
                   : "Not yet"}
               </Badge>
             </div>
-            <span className="lg:text-[10px] xl:text-xs">{course.courseName}</span>
+            <span className="lg:text-[10px] xl:text-xs">
+              {course.courseName}
+            </span>
             <div className="flex items-center justify-between lg:gap-1 xl:text-xs">
               {course.room && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
                   <MapPin size={12} /> {course.room}
                 </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
                   <User size={12} /> {course.instructor}
                 </span>
               )}
@@ -257,7 +245,7 @@ const ScheduleContainer = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ScheduleSelect handleSetWeeks={handleSetWeeks} />
+      <ScheduleSelect />
 
       <div className="w-full">
         <Table

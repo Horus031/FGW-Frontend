@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,60 +6,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import { type Weeks } from "../../../hooks/useWeeksInYear";
 import { Button } from "../../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import useWeeksInYear from "../../../hooks/useWeeksInYear";
+import React, { useEffect, useMemo, useRef } from "react";
+import { useWeekStore } from "../../../store/week";
+import type { Weeks } from "../../../hooks/useWeeksInYear";
 
-
-type ScheduleSelectProps = {
-  handleSetWeeks: (weeks: Weeks | null) => void;
+const isSameWeek = (a: Weeks | null, b: Weeks | null) => {
+  if (!a && !b) return true;
+  if (!a || !b) return false;
+  return (
+    a.start.getTime() === b.start.getTime() &&
+    a.end.getTime() === b.end.getTime()
+  );
 };
 
-const ScheduleSelect = (props: ScheduleSelectProps) => {
-  const { handleSetWeeks } = props;
-  const [selectedYear, setSelectedYear] = useState<string>("2025");
-  const [selectedWeek, setSelectedWeek] = useState<Weeks | null>(null);
+const ScheduleSelect = () => {
+  const {
+    selectedYear,
+    setSelectedYear,
+    weeksInYear,
+    setSelectedWeek,
+    selectedWeek,
+  } = useWeekStore();
 
-  const weeks = useWeeksInYear(Number(selectedYear));
-
-
-  const handleYearChange = (value: string) => {
-    setSelectedYear(value);
-  };
-
-  const handleWeekChange = (value: string) => {
-    const parsed: Weeks = JSON.parse(value);
-    // cần convert lại string thành Date
-    parsed.start = new Date(parsed.start);
-    parsed.end = new Date(parsed.end);
-
-    setSelectedWeek(parsed);
-    handleSetWeeks(parsed);
-  };
-
-  const renderDaysInWeek = () => {
-    return weeks.map((week, idx) => {
-      const startWeek = `${week.start.getDate()}/${week.start.getMonth() + 1}`;
-      const endWeek = `${week.end.getDate()}/${week.end.getMonth() + 1}`;
-
-      return (
-        <SelectItem
-          key={idx}
-          value={JSON.stringify({
-            start: week.start,
-            end: week.end,
-          })}
-          className="pr-2 justify-center"
-        >
-          {startWeek} - {endWeek}
-        </SelectItem>
-      );
-    });
-  };
-
+  const prevWeeksRef = useRef<Weeks[] | null>(null);
   useEffect(() => {
-    if (weeks.length > 0) {
+    if (prevWeeksRef.current !== weeksInYear) {
+      prevWeeksRef.current = weeksInYear;
+    }
+
+    if (weeksInYear.length > 0) {
       const today = new Date();
       const currentYear = today.getFullYear();
 
@@ -68,34 +44,54 @@ const ScheduleSelect = (props: ScheduleSelectProps) => {
 
       if (Number(selectedYear) === currentYear) {
         defaultWeek =
-          weeks.find((week) => week.start <= today && today <= week.end) ||
-          null;
+          weeksInYear.find(
+            (week) => week.start <= today && today <= week.end
+          ) || null;
       } else {
-        defaultWeek = weeks[0];
+        defaultWeek = weeksInYear[0];
       }
 
-      if (defaultWeek) {
-        setSelectedWeek((prev) => {
-          if (
-            !prev ||
-            prev.start.getTime() !== defaultWeek!.start.getTime() ||
-            prev.end.getTime() !== defaultWeek!.end.getTime()
-          ) {
-            return defaultWeek;
-          }
-
-          return prev;
-        });
-        handleSetWeeks(defaultWeek);
+      if (defaultWeek && !isSameWeek(defaultWeek, selectedWeek)) {
+        setSelectedWeek(defaultWeek);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weeks, selectedYear]);
+  }, [weeksInYear, selectedYear, setSelectedWeek]);
 
+  const handleWeekChange = (value: string) => {
+    const parsed: Weeks = JSON.parse(value);
+    parsed.start = new Date(parsed.start);
+    parsed.end = new Date(parsed.end);
+
+    if (!isSameWeek(parsed, selectedWeek)) {
+      setSelectedWeek(parsed);
+    }
+  };
+
+  const renderWeeks = useMemo(() => {
+    if (weeksInYear.length === 0) return null;
+    return weeksInYear.map((week, index) => {
+      const startTime = `${week.start.getDate()}/${week.start.getMonth() + 1}`;
+      const endTime = `${week.end.getDate()}/${week.end.getMonth() + 1}`;
+
+      return (
+        <SelectItem
+          key={index}
+          value={JSON.stringify({
+            start: week.start,
+            end: week.end,
+          })}
+          className="pr-2 justify-center"
+        >
+          {`${startTime} - ${endTime}`}
+        </SelectItem>
+      );
+    });
+  }, [weeksInYear]);
 
   return (
     <div className="flex self-end gap-4">
-      <Select value={selectedYear} onValueChange={handleYearChange}>
+      <Select value={selectedYear} onValueChange={setSelectedYear}>
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
@@ -132,9 +128,7 @@ const ScheduleSelect = (props: ScheduleSelectProps) => {
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="-left-5">
-            <SelectGroup className="text-center">
-              {renderDaysInWeek()}
-            </SelectGroup>
+            <SelectGroup className="text-center">{renderWeeks}</SelectGroup>
           </SelectContent>
         </Select>
 
@@ -146,4 +140,4 @@ const ScheduleSelect = (props: ScheduleSelectProps) => {
   );
 };
 
-export default ScheduleSelect;
+export default React.memo(ScheduleSelect);

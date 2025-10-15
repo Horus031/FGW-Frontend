@@ -1,3 +1,4 @@
+// ...existing code...
 import { useState } from "react";
 import { Button } from "../ui/button";
 import ScheduleContainer from "./Schedule/ScheduleContainer";
@@ -26,15 +27,17 @@ const TabsContainer = () => {
         </Button>
       </div>
 
-      <div> 
-          {tab === "schedule" ? (
-            <ScheduleContainer/>
-          ) : (
-            <TaskContainer/>
-          )}
+      <div>
+        <div className={tab === "schedule" ? "block" : "hidden"}>
+          <ScheduleContainer />
+        </div>
+        <div className={tab === "task" ? "block" : "hidden"}>
+          <TaskContainer />
+        </div>
       </div>
     </div>
   );
 };
 
 export default TabsContainer;
+// ...existing code...
