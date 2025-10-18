@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_NODE_ENV == "development" ? "http://localhost:3000" : import.meta.env.VITE_API_URL}`,
+  baseURL: `${import.meta.env.VITE_NODE_ENV == "development" ? import.meta.env.VITE_DEV_URL : import.meta.env.VITE_BACKEND_URL}`,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,

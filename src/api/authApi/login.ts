@@ -1,7 +1,7 @@
 import api from "../apiRequest";
 
 export const login = async () => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+    window.location.href = `${import.meta.env.VITE_NODE_ENV == "development" ? `${import.meta.env.VITE_DEV_URL}` : import.meta.env.VITE_BACKEND_URL}/auth/google`;
 };
 
 export const exchangeToken = async (code: string | null) => {
