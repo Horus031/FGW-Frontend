@@ -1,3 +1,4 @@
+import { login } from "../../api/authApi/login";
 import AppStoreButton from "../icons/AppStoreButton";
 import GoogleIcon from "../icons/GoogleIcons";
 import GooglePlayButton from "../icons/GooglePlayButton";
@@ -16,7 +17,7 @@ const LoginForm = () => {
             </h2>
 
             <button
-              // onClick={() => login()}
+              onClick={login}
               className="flex justify-center w-full gap-2 bg-secondary font-medium cursor-pointer text-lg px-6 py-3 text-white rounded-md"
             >
               <GoogleIcon/>

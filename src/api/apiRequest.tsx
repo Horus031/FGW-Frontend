@@ -1,17 +1,10 @@
-// src/api/apiRequest.ts
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 
 const api: AxiosInstance = axios.create({
-  baseURL: "https://api.example.com",
+  baseURL: `${import.meta.env.VITE_API_URL}`,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
-});
-
-// Request interceptor: thêm token
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
+  withCredentials: true,
 });
 
 // Response interceptor: xử lý lỗi chung
