@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "../components/shared/LoadingPage";
 import { useUserStore } from "../store/user";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { exchangeToken } from "../api/authApi/login";
 
 const AuthBridge = () => {
   const { setUser } = useUserStore();
   const navigate = useNavigate();
-
-  const [searchParams] = useSearchParams();
-  const code: string | null = searchParams.get("code");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const code = queryParams.get("code");
 
   const { data, isSuccess, isError } = useQuery({
     queryKey: ["user"],
@@ -28,6 +28,7 @@ const AuthBridge = () => {
   return (
     <div>
       <LoadingPage />
+
     </div>
   );
 };
