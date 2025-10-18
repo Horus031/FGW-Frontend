@@ -4,7 +4,7 @@ export const login = async () => {
     window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
 };
 
-export const exchangeToken = async (code: string) => {
+export const exchangeToken = async (code: string | null) => {
     try {
         const response = await api.post("/auth/exchange", { code });
         return response.data;
