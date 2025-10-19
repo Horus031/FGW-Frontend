@@ -1,4 +1,4 @@
-import { login } from "../../api/authApi/login";
+import { login } from "../../api/requests/auth.api";
 import AppStoreButton from "../icons/AppStoreButton";
 import GoogleIcon from "../icons/GoogleIcons";
 import GooglePlayButton from "../icons/GooglePlayButton";

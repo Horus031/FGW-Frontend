@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "../components/shared/LoadingPage";
 import { useUserStore } from "../store/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { exchangeToken } from "../api/authApi/login";
+import { exchangeToken } from "../api/requests/auth.api";
 
 const AuthBridge = () => {
   const { setUser } = useUserStore();
