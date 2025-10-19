@@ -15,7 +15,6 @@ const SendRequestPage = () => {
       {requestType === "verification" ? (
         <>
           <PageTitle
-            title="Student Status Verification"
             breadcrumb="Student Status Verification"
           />
 
@@ -23,7 +22,7 @@ const SendRequestPage = () => {
         </>
       ) : (
         <>
-          <PageTitle title="Document Request" breadcrumb="Document Request" />
+          <PageTitle breadcrumb="Document Request" />
 
           <RequestForm requestType="document" />
         </>
