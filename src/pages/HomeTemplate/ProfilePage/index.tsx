@@ -7,7 +7,7 @@ import ProfileCard from "../../../components/ProfilePage/ProfileCard";
 const ProfilePage = () => {
   return (
     <div className="space-y-8">
-      <PageTitle title="User detail" breadcrumb="Profile"/>
+      <PageTitle breadcrumb="Profile"/>
 
       <ProfileCard/>
     </div>
