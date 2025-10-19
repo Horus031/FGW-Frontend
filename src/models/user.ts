@@ -1,15 +1,19 @@
 export type UserInfo = {
-  fullName: string;
-  avatar: string;
-  studentId: string;
-  email: string;
-  major: string;
-  year: string;
-  academicYear: string;
-  campus: string;
-  courses: string[];
-  accessToken?: string;
-  refreshToken?: string;
+  email?: string;
+  role?: string;
+  campus?: Campus;
+  gender?: string;
+  avatar?: string | null;
+  status?: string;
 };
 
-export type User = Pick<UserInfo, "accessToken" | "refreshToken">;
+type Campus = {
+  id: string;
+  code: string;
+  name: string;
+}
+
+export type UserAuth = {
+  accessToken: string;
+  refreshToken: string;
+}
