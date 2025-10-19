@@ -34,10 +34,6 @@ const ProtectedRoute: React.FC = () => {
     }
   }, [isError, clearUser]);
 
-  if (isError) {
-    clearUser();
-  }
-
   if (isLoading) return null;
 
   if (isError) return <Navigate to="/login" replace />;

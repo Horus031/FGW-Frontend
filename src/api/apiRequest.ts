@@ -26,6 +26,7 @@ api.interceptors.response.use(
     const status = error.response?.status;
     if (status === 401) {
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       window.location.href = "/login";
     }
     if (status >= 500) {
