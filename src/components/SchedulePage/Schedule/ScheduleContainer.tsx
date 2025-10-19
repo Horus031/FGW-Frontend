@@ -5,7 +5,6 @@ import type { ColumnConfig } from "../../shared/Table";
 import { Badge } from "../../ui/badge";
 import { MapPin, User } from "lucide-react";
 import { useWeekStore } from "../../../store/week";
-import ScheduleSelect from "./ScheduleSelect";
 import Table from "../../shared/Table";
 
 const ScheduleContainer = () => {
@@ -170,7 +169,7 @@ const ScheduleContainer = () => {
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
         const { start, end } = TIME_SLOTS[index];
         return (
-          <div className="lg:text-xs xl:text-sm">
+          <div className="lg:text-xs xl:text-sm font-medium">
             <span>{value as string}</span>
             <br />
             <span className="text-nowrap">
@@ -245,7 +244,6 @@ const ScheduleContainer = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ScheduleSelect />
 
       <div className="w-full">
         <Table
@@ -257,6 +255,7 @@ const ScheduleContainer = () => {
           textSize="text-sm"
           height="h-[94px]"
           bordered
+          schedule
         />
       </div>
     </div>

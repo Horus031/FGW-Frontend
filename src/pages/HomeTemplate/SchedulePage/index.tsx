@@ -1,15 +1,14 @@
-
-import TabsContainer from "../../../components/SchedulePage/TabsContainer"
-import PageTitle from "../../../components/shared/PageTitle"
+import TabsContainer from "../../../components/SchedulePage/TabsContainer";
+import PageTitle from "../../../components/shared/PageTitle";
 
 const SchedulePage = () => {
   return (
-    <div className="space-y-12">
-      <PageTitle title="Schedule" breadcrumb="Schedule" subtitle="Activities for Vo Minh Nghia" />
+    <div className="flex flex-col gap-4.5">
+      <PageTitle breadcrumb="Schedule" />
 
-      <TabsContainer/>
+      <TabsContainer />
     </div>
-  )
-}
+  );
+};
 
-export default SchedulePage
+export default SchedulePage;
