@@ -18,7 +18,11 @@ import { logout } from "../../api/requests/auth.api";
 const Header = () => {
   const navigate = useNavigate();
   const {mutate: handleLogout} = useMutation({
-    mutationFn: () => logout()
+    mutationFn: () => logout(),
+    onSuccess: () => {
+      localStorage.clear();
+      navigate("/login");
+    }
   })
 
   return (

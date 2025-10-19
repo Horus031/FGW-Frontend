@@ -3,13 +3,8 @@ import CarouselSection from "../../../components/HomePage/CarouselSection";
 import NewsSection from "../../../components/HomePage/NewsSection";
 import ActionButtons from "../../../components/HomePage/ActionButtons";
 import RegistrationAndFeedback from "../../../components/HomePage/RegistrationAndFeedback";
-import { useUserStore } from "../../../store/user";
 
 const HomePage = () => {
-  const { user } = useUserStore();
-
-  console.log(user);
-
   return (
     <div className="space-y-8 font-public">
       <WelcomeSection />
