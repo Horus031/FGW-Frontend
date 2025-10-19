@@ -4,9 +4,13 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen">
       <div className="relative">
-        <img src="/images/Login/Background.png" alt=""  className="bg-cover size-full h-screen bg-center"/>
+        <img
+          src="/images/Login/Background.png"
+          alt=""
+          className="bg-cover size-full h-screen bg-center"
+        />
 
-        <LoginForm/>
+        <LoginForm />
       </div>
     </div>
   );
