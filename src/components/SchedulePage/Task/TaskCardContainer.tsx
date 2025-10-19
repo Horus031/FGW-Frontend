@@ -13,31 +13,25 @@ const TaskCard = (task: Task) => {
     switch (status) {
       case 'new':
         return {
-          badge: 'New',
-          bgColor: 'bg-blue-50',
-          borderColor: 'border-blue-800',
-          badgeColor: 'bg-blue-100 text-blue-700'
+          taskName: "New",
+          taskColor: 'task-new',
+          badgeBorder: 'badge-new'
         };
       case 'missing':
         return {
-          badge: 'Missing',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-800',
-          badgeColor: 'bg-red-100 text-red-700'
+          taskName: "Missing",
+          taskColor: 'task-missing',
+          badgeBorder: 'badge-missing'
         };
       case 'attempted':
         return {
-          badge: 'Attempted',
-          bgColor: 'bg-green-50',
-          borderColor: 'border-green-800',
-          badgeColor: 'bg-green-100 text-green-700'
+          taskName: "Attempted",
+          taskColor: 'task-attempt',
+          badgeBorder: 'badge-attempt'
         };
       default:
         return {
-          badge: null,
-          bgColor: 'bg-white',
-          borderColor: 'border-gray-800',
-          badgeColor: ''
+          taskColor: 'task-default',
         };
     }
   };
@@ -45,13 +39,13 @@ const TaskCard = (task: Task) => {
   const config = getStatusConfig();
 
   return (
-    <div className={`${config.bgColor} ${config.borderColor} border-1 rounded-xl p-6 relative`}>
+    <div className={`${config.taskColor} border-1 rounded-xl p-6 relative`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
-          {config.badge && (
-            <span className={`${config.badgeColor} text-sm font-medium px-2.5 py-1 rounded`}>
-              {config.badge}
+          {config.taskName && (
+            <span className={`${config.badgeBorder} text-sm font-medium px-2.5 py-1 rounded`}>
+              {config.taskName}
             </span>
           )}
           <h3 className="text-base font-semibold text-primary">{title}</h3>

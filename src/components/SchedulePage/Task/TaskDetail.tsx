@@ -22,13 +22,13 @@ const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) =>
                 <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
                     <div className="p-6 border-b border-gray-200">
                         {/* If there's no badge, title and close button share one line */}
-                        {!StatusConfig.badge ? (
+                        {!StatusConfig.badgeBorder ? (
                             <div className="flex items-center justify-between">
                                 <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
                                 <button
                                     onClick={onClose}
                                     aria-label="Close task detail"
-                                    className="text-gray-400 hover:text-gray-600 text-xl font-bold cursor-pointer"
+                                    className="text-gray-400 hover:text-gray-weak text-xl font-bold cursor-pointer"
                                 >
                                     X
                                 </button>
@@ -39,9 +39,9 @@ const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) =>
                                 <div className="relative mb-4">
                                     <div className="flex items-start gap-3">
                                         <span
-                                            className={`${StatusConfig.badgeColor} text-sm font-medium px-2.5 py-1 rounded`}
+                                            className={`${StatusConfig.badgeBorder} text-sm font-medium px-2.5 py-1 rounded`}
                                         >
-                                            {StatusConfig.badge}
+                                            {StatusConfig.taskName}
                                         </span>
                                     </div>
 
