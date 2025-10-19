@@ -14,10 +14,11 @@ type TableProps<T> = {
     height?: string;
     bordered?: boolean;
     centered?: boolean;
+    schedule?: boolean
 }
 
 const Table = <T extends object>(props: TableProps<T>) => {
-    const { columns, data, color, centered, textSize, textColor, height, bordered } = props
+    const { columns, data, color, centered, textSize, textColor, height, bordered, schedule } = props
 
     if (columns.length === 0) {
         return <div>No data available</div>
@@ -37,7 +38,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
       </thead>
       <tbody>
         {data.map((row, rowIdx) => (
-          <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""}`} key={rowIdx}>
+          <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""} ${schedule ? rowIdx % 2 !== 0 ? "bg-[#FAFAFA]" : "" : ""}`} key={rowIdx}>
             {columns.map((col) => (
               <td className="custom-table" key={String(col.key)}>
                 {col.render

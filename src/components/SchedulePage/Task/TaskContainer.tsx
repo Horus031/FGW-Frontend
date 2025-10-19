@@ -1,5 +1,4 @@
 import Pagination from "../../shared/Pagination"
-import FilterButton from "../../shared/Filter"
 import TaskCard from "./TaskCardContainer";
 import type { Task } from "../../../models/task";
 
@@ -17,9 +16,6 @@ const TaskContainer = () => {
   return (
     <div className="py-4">
       <div className="max-w-8xl">
-        <div className="flex justify-end mb-6">
-          <FilterButton />
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {tasks.map((task) => (
             <TaskCard key={task.id} {...task} />

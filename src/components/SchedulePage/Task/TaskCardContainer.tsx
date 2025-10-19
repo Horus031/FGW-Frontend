@@ -45,7 +45,7 @@ const TaskCard = (task: Task) => {
   const config = getStatusConfig();
 
   return (
-    <div className={`${config.bgColor} ${config.borderColor} border-2 rounded-xl p-6 relative`}>
+    <div className={`${config.bgColor} ${config.borderColor} border-1 rounded-xl p-6 relative`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
