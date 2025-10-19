@@ -1,6 +1,6 @@
 export interface Task {
     id: number;
-    status: 'new' | 'missing' | 'attempted' | null;
+    status: 'new' | 'missing' | 'attempted' | "default";
     title: string;
     studentgroup: string;
     course: string;
@@ -11,10 +11,9 @@ export interface Task {
 
 
 export interface StatusConfig {
-  badge: string | null;
-  bgColor: string;
-  borderColor: string;
-  badgeColor: string;
+  taskName?: string;
+  taskColor?: string | null;
+  badgeBorder?: string;
 }
 
 export interface TaskDetailProps {
