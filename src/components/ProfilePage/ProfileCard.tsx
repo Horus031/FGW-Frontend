@@ -8,8 +8,8 @@ import CourseCard from "../shared/CourseCard";
 const ProfileCard = () => {
 
   return (
-    <div className="flex flex-col gap-18 w-9/12">
-      <div className="flex flex-col gap-8 w-9/12">
+    <div className="flex flex-col gap-18 lg:w-10/12 w-8/12">
+      <div className="flex flex-col gap-8 w-8/12">
         <div className="flex items-center gap-8">
           <Avatar className="size-20">
             <AvatarImage src="." />
@@ -96,10 +96,12 @@ const ProfileCard = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 w-full">
         <h2 className="text-lg font-semibold">Course</h2>
 
         <div className="grid grid-cols-3 gap-5">
+          <CourseCard/>
+          <CourseCard/>
           <CourseCard/>
         </div>
       </div>
