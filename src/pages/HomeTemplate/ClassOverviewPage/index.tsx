@@ -84,7 +84,7 @@ const ClassOverviewPage = () => {
 
       <ScheduleDetailCard />
 
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} padding="p-4"/>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,14 +15,15 @@ type PageTitleProps = {
 
 const PageTitle = (props: PageTitleProps) => {
   const { title, breadcrumb, subtitle } = props;
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col h-fit">
       <div className="flex flex-col gap-4">
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem>
-              <span className="text-sm flex gap-1 items-center text-primary">
+            <BreadcrumbItem onClick={() => navigate("/")}>
+              <span className="text-sm flex gap-1 items-center text-primary hover:underline hover:cursor-pointer">
                 <Home size={16} /> Home
               </span>
             </BreadcrumbItem>

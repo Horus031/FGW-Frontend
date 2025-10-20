@@ -4,8 +4,8 @@ import InstructorList from "../../../components/StudentFeedbackPage/InstructorLi
 
 const StudentFeedbackPage = () => {
   return (
-    <div className="space-y-8">
-      <PageTitle title="Feedback Teacher" breadcrumb="Feedback"/>
+    <div className="space-y-4.5">
+      <PageTitle breadcrumb="Feedback"/>
 
       <InstructorList/>
 

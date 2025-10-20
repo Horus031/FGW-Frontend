@@ -5,14 +5,12 @@ import TermSelect from "../../../components/shared/TermSelect";
 
 const MarkPage = () => {
   return (
-    <div className="space-y-12">
+    <div className="space-y-4.5">
       <PageTitle
-        title="Mark Report"
-        breadcrumb="Mark"
-        subtitle="View all your module's result"
+        breadcrumb="Mark Report"
       />
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
         <TermSelect />
 
         <div className="flex gap-12">

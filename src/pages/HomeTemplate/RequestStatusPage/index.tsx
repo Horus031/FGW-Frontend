@@ -53,10 +53,10 @@ const RequestStatusPage = () => {
   ];
 
   return (
-    <div className="space-y-12">
-      <PageTitle title="My Request" breadcrumb="My Request" />
+    <div className="space-y-4.5">
+      <PageTitle breadcrumb="My Request" />
 
-      <Table columns={columns} data={data} color="bg-blue-300" centered={true} />
+      <Table columns={columns} data={data} color="bg-primary" textColor="text-white" centered={true} />
     </div>
   );
 };

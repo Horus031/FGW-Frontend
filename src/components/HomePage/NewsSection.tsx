@@ -35,7 +35,7 @@ const NewsSection = () => {
     <div className="space-y-8">
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h5 className="font-semibold text-primary text-3xl">News</h5>
+          <h5 className="font-semibold text-primary text-2xl">News</h5>
           <button className="cursor-pointer font-semibold hover:opacity-50 transition-opacity text-secondary text-sm">
             See more
           </button>

@@ -1,29 +1,11 @@
-import { ChevronDown, LogOut, User } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LogoWithName from "../icons/LogoWithName";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import BellIcon from "../icons/BellIcon";
 import MagnifyClass from "../icons/MagnifyClass";
-import { useMutation } from "@tanstack/react-query";
-import { logout } from "../../api/requests/auth.api";
+import DropdownMenu from "./DropdownMenu";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const {mutate: handleLogout} = useMutation({
-    mutationFn: () => logout(),
-    onSuccess: () => {
-      localStorage.clear();
-      navigate("/login");
-    }
-  })
+  
 
   return (
     <div className="fixed top-0 min-w-screen py-3 bg-white z-50 border-b border-gray-300 font-public">
@@ -64,41 +46,7 @@ const Header = () => {
               </button>
             </div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className="focus:outline-none">
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <Avatar className="size-8 2xl:size-11">
-                    <AvatarImage src=".." />
-                    <AvatarFallback className="text-base 2xl:text-xl bg-bright text-white">
-                      NV
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <ChevronDown className="text-primary size-4 2xl:size-5" />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48 font-public text-primary font-medium container -translate-x-8">
-                <DropdownMenuLabel
-                  className="p-2.5 flex flex-col gap-2.5  border-b-1 pb-3
-                "
-                >
-                  <span className="text-primary text-lg">Vo Minh Nghia</span>
-                  <span className="text-gray-400">GCS230351</span>
-                </DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    onClick={() => navigate("/profile")}
-                    className="py-3 text-lg"
-                  >
-                    <User className="size-6 text-primary" />
-                    My Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleLogout()} className="py-3 text-lg text-danger hover:text-danger">
-                    <LogOut className="size-6 text-danger" /> Log Out
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <DropdownMenu/>
           </div>
         </div>
       </div>

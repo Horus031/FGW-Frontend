@@ -11,6 +11,7 @@ type TableProps<T> = {
     color?: string | "bg-blue-100";
     textSize?: string;
     textColor?: string;
+    padding?: string;
     height?: string;
     bordered?: boolean;
     centered?: boolean;
@@ -18,7 +19,7 @@ type TableProps<T> = {
 }
 
 const Table = <T extends object>(props: TableProps<T>) => {
-    const { columns, data, color, centered, textSize, textColor, height, bordered, schedule } = props
+    const { columns, data, color, centered, textSize, textColor, height, schedule, padding } = props
 
     if (columns.length === 0) {
         return <div>No data available</div>
@@ -26,11 +27,11 @@ const Table = <T extends object>(props: TableProps<T>) => {
    
 
   return (
-    <table className={`lg:w-fit xl:w-full col-md-12 ${centered === true ? "text-center" : "text-left"} ${bordered ? "rounded-table" : ""} rounded-lg`}>
-      <thead className={`${color || "bg-blue-100"}`}>  
-        <tr className={`${textColor ? textColor : "text-primary"} text-base`}>
+    <table className={`lg:w-fit xl:w-full col-md-12 ${centered === true ? "text-center" : "text-left"} rounded-table rounded-lg`}>
+      <thead className={`${color || "bg-primary"}`}>  
+        <tr className={`${textColor ? textColor : "text-white"} text-base`}>
           {columns.map((col) => (
-            <th className="custom-table py-2 font-medium" key={col.key} style={{ width: col.width || 'auto' }}>
+            <th className={`font-medium ${padding ? `${padding} border border-[#D2D6DB]` : "custom-table py-2"}`} key={col.key} style={{ width: col.width || 'auto' }}>
               {col.title}
             </th>
           ))}
@@ -40,7 +41,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
         {data.map((row, rowIdx) => (
           <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""} ${schedule ? rowIdx % 2 !== 0 ? "bg-[#FAFAFA]" : "" : ""}`} key={rowIdx}>
             {columns.map((col) => (
-              <td className="custom-table" key={String(col.key)}>
+              <td className={`${padding ? `${padding} border border-[#D2D6DB]` : "custom-table"}`} key={String(col.key)}>
                 {col.render
                   ? col.render(row[col.key], row)
                   : (row[col.key] as React.ReactNode)}
