@@ -3,6 +3,7 @@ import { Button } from "../../../components/ui/button";
 import { Textarea } from "../../../components/ui/textarea";
 import BookingCalendar from "../../../components/shared/Calendar";
 import SlotButton from "../../../components/RoomBookingPage/BookingSlots";
+import PageTitle from "../../../components/shared/PageTitle";
 
 const BookingForm = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -32,6 +33,8 @@ const BookingForm = () => {
 
   return (
     <div className="space-y-6 max-w-4xl ml-0">
+      <PageTitle breadcrumb="Room Booking"/>
+
       {/* Date and Slot Selection - Flex Layout */}
       <div className="flex gap-6">
         {/* Date Selection */}

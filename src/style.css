@@ -171,6 +171,22 @@
   @apply bg-white border-gray-800
 }
 
+.dropdown:focus-within .dropdown-menu {
+  @apply block;
+}
+
+.menu-items {
+  @apply py-3 px-5 cursor-pointer
+}
+
+.menu-items:active .dropdown-menu {
+  @apply hidden;
+}
+
+.menu-items:hover {
+  @apply bg-gray-100
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

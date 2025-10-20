@@ -1,5 +1,6 @@
 import AttendanceSlotDetail from "./AttendanceSlot";
 import type { AttendanceSlot } from "../../models/attendance";
+import Pagination from "../shared/Pagination";
 
 
 
@@ -19,17 +20,11 @@ const data: AttendanceSlot[] = [
   {
     date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
   },
-  {
-    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
-  },
-  {
-    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
-  },
 ];
 
 const AttendanceDetails = () => {
   return (
-    <div className="flex flex-col gap-12 w-3xl">
+    <div className="flex flex-col gap-6 w-3xl">
       <div className="flex flex-col gap-6">
         <span className="font-semibold text-2xl text-primary">Module Details</span>
 
@@ -50,9 +45,11 @@ const AttendanceDetails = () => {
       </div>
 
 
-      <div className="flex flex-col overflow-y-auto max-h-[500px]">
+      <div className="flex flex-col overflow-y-hidden max-h-[500px]">
         <AttendanceSlotDetail data={data} />
       </div>
+
+      <Pagination/>
 
     </div>
   );

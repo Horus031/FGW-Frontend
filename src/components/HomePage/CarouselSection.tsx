@@ -17,7 +17,7 @@ const CarouselSection = () => {
           {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
-                <img src="/images/Homepage/Carousel.png" alt="" className="w-full h-80"/>
+                <img src="/images/Homepage/Carousel.png" alt="" className="w-full lg:h-fit 2xl:h-80"/>
               </div>
             </CarouselItem>
           ))}

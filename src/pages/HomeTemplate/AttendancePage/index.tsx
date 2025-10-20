@@ -4,9 +4,8 @@ import PageTitle from "../../../components/shared/PageTitle";
 
 const AttendancePage = () => {
   return (
-    <div className="space-y-12">
+    <div className="space-y-4.5">
       <PageTitle
-        title="Attendance Report"
         breadcrumb="Attendance"
       />
 
