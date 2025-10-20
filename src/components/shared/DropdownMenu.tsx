@@ -45,7 +45,7 @@ const DropdownMenu = () => {
   }, [isShow]);
 
   return (
-    <div className=" bg-white flex flex-col justify-center">
+    <div className="bg-white flex flex-col justify-center">
       <div className="flex items-center justify-center">
         <div ref={dropdownRef}  className=" relative inline-block text-left dropdown">
           <span className="shadow-sm">
@@ -69,7 +69,7 @@ const DropdownMenu = () => {
           </span>
           <div className={`${isShow ? "block" : "hidden"}`}>
             <div
-              className="absolute right-0 w-55 mt-2 origin-top-right font-public text-primary font-medium bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+              className="absolute right-0 w-56 mt-2 origin-top-right font-public text-primary font-medium bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
               aria-labelledby="headlessui-menu-button-1"
               id="headlessui-menu-items-117"
               role="menu"
