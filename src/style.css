@@ -163,7 +163,7 @@
   @apply bg-green-50 border-green-800
 }
 
-.border-attempt {
+.badge-attempt {
   @apply bg-green-100 text-green-700
 }
 
