@@ -124,23 +124,23 @@
 }
 
 .table-cell {
-  @apply text-left px-6 py-3 border border-gray-400;
+  @apply text-left px-6 py-3 border border-gray-300;
 }
 
 .table-cell:first-child {
-  @apply rounded-tl-md rounded-bl-md;
+  @apply rounded-tl-md ;
 }
 
 .table-cell:last-child {
-  @apply rounded-tr-md rounded-br-md;
+  @apply rounded-tr-md ;
 }
 
 .custom-table {
-  @apply py-2 px-2 border border-[#D2D6DB];
+  @apply py-2 px-3 border border-[#D2D6DB];
 }
 
 .rounded-table {
-  @apply border-collapse rounded-xl border border-solid border-gray-400 overflow-hidden shadow-[0_0_0_1px_gray];
+  @apply border-collapse rounded-md p-10 border-1 border-solid overflow-hidden border-gray-300 shadow-[0_0_0_1px] shadow-gray-300;
 }
 
 .task-new {

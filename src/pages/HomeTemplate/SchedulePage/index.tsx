@@ -3,7 +3,7 @@ import PageTitle from "../../../components/shared/PageTitle";
 
 const SchedulePage = () => {
   return (
-    <div className="flex flex-col gap-4.5">
+    <div className="space-y-4.5">
       <PageTitle breadcrumb="Schedule" />
 
       <TabsContainer />

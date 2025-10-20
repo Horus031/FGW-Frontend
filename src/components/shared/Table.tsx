@@ -27,7 +27,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
    
 
   return (
-    <table className={`lg:w-fit xl:w-full col-md-12 ${centered === true ? "text-center" : "text-left"} rounded-table rounded-lg`}>
+    <table className={`w-full ${centered === true ? "text-center" : "text-left"} rounded-table rounded-lg`}>
       <thead className={`${color || "bg-primary"}`}>  
         <tr className={`${textColor ? textColor : "text-white"} text-base`}>
           {columns.map((col) => (

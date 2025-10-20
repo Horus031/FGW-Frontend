@@ -193,20 +193,20 @@ const ScheduleContainer = () => {
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`lg:w-full 2xl:max-w-36 lg:min-h-14 xl:min-h-20 flex flex-col justify-between gap-1 font-semibold rounded-sm border p-1 mx-auto ${
+            className={`lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 lg:px-1 xl:px-2 flex flex-col justify-between gap-1 font-semibold rounded-sm border px-3 pb-1 py-1.5 mx-auto ${
               course.status === "present"
-                ? "border-approve bg-approve/5"
+                ? "border-green-700 bg-green-700/10"
                 : course.status === "absent"
-                ? "border-danger bg-danger/5"
-                : "border-gray-500 bg-gray-500/5"
+                ? "border-danger bg-danger/10"
+                : "border-gray-500 bg-gray-500/10"
             }`}
           >
-            <div className="flex items-center justify-between lg:text-[8px] xl:text-xs">
-              <span className="text-secondary font-semibold lg:text-[10px] xl:text-xs">
+            <div className="flex items-center leading-0 justify-between lg:text-[8px] xl:text-[11px]">
+              <span className="text-secondary font-semibold lg:text-[10px] xl:text-[11px]">
                 {course.classCode}
               </span>
               <Badge
-                className={`px-1 lg:text-[8px] xl:text-xs font-medium rounded-sm ${
+                className={`px-1 py-0 lg:text-[8px] xl:text-[11px] font-medium rounded-sm ${
                   course.status === "present"
                     ? "border-approve text-approve bg-approve/10"
                     : course.status === "absent"
@@ -226,12 +226,12 @@ const ScheduleContainer = () => {
             </span>
             <div className="flex items-center justify-between lg:gap-1 xl:text-xs">
               {course.room && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-normal">
                   <MapPin size={12} /> {course.room}
                 </span>
               )}
               {course.instructor && (
-                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-medium">
+                <span className="flex items-center gap-0.5 lg:text-[8px] xl:text-xs font-normal">
                   <User size={12} /> {course.instructor}
                 </span>
               )}

@@ -9,26 +9,26 @@ const Header = () => {
 
   return (
     <div className="fixed top-0 min-w-screen py-3 bg-white z-50 border-b border-gray-300 font-public">
-      <div className="md:container md:mx-auto px-8 flex items-center justify-between">
+      <div className="mx-auto max-w-screen-2xl px-8 md:px-20 flex items-center justify-between">
         <div className="flex items-center gap-14 basis-8/12">
           <NavLink to="/" className="cursor-pointer">
             <LogoWithName />
           </NavLink>
 
           <div className="flex items-center gap-9 text-primary font-semibold text-lg h-full">
-            <NavLink to="/" className="p-2 hover:bg-gray-200 cursor-pointer">
+            <NavLink to="/" className="py-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
               Home
             </NavLink>
             <NavLink
               to="/schedule"
-              className="p-2 hover:bg-gray-200 cursor-pointer"
+              className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer"
             >
               Schedule
             </NavLink>
-            <button className="p-2 hover:bg-gray-200 cursor-pointer">
+            <button className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
               Library
             </button>
-            <button className="p-2 hover:bg-gray-200 cursor-pointer">
+            <button className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
               Thread
             </button>
           </div>

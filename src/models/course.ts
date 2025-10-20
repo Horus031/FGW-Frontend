@@ -1,7 +1,7 @@
 import type { UserInfo } from "./user";
 
 export type ScheduleStatus = "present" | "absent" | "pending";
-export type GradeStatus = "passed" | "failed";
+export type GradeStatus = "pass" | "fail";
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 
@@ -35,7 +35,7 @@ export type CourseAttendance = Pick<Course, "courseName" | "classCode" | "totalS
 };
 
 export type CourseMark = Pick<Course, "courseName" | "classCode" | "grade" | "gradeStatus"> & {
-  termLabel: string;
+  termLabel?: string;
 };
 
 export type ScheduleRowData = {
