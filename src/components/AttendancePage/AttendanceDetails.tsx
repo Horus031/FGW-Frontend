@@ -24,7 +24,7 @@ const data: AttendanceSlot[] = [
 
 const AttendanceDetails = () => {
   return (
-    <div className="flex flex-col gap-6 w-3xl">
+    <div className="flex flex-col gap-6 w-3xl ">
       <div className="flex flex-col gap-6">
         <span className="font-semibold text-2xl text-primary">Module Details</span>
 
