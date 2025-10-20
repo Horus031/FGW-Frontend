@@ -5,8 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../api/requests/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useUserStore } from "../../store/user";
+
 
 const DropdownMenu = () => {
+  const user = useUserStore((state) => state.user);
   const [isShow, setIsShow] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -47,7 +50,7 @@ const DropdownMenu = () => {
   return (
     <div className="bg-white flex flex-col justify-center">
       <div className="flex items-center justify-center">
-        <div ref={dropdownRef}  className=" relative inline-block text-left dropdown">
+        <div ref={dropdownRef} className=" relative inline-block text-left dropdown">
           <span className="shadow-sm">
             <button
               onClick={() => setIsShow(!isShow)}
@@ -75,8 +78,8 @@ const DropdownMenu = () => {
               role="menu"
             >
               <div className="flex flex-col gap-2 px-5 py-3">
-                <p className="text-lg">Vo Minh Nghia</p>
-                <p className="text-gray-400">GCS230351</p>
+                <p className="text-lg">{user?.givenName}</p>
+                <p className="text-gray-400">{user?.id}</p>
               </div>
               <button
                 onClick={() => handleNavigate("profile")}

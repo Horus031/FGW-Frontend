@@ -2,10 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import CourseCard from "../shared/CourseCard";
-
-
+import { useUserStore } from "../../store/user";
 
 const ProfileCard = () => {
+  const user = useUserStore((state) => state.user);
 
   return (
     <div className="flex flex-col gap-18 lg:w-10/12 w-8/12">
@@ -19,7 +19,7 @@ const ProfileCard = () => {
           </Avatar>
 
           <span className="text-[40px] font-bold text-primary">
-            Vo Minh Nghia
+            {user?.givenName}
           </span>
         </div>
 
@@ -32,7 +32,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="studentId"
-              value="GCS230351"
+              value={user?.id}
             />
           </div>
           <div className="space-y-1">
@@ -43,7 +43,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="email"
-              value="nghiavmgcs230351@fpt.edu.vn"
+              value={user?.email}
             />
           </div>
           <div className="space-y-1">
@@ -100,9 +100,9 @@ const ProfileCard = () => {
         <h2 className="text-lg font-semibold">Course</h2>
 
         <div className="grid grid-cols-3 gap-5">
-          <CourseCard/>
-          <CourseCard/>
-          <CourseCard/>
+          <CourseCard />
+          <CourseCard />
+          <CourseCard />
         </div>
       </div>
     </div>
