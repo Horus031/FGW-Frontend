@@ -35,7 +35,15 @@ const StudentFeedbackPage = React.lazy(
 const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
 );
+
+const NotFoundPage = React.lazy(() => import("../pages/HomeTemplate/NotFoundPage"));
+
+
+// Authentication Bridge
 const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
+
+// Admin Route
+const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -96,6 +104,20 @@ export const routes: RouteObject[] = [
           {
             path: "course-overview",
             element: withSuspense(CourseOverview),
+          },
+          {
+            path: "not-found",
+            element: withSuspense(NotFoundPage),
+          }
+        ],
+      },
+      {
+        path: "/admin",
+        element: <ProtectedRoute allowedRoles={["admin"]} />,
+        children: [
+          {
+            path: "",
+            element: withSuspense(AdminLayout),
           },
         ],
       },

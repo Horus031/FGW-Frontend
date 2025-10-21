@@ -1,12 +1,11 @@
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { ChevronDown, LogOut, User } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../api/requests/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useUserStore } from "../../store/user";
-
 
 const DropdownMenu = () => {
   const user = useUserStore((state) => state.user);
@@ -50,7 +49,10 @@ const DropdownMenu = () => {
   return (
     <div className="bg-white flex flex-col justify-center">
       <div className="flex items-center justify-center">
-        <div ref={dropdownRef} className=" relative inline-block text-left dropdown">
+        <div
+          ref={dropdownRef}
+          className=" relative inline-block text-left dropdown"
+        >
           <span className="shadow-sm">
             <button
               onClick={() => setIsShow(!isShow)}
@@ -79,16 +81,26 @@ const DropdownMenu = () => {
             >
               <div className="flex flex-col gap-2 px-5 py-3">
                 <p className="text-lg">{user?.givenName}</p>
-                <p className="text-gray-400">{user?.id}</p>
+                <p className="text-gray-400">{user?.role?.name}</p>
               </div>
+
               <button
                 onClick={() => handleNavigate("profile")}
                 className="text-lg flex items-center gap-4 w-full menu-items"
                 role="menuitem"
               >
-                <User className="size-6 text-primary" />
                 Profile
               </button>
+
+              {user?.role?.name === "Staff" && (
+                <button
+                  className="text-lg whitespace-nowrap flex items-center gap-4 w-full menu-items"
+                  role="menuitem"
+                >
+                  Teaching Summary
+                </button>
+              )}
+
               <button
                 onClick={() => handleLogout()}
                 className="text-lg text-danger hover:text-danger gap-4 w-full flex items-center menu-items"

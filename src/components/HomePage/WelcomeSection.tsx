@@ -2,7 +2,7 @@ import { useUserStore } from "../../store/user";
 
 
 const WelcomeSection = () => {
-  const user = useUserStore((state) => state.user);
+  const { user } = useUserStore();
 
   return (
     <div className="mx-auto">

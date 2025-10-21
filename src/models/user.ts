@@ -1,19 +1,20 @@
 export type UserInfo = {
-  id: string; // chưa có mã số sinh viên nên thêm id trước
+  id?: string;
   email?: string;
-  role?: string;
-  campus?: Campus;
-  gender?: string;
+  role?: Role;
+  surname?: string;
+  givenName?: string;
   avatar?: string | null;
-  status?: string;
-  givenName: string;
+  code?: string;
+  staffRole?: string;
 };
 
-type Campus = {
+type Role = {
   id: string;
-  code: string;
   name: string;
 }
+
+
 
 export type UserAuth = {
   accessToken: string;

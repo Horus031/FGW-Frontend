@@ -5,11 +5,9 @@ import MagnifyClass from "../icons/MagnifyClass";
 import DropdownMenu from "./DropdownMenu";
 
 const Header = () => {
-  
-
   return (
-    <div className="fixed top-0 min-w-screen py-3 bg-white z-50 border-b border-gray-300 font-public">
-      <div className="mx-auto max-w-screen-2xl px-8 md:px-20 flex items-center justify-between">
+    <div className="fixed top-0 w-full py-3 bg-white z-50 border-b border-gray-300 font-public">
+      <div className="px-20 mx-auto md:max-w-screen-2xl flex items-center justify-between">
         <div className="flex items-center gap-14 basis-8/12">
           <NavLink to="/" className="cursor-pointer">
             <LogoWithName />
@@ -28,9 +26,9 @@ const Header = () => {
             <button className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
               Library
             </button>
-            <button className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
+            <NavLink to="/thread" className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
               Thread
-            </button>
+            </NavLink>
           </div>
         </div>
 

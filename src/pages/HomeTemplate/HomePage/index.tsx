@@ -1,8 +1,7 @@
 import WelcomeSection from "../../../components/HomePage/WelcomeSection";
 import CarouselSection from "../../../components/HomePage/CarouselSection";
 import NewsSection from "../../../components/HomePage/NewsSection";
-import ActionButtons from "../../../components/HomePage/ActionButtons";
-import RegistrationAndFeedback from "../../../components/HomePage/RegistrationAndFeedback";
+import HomeNavigation from "../../../components/HomePage/HomeNavigation";
 
 const HomePage = () => {
   return (
@@ -20,15 +19,8 @@ const HomePage = () => {
         {/* Two Column Grid Below */}
         <div className="">
           <div className="md:gap-8 lg:gap-31.5">
-            {/* Left Column */}
-
-            {/* Right Column */}
             <div className="space-y-8">
-              {/* Action Buttons Section */}
-              <ActionButtons />
-
-              {/* Registration and Feedback Section */}
-              <RegistrationAndFeedback />
+              <HomeNavigation/>
             </div>
           </div>
         </div>
