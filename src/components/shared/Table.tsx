@@ -15,11 +15,12 @@ type TableProps<T> = {
     height?: string;
     bordered?: boolean;
     centered?: boolean;
-    schedule?: boolean
+    schedule?: boolean;
+    feedback?: boolean;
 }
 
 const Table = <T extends object>(props: TableProps<T>) => {
-    const { columns, data, color, centered, textSize, textColor, height, schedule, padding } = props
+    const { columns, data, color, centered, textSize, textColor, height, schedule, padding, feedback, bordered } = props
 
     if (columns.length === 0) {
         return <div>No data available</div>
@@ -29,9 +30,9 @@ const Table = <T extends object>(props: TableProps<T>) => {
   return (
     <table className={`w-full ${centered === true ? "text-center" : "text-left"} rounded-table rounded-lg`}>
       <thead className={`${color || "bg-primary"}`}>  
-        <tr className={`${textColor ? textColor : "text-white"} text-base`}>
+        <tr className={`${textColor ? textColor : "text-white"} ${height ? height : ""} text-base`}>
           {columns.map((col) => (
-            <th className={`font-medium ${padding ? `${padding} border border-[#D2D6DB]` : "custom-table py-2"}`} key={col.key} style={{ width: col.width || 'auto' }}>
+            <th className={`font-medium ${padding ? `${padding}` : "custom-table py-2"} ${bordered ? "border border-[#D2D6DB]" : ""}`} key={col.key} style={{ width: col.width || 'auto' }}>
               {col.title}
             </th>
           ))}
@@ -39,9 +40,9 @@ const Table = <T extends object>(props: TableProps<T>) => {
       </thead>
       <tbody>
         {data.map((row, rowIdx) => (
-          <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""} ${schedule ? rowIdx % 2 !== 0 ? "bg-[#FAFAFA]" : "" : ""}`} key={rowIdx}>
+          <tr className={`text-primary ${textSize ? textSize : ""} ${height ? height : ""} ${schedule || feedback ? rowIdx % 2 !== 0 ? "bg-[#F0F0F0]" : "" : ""}`} key={rowIdx}>
             {columns.map((col) => (
-              <td className={`${padding ? `${padding} border border-[#D2D6DB]` : "custom-table"}`} key={String(col.key)}>
+              <td className={`${feedback ? "font-medium" : ""}  ${padding ? `${padding}` : "custom-table"} ${bordered ? "border border-[#D2D6DB]" : ""}`} key={String(col.key)}>
                 {col.render
                   ? col.render(row[col.key], row)
                   : (row[col.key] as React.ReactNode)}
@@ -49,6 +50,16 @@ const Table = <T extends object>(props: TableProps<T>) => {
             ))}
           </tr>
         ))}
+        {feedback && (
+          <tr className={`text-primary ${textSize ? textSize : ""} h-18 bg-[#F0F0F0]`}>
+            <td colSpan={2} className={`${padding ? `${padding} border border-[#D2D6DB]` : "custom-table"} font-bold`}>
+              Total GPA
+            </td>
+            <td colSpan={6} className={`${padding ? `${padding} border border-[#D2D6DB]` : "custom-table"} font-semibold `}>
+              4
+            </td>
+          </tr>
+        )}
       </tbody>
     </table>
   )

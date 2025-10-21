@@ -12,6 +12,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const { user, setUser, clearUser } = useUserStore();
   const { allowedRoles } = props;
 
+  console.log(user?.role?.name)
+
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["user-info"],
     queryFn: getMe,

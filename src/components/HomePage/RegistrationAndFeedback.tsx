@@ -64,24 +64,6 @@ const RegistrationAndFeedback = () => {
               <NavLink to="/booking" className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left">
                 Room Booking
               </NavLink>
-              <NavLink
-                to="/request/document"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left"
-              >
-                Document Requests
-              </NavLink>
-              <NavLink
-                to="/request/verification"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left"
-              >
-                Student Status Verification
-              </NavLink>
-              <NavLink
-                to="/req-status"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left"
-              >
-                View My Requests
-              </NavLink>
             </div>
           </div>
 

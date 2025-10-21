@@ -2,8 +2,13 @@ import WelcomeSection from "../../../components/HomePage/WelcomeSection";
 import CarouselSection from "../../../components/HomePage/CarouselSection";
 import NewsSection from "../../../components/HomePage/NewsSection";
 import HomeNavigation from "../../../components/HomePage/HomeNavigation";
+import { useUserStore } from "../../../store/user";
 
 const HomePage = () => {
+  const { user } = useUserStore();
+
+  console.log(user?.role?.name)
+
   return (
     <div className="space-y-8 font-public">
       <WelcomeSection />

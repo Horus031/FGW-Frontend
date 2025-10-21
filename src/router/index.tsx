@@ -83,11 +83,13 @@ export const routes: RouteObject[] = [
           },
           {
             path: "request/:requestType",
-            element: withSuspense(SendRequestPage),
+            element: <ProtectedRoute allowedRoles={["Student"]}/>,
+            children: [{ path: "", element: withSuspense(SendRequestPage) }],
           },
           {
             path: "req-status",
-            element: withSuspense(RequestStatusPage),
+            element: <ProtectedRoute allowedRoles={["Student"]}/>,
+            children: [{ path: "", element: withSuspense(RequestStatusPage)}]
           },
           {
             path: "schedule",
