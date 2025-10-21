@@ -23,13 +23,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   useEffect(() => {
     if (isSuccess && data) {
       setUser({
-      email: data.email,
-      role: data.role,
-      campus: data.campus,
-      gender: data.gender,
-      avatar: data.avatar,
-      status: data.status,
-    });
+        id: data.id,
+        email: data.email,
+        role: data.role,
+        campus: data.campus,
+        gender: data.gender,
+        avatar: data.avatar,
+        status: data.status,
+        givenName: data.givenName,
+      });
+      localStorage.setItem("user", JSON.stringify(data));// bỏ data vào localstorage để debug
     }
   }, [isSuccess, data, setUser]);
 
