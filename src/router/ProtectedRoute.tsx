@@ -45,7 +45,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
 
   if (allowedRoles) {
     const role = user?.role;
-    if (!role || !allowedRoles.includes(role.name)) {
+    if (!role?.name || !allowedRoles.includes(role.name)) {
       return <Navigate to="/not-found" replace />;
     }
   }
