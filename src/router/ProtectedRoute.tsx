@@ -4,8 +4,13 @@ import { useUserStore } from "../store/user";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../api/requests/auth.api";
 
-const ProtectedRoute: React.FC = () => {
-  const { setUser, clearUser } = useUserStore();
+type ProtectedRouteProps = {
+  allowedRoles?: string[];
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
+  const { user, setUser, clearUser } = useUserStore();
+  const { allowedRoles } = props;
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["user-info"],
@@ -37,6 +42,13 @@ const ProtectedRoute: React.FC = () => {
   if (isLoading) return null;
 
   if (isError) return <Navigate to="/login" replace />;
+
+  if (allowedRoles) {
+    const role = user?.role;
+    if (!role || !allowedRoles.includes(role.name)) {
+      return <Navigate to="/not-found" replace />;
+    }
+  }
 
 
   return <Outlet />;

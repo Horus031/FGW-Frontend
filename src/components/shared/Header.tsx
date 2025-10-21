@@ -8,8 +8,8 @@ const Header = () => {
   
 
   return (
-    <div className="fixed top-0 min-w-screen py-3 bg-white z-50 border-b border-gray-300 font-public">
-      <div className="mx-auto max-w-screen-2xl px-8 md:px-20 flex items-center justify-between">
+    <div className="fixed top-0 w-full py-3 bg-white z-50 border-b border-gray-300 font-public">
+      <div className="px-20 mx-auto max-w-[calc(100%-160px)] md:max-w-screen-2xl flex items-center justify-between">
         <div className="flex items-center gap-14 basis-8/12">
           <NavLink to="/" className="cursor-pointer">
             <LogoWithName />

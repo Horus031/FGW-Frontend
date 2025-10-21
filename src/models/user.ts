@@ -1,11 +1,16 @@
 export type UserInfo = {
   email?: string;
-  role?: string;
+  role?: Role;
   campus?: Campus;
   gender?: string;
   avatar?: string | null;
   status?: string;
 };
+
+type Role = {
+  id: string;
+  name: string;
+}
 
 type Campus = {
   id: string;
