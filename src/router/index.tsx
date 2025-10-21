@@ -36,8 +36,9 @@ const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
 );
 
-const NotFoundPage = React.lazy(() => import("../pages/HomeTemplate/NotFoundPage"));
-
+const NotFoundPage = React.lazy(
+  () => import("../pages/HomeTemplate/NotFoundPage")
+);
 
 // Authentication Bridge
 const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
@@ -83,13 +84,13 @@ export const routes: RouteObject[] = [
           },
           {
             path: "request/:requestType",
-            element: <ProtectedRoute allowedRoles={["Student"]}/>,
+            element: <ProtectedRoute allowedRoles={["Student"]} />,
             children: [{ path: "", element: withSuspense(SendRequestPage) }],
           },
           {
             path: "req-status",
-            element: <ProtectedRoute allowedRoles={["Student"]}/>,
-            children: [{ path: "", element: withSuspense(RequestStatusPage)}]
+            element: <ProtectedRoute allowedRoles={["Student"]} />,
+            children: [{ path: "", element: withSuspense(RequestStatusPage) }],
           },
           {
             path: "schedule",
@@ -110,7 +111,7 @@ export const routes: RouteObject[] = [
           {
             path: "not-found",
             element: withSuspense(NotFoundPage),
-          }
+          },
         ],
       },
       {

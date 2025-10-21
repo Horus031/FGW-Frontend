@@ -11,7 +11,7 @@ const StudentFeedbackPage = () => {
       <PageTitle breadcrumb="Feedback" />
 
       {user?.role?.name === "Student" ? (
-        <div>
+        <div className="space-y-4.5">
           <InstructorList />
 
           <FeedbackForm />
