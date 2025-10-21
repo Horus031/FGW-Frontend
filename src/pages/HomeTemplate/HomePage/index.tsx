@@ -20,7 +20,7 @@ const HomePage = () => {
         <div className="">
           <div className="md:gap-8 lg:gap-31.5">
             <div className="space-y-8">
-              <HomeNavigation/>
+              <HomeNavigation />
             </div>
           </div>
         </div>

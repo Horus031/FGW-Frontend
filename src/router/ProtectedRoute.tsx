@@ -6,7 +6,7 @@ import { getMe } from "../api/requests/auth.api";
 
 type ProtectedRouteProps = {
   allowedRoles?: string[];
-}
+};
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const { user, setUser, clearUser } = useUserStore();
@@ -29,7 +29,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
         avatar: data.avatar,
         givenName: data.givenName,
       });
-      localStorage.setItem("user", JSON.stringify(data));// bỏ data vào localstorage để debug
+      localStorage.setItem("user", JSON.stringify(data)); // bỏ data vào localstorage để debug
     }
   }, [isSuccess, data, setUser]);
 
@@ -49,7 +49,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
       return <Navigate to="/not-found" replace />;
     }
   }
-
 
   return <Outlet />;
 };
