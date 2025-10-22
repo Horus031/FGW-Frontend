@@ -2,8 +2,8 @@ import type { IconType } from "./iconTypes";
 
 const GooglePlayButton = (props: IconType) => (
   <svg
-    width={148}
-    height={51}
+    width={160}
+    height={100}
     viewBox="0 0 148 51"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -39,4 +39,4 @@ const GooglePlayButton = (props: IconType) => (
   </svg>
 );
 export
- default GooglePlayButton;
+  default GooglePlayButton;

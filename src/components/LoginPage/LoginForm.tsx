@@ -8,7 +8,7 @@ const LoginForm = () => {
   return (
     <div className="absolute top-1/2 left-1/2 mx-auto bg-white px-14 py-12 rounded-xl -translate-1/2  w-xl">
       <div className="flex flex-col justify-center items-center gap-12 w-full">
-        <LogoWithName/>
+        <LogoWithName />
 
         <div className="flex flex-col gap-8 w-full">
           <div className="font-public flex flex-col items-center gap-6">
@@ -20,23 +20,23 @@ const LoginForm = () => {
               onClick={login}
               className="flex justify-center w-full gap-2 bg-secondary font-medium cursor-pointer text-lg px-6 py-3 text-white rounded-md"
             >
-              <GoogleIcon/>
+              <GoogleIcon />
               Login with you email
             </button>
           </div>
 
-          <span className="bg-grey-400 border"></span>
+          <span className="bg-grey-400 border "></span>
 
-          <div className="flex flex-col items-center text-[#00033D] text-sm gap-2">
+          <div className="flex flex-col items-center text-[#00033D] text-sm">
             <span className="hidden lg:block">
               Mobile App for Student and Parent is ready at
             </span>
-            <div className="hidden lg:flex gap-2 p-2">
+            <div className="hidden lg:flex md:flex gap-2 p-1">
               <button className="cursor-pointer">
-                <AppStoreButton/>
+                <AppStoreButton />
               </button>
               <button className="cursor-pointer">
-                <GooglePlayButton/>
+                <GooglePlayButton />
               </button>
             </div>
             <span>
