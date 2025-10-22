@@ -40,6 +40,8 @@ const NotFoundPage = React.lazy(
   () => import("../pages/HomeTemplate/NotFoundPage")
 );
 
+const dev = React.lazy(() => import("../components/logindev/login"));
+
 // Authentication Bridge
 const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
 
@@ -111,6 +113,10 @@ export const routes: RouteObject[] = [
           {
             path: "not-found",
             element: withSuspense(NotFoundPage),
+          },
+          {
+            path: "dev",
+            element: withSuspense(dev),
           },
         ],
       },
