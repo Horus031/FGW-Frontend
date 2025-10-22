@@ -5,7 +5,6 @@ export type UserInfo = {
   surname?: string;
   givenName?: string;
   avatar?: string | null;
-  code?: string;
   staffRole?: string;
   campus?: Campus;
   student?: Student;

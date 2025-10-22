@@ -28,6 +28,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
         role: data.role,
         avatar: data.avatar,
         givenName: data.givenName,
+        student: data.student,
+        campus: data.campus,
       });
       localStorage.setItem("user", JSON.stringify(data)); // bỏ data vào localstorage để debug
     }
