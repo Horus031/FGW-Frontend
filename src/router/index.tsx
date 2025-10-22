@@ -8,7 +8,7 @@ const CourseOverview = React.lazy(
   () => import("../pages/HomeTemplate/CourseOverview")
 );
 const HomePage = React.lazy(() => import("../pages/HomeTemplate/HomePage"));
-const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"));
+// const LoginPage = React.lazy(() => import("../pages/AuthTemplate/LoginPage"));
 const MainLayout = React.lazy(() => import("../layouts/MainLayout"));
 const ProfilePage = React.lazy(
   () => import("../pages/HomeTemplate/ProfilePage")
@@ -134,7 +134,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: "/login",
-    element: withSuspense(LoginPage),
+    element: withSuspense(dev),
   },
   {
     // Query parameter for path
