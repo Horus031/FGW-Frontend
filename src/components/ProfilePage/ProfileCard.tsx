@@ -54,7 +54,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="faculty"
-              value="Computer Science"
+              value={user?.student?.faculty}
             />
           </div>
           <div className="space-y-1">
@@ -65,7 +65,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="year"
-              value="2"
+              value={user?.student?.year}
             />
           </div>
         </div>
