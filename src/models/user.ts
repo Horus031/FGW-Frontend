@@ -18,6 +18,8 @@ interface Campus {
 interface Student {
   id: string;
   studentCode: string;
+  faculty?: string;
+  year?: string;
 }
 
 
