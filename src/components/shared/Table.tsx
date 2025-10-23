@@ -18,6 +18,7 @@ type TableProps<T> = {
   schedule?: boolean;
   feedback?: boolean;
   activity?: boolean;
+  grade?: boolean;
 };
 
 const Table = <T extends object>(props: TableProps<T>) => {
@@ -34,6 +35,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
     feedback,
     bordered,
     activity,
+    grade,
   } = props;
 
   if (columns.length === 0) {
@@ -50,7 +52,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
       <tr
         className={`${textColor ? textColor : "text-white"} ${
         height ? height : ""
-        } text-base`}
+        } ${textSize ? textSize : "text-base"}`}
       >
         {columns.map((col) => (
         <th
@@ -81,7 +83,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
         >
         {columns.map((col) => (
           <td
-          className={`${feedback ? "font-medium" : ""}  ${
+          className={`${feedback || grade ? "font-medium" : ""}  ${
             padding ? `${padding}` : "custom-table"
           } ${bordered ? "border border-[#D2D6DB]" : ""}`}
           key={String(col.key)}

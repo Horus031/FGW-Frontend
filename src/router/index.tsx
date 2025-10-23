@@ -49,6 +49,8 @@ const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 // Teacher Route
 const ActivitiesPage = React.lazy(() => import("../pages/HomeTemplate/ActivitiesPage"))
 
+const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"))
+
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
     <React.Suspense fallback={<LoadingPage />}>
@@ -120,6 +122,11 @@ export const routes: RouteObject[] = [
             path: "activities",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
             children: [{ path: "", element: withSuspense(ActivitiesPage) }],
+          },
+          {
+            path: "grade",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [{ path: "", element: withSuspense(GradePage) }],
           }
         ],
       },
