@@ -4,26 +4,7 @@ import { useState } from "react";
 import type { ColumnConfig } from "../shared/Table";
 import { TIME_SLOTS } from "../../constants/constants";
 import Table from "../shared/Table";
-
-export type ActivitySlot = {
-  classCode: string;
-  courseCode: string;
-  teacherCode: string;
-} | null;
-
-export type RoomActivity = {
-  room: string;
-  capacity: number;
-  slot1: ActivitySlot;
-  slot2: ActivitySlot;
-  slot3: ActivitySlot;
-  slot4: ActivitySlot;
-  slot5: ActivitySlot;
-  slot6: ActivitySlot;
-  slot7: ActivitySlot;
-  slot8: ActivitySlot;
-  slot9: ActivitySlot;
-};
+import type { ActivitySlot, RoomActivity } from "../../models/activity";
 
 const FLOOR_2_ACTIVITIES: RoomActivity[] = [
   {
@@ -254,9 +235,7 @@ const ActivitiesContainer = () => {
   const columns: ColumnConfig<RoomActivity>[] = [
     {
       key: "room",
-      title: (
-        <span className="lg:text-xs xl:text-sm">Room</span>
-      ),
+      title: <span className="lg:text-xs xl:text-sm">Room</span>,
       width: "120px",
       render: (value, row) => (
         <div className="flex flex-col text-sm">
