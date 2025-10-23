@@ -6,11 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import { Button } from "../../ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useWeekStore } from "../../../store/week";
 import type { Weeks } from "../../../hooks/useWeeksInYear";
+import DatePicker from "../../shared/DatePicker";
 
 const isSameWeek = (a: Weeks | null, b: Weeks | null) => {
   if (!a && !b) return true;
@@ -105,37 +104,7 @@ const ScheduleSelect = () => {
         </SelectContent>
       </Select>
 
-      <div className="flex border border-black/30 rounded-md">
-        <Button className="rounded-r-none bg-white hover:bg-black/10 cursor-pointer">
-          <ChevronLeft color="gray" />
-        </Button>
-
-        <Select
-          value={
-            selectedWeek
-              ? JSON.stringify({
-                  start: selectedWeek.start,
-                  end: selectedWeek.end,
-                })
-              : undefined
-          }
-          onValueChange={handleWeekChange}
-        >
-          <SelectTrigger
-            noIcon
-            className="rounded-none border-y-0 hover:bg-black/10 cursor-pointer border-black/30"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="-left-5">
-            <SelectGroup className="text-center">{renderWeeks}</SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Button className="rounded-l-none bg-white hover:bg-black/10 cursor-pointer">
-          <ChevronRight color="gray" />
-        </Button>
-      </div>
+      <DatePicker weeksInYear={weeksInYear} selectedWeek={selectedWeek} handleWeekChange={handleWeekChange} renderWeeks={() => renderWeeks} />
     </div>
   );
 };

@@ -56,10 +56,6 @@ export const TIME_SLOTS = [
     start: "19:00", 
     end: "20:30"
   },
-  {
-    start: "20:30", 
-    end: "22:00"
-  },
 ]
 
 export const FEEDBACK_QUESTIONS = [
