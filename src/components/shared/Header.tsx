@@ -14,19 +14,43 @@ const Header = () => {
           </NavLink>
 
           <div className="flex items-center gap-9 text-primary font-semibold text-lg h-full">
-            <NavLink to="/" className="py-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `py-2 cursor-pointer hover:text-secondary hover:border-b-2 hover:border-b-secondary ${isActive ? "text-secondary border-b-2 border-b-secondary" : ""
+                }`
+              }
+            >
               Home
             </NavLink>
+
             <NavLink
               to="/schedule"
-              className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer"
+              className={({ isActive }) =>
+                `p-2 cursor-pointer hover:text-secondary hover:border-b-2 hover:border-b-secondary ${isActive ? "text-secondary border-b-2 border-b-secondary" : ""
+                }`
+              }
             >
               Schedule
             </NavLink>
-            <button className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
+
+            <NavLink
+              to="/library"
+              className={({ isActive }) =>
+                `p-2 cursor-pointer hover:text-secondary hover:border-b-2 hover:border-b-secondary ${isActive ? "text-secondary border-b-2 border-b-secondary" : ""
+                }`
+              }
+            >
               Library
-            </button>
-            <NavLink to="/thread" className="p-2 hover:text-secondary hover:border-b-1 hover:border-b-secondary cursor-pointer">
+            </NavLink>
+
+            <NavLink
+              to="/thread"
+              className={({ isActive }) =>
+                `p-2 cursor-pointer hover:text-secondary hover:border-b-2 hover:border-b-secondary ${isActive ? "text-secondary border-b-2 border-b-secondary" : ""
+                }`
+              }
+            >
               Thread
             </NavLink>
           </div>
@@ -34,17 +58,13 @@ const Header = () => {
 
         <div className="flex items-center justify-between gap-9">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <button className="text-primary cursor-pointer p-1.5">
-                <MagnifyClass className="size-6 2xl:size-8" />
-              </button>
-
-              <button className="text-primary cursor-pointer p-1.5">
-                <BellIcon className="size-6 2xl:size-8" />
-              </button>
-            </div>
-
-            <DropdownMenu/>
+            <button className="text-primary cursor-pointer p-1.5">
+              <MagnifyClass className="size-6 2xl:size-8" />
+            </button>
+            <button className="text-primary cursor-pointer p-1.5">
+              <BellIcon className="size-6 2xl:size-8" />
+            </button>
+            <DropdownMenu />
           </div>
         </div>
       </div>
