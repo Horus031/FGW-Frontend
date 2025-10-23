@@ -46,6 +46,9 @@ const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
 // Admin Route
 const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 
+// Teacher Route
+const ActivitiesPage = React.lazy(() => import("../pages/HomeTemplate/ActivitiesPage"))
+
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
     <React.Suspense fallback={<LoadingPage />}>
@@ -112,6 +115,12 @@ export const routes: RouteObject[] = [
             path: "not-found",
             element: withSuspense(NotFoundPage),
           },
+
+          {
+            path: "activities",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [{ path: "", element: withSuspense(ActivitiesPage) }],
+          }
         ],
       },
       {
