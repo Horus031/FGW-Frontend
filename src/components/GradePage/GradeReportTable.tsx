@@ -76,7 +76,17 @@ const GradeReportTable = () => {
       title: "Status",
       width: "160px",
       render: (_, row) => (
-        <Badge className={`${row.status === "Passed" ? "border-approve bg-approve/10 text-approve" : row.status === "Failed" ? "border-danger bg-danger/10 text-danger" : "border-amber-500 bg-amber-500/10 text-amber-500"} border-1`}>{row.status}</Badge>
+        <Badge
+          className={`${
+            row.status === "Passed"
+              ? "border-approve bg-approve/10 text-approve"
+              : row.status === "Failed"
+              ? "border-danger bg-danger/10 text-danger"
+              : "border-amber-500 bg-amber-500/10 text-amber-500"
+          } border-1`}
+        >
+          {row.status}
+        </Badge>
       ),
     },
   ];
