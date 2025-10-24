@@ -17,7 +17,7 @@ export default defineConfig(() => {
     server: {
       proxy: {
         '/requests': {
-          target: 'https://greenwich-ap-backend.onrender.com/api', // ✅ use loaded env
+          target: 'http://localhost:3000/api', // ✅ use loaded env
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/requests/, ''),
