@@ -5,7 +5,7 @@ const LoginPage = () => {
     <div className="min-h-screen">
       <div className="relative">
         <img
-          src="/images/Login/Background.png"
+          src="/images/Login/Background.webp"
           alt=""
           className="bg-cover size-full h-screen bg-center"
         />

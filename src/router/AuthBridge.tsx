@@ -19,8 +19,8 @@ const AuthBridge = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("access_token", data.accessToken);
+      localStorage.setItem("refresh_token", data.refreshToken);
       navigate("/", { replace: true });
     }
   }, [isSuccess, data, navigate]);

@@ -1,13 +1,20 @@
+import PageTitle from "../../../components/shared/PageTitle";
+
 const NotFoundPage = () => {
   return (
-    <div className="space-y-4.5 h-full">
-      <img src="/images/GreenwichLogo.svg" height={900} className="relative top-1/2 left-0 bg-no-repeat opacity-25 bg-contain size-96 m-auto"/>
-      <p className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-5xl whitespace-nowrap text-gray-900">
-        Page Not Found
-      </p>
-
-      <div className="w-fit mx-auto">
-        <span className="font-medium text-2xl">Call the support if needed</span>
+    <div className="flex flex-col gap-32">
+      <PageTitle breadcrumb="Not Found" />
+      <div className=" text-primary flex justify-center items-center h-full text-center">
+        <div className="h-full my-auto w-xl">
+          <h2 className="text-9xl text-secondary/20 font-medium">404</h2>
+          <div className="space-y-2 flex flex-col items-center justify-center">
+            <span className="font-semibold text-2xl">Page Not Found</span>
+            <p>
+              Oops! The page you're looking for doesn't exist. It may have been
+              moved or deleted, or you may have entered an incorrect URL.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
