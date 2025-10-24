@@ -13,6 +13,9 @@ const MainLayout = React.lazy(() => import("../layouts/MainLayout"));
 const ProfilePage = React.lazy(
   () => import("../pages/HomeTemplate/ProfilePage")
 );
+const ThreadPage = React.lazy(
+  () => import("../pages/HomeTemplate/ThreadPage")
+);
 const AttendancePage = React.lazy(
   () => import("../pages/HomeTemplate/AttendancePage")
 );
@@ -76,6 +79,10 @@ export const routes: RouteObject[] = [
           {
             path: "profile",
             element: withSuspense(ProfilePage),
+          },
+          {
+            path: "thread",
+            element: withSuspense(ThreadPage),
           },
           {
             path: "attendance",
