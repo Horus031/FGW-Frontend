@@ -19,14 +19,15 @@ const AuthBridge = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      navigate("/", { replace: true });
+      console.log("Auth exchange successful:", data);
+      // navigate("/", { replace: true });
     }
   }, [isSuccess, data, navigate]);
 
   useEffect(() => {
     if (isError) {
       console.error("Auth exchange failed:", error);
-      navigate("/login", { replace: true });
+      // navigate("/login", { replace: true });
     }
   }, [isError, error, navigate]);
 
