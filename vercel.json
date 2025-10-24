@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/requests/:match*",
-      "destination": "https://wonda-calcicolous-janyce.ngrok-free.dev/api/:match*"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
