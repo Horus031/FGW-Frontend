@@ -1,5 +1,5 @@
 // import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 // import { useUserStore } from "../store/user";
 // import { useQuery } from "@tanstack/react-query";
 // import { getMe } from "../api/requests/auth.api";
@@ -8,9 +8,10 @@ type ProtectedRouteProps = {
   allowedRoles?: string[];
 };
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = () => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = (props: ProtectedRouteProps) => {
   // const { user, setUser, clearUser } = useUserStore();
-  // const { allowedRoles } = props;
+  const role = localStorage.getItem("role");
+  const { allowedRoles } = props;
 
   // const { data, isLoading, isError, isSuccess } = useQuery({
   //   queryKey: ["user-info"],
@@ -45,12 +46,17 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = () => {
 
   // if (isError) return <Navigate to="/login" replace />;
 
-  // if (allowedRoles) {
-  //   const role = user?.role;
-  //   if (!role?.name || !allowedRoles.includes(role.name)) {
-  //     return <Navigate to="/not-found" replace />;
-  //   }
-  // }
+  if (allowedRoles) {
+    const userRole = role;
+    // const role = user?.role;
+    // if (!role?.name || !allowedRoles.includes(role.name)) {
+    //   return <Navigate to="/not-found" replace />;
+    // }
+
+    if (!userRole || !allowedRoles.includes(userRole)) {
+      return <Navigate to="/not-found" replace />;
+    }
+  }
 
   return <Outlet />;
 };
