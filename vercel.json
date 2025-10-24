@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/requests/:match*",
+      "destination": "https://greenwich-ap-backend.onrender.com/api/:match*"
     }
   ]
 }
