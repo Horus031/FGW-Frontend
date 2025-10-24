@@ -8,7 +8,7 @@ const api: AxiosInstance = axios.create({
   }`,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
@@ -25,8 +25,8 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     if (status === 401) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
       window.location.href = "/login";
     }
     if (status >= 500) {
