@@ -17,7 +17,7 @@ export default defineConfig(() => {
     server: {
       proxy: {
         '/requests': {
-          target: 'http://localhost:3000/api', // ✅ use loaded env
+          target: 'https://wonda-calcicolous-janyce.ngrok-free.dev/api', // ✅ use loaded env
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/requests/, ''),

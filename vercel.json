@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/requests/:match*",
-      "destination": "http://localhost:3000/api/:match*"
+      "destination": "https://wonda-calcicolous-janyce.ngrok-free.dev/api/:match*"
     }
   ]
 }
