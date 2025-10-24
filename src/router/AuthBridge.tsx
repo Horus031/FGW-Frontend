@@ -13,14 +13,12 @@ const AuthBridge = () => {
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["exchange-token", code],
     queryFn: async () => exchangeToken(code),
-    enabled: !!code, // only run if code exists
-    retry: false, // don't retry on CORS/network errors
+    enabled: !!code,
+    retry: false,
   });
 
   useEffect(() => {
     if (isSuccess && data) {
-      localStorage.setItem("access_token", data.accessToken);
-      localStorage.setItem("refresh_token", data.refreshToken);
       navigate("/", { replace: true });
     }
   }, [isSuccess, data, navigate]);
