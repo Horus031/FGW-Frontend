@@ -17,7 +17,7 @@ export default defineConfig(() => {
     server: {
       proxy: {
         '/requests': {
-          target: 'https://wonda-calcicolous-janyce.ngrok-free.dev/api', // ✅ use loaded env
+          target: 'https://greenwich-ap-backend.onrender.com/api', // ✅ use loaded env
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/requests/, ''),
