@@ -1,5 +1,4 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { logout } from "./requests/auth.api";
 
 const api: AxiosInstance = axios.create({
   baseURL: '/requests',
@@ -22,7 +21,7 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     if (status === 401) {
-      logout();
+      // logout();
       // window.location.href = "/login";
     }
     if (status >= 500) {

@@ -2,7 +2,7 @@ import { type UserAuth, type UserInfo } from "../../models/user";
 import api from "../apiRequest";
 
 export const login = async () => {
-  window.location.href = import.meta.env.VITE_BACKEND_URL;
+  window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
 };
 
 export const exchangeToken = async (code: string | null): Promise<UserAuth> => {
