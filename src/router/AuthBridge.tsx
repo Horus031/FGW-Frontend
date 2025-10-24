@@ -10,6 +10,8 @@ const AuthBridge = () => {
   const queryParams = new URLSearchParams(location.search);
   const code = queryParams.get("code");
 
+  console.log(location.search);
+
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["exchange-token", code],
     queryFn: async () => exchangeToken(code),
