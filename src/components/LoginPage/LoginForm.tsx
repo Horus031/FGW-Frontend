@@ -57,7 +57,7 @@ const LoginForm = () => {
                 />
                 <button>Admin Login</button>
                 <p style={{ fontSize: 12, color: "#777" }}>
-                  (Form này chỉ hiện khi nhập đúng mật mã phím)
+                  (This form only appears when the correct key sequence is entered)
                 </p>
               </div>
             )}

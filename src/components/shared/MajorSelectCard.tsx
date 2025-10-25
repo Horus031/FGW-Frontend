@@ -34,7 +34,7 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
   };
 
   return (
-    <div className="basis-7/12 px-3 py-2 border-1 border-gray-400 rounded- whitespace-nowrap rounded-lg">
+    <div className="basis-7/12 px-3 py-2 border-1 border-gray-400 whitespace-nowrap rounded-lg">
       <div className="pt-3 py-2">{renderSelectOption()}</div>
     </div>
   );
