@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import CourseCard from "../shared/CourseCard";
+import CourseCard from "../shared/CourseAttendanceCard";
 import { useUserStore } from "../../store/user";
 
 const ProfileCard = () => {

@@ -1,4 +1,4 @@
-import type { AttendanceSlotProps } from "../../models/attendance";
+import type { AttendanceSlotProps } from "../../../models/attendance";
 
 const AttendanceSlotDetail = ({ data }: AttendanceSlotProps) => {
   return (

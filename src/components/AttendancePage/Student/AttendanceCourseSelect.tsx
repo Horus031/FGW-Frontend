@@ -1,5 +1,5 @@
-import CourseCard from '../shared/CourseCard'
-import TermSelect from '../shared/TermSelect'
+import CourseCard from '../../shared/CourseAttendanceCard'
+import TermSelect from '../../shared/TermSelect'
 
 const AttendanceCourseSelect = () => {
   return (
