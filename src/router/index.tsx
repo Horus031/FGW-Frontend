@@ -29,8 +29,8 @@ const RequestStatusPage = React.lazy(
 const SchedulePage = React.lazy(
   () => import("../pages/HomeTemplate/SchedulePage")
 );
-const FeedbackPage = React.lazy(
-  () => import("../pages/HomeTemplate/FeedbackPage")
+const StudentFeedbackPage = React.lazy(
+  () => import("../pages/HomeTemplate/StudentFeedbackPage")
 );
 const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
@@ -103,7 +103,7 @@ export const routes: RouteObject[] = [
           },
           {
             path: "feedback",
-            element: withSuspense(FeedbackPage),
+            element: withSuspense(StudentFeedbackPage),
           },
           {
             path: "booking",

@@ -11,7 +11,7 @@ const SendRequestPage = () => {
   const { requestType } = useParams<RequestPageParams>();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4.5">
       {requestType === "verification" ? (
         <>
           <PageTitle
