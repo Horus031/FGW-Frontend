@@ -17,7 +17,7 @@ const AttendancePage = () => {
           <AttendanceDetails />
         </div>
       ) : (
-        <AttendanceContainer/>
+        <AttendanceContainer />
       )}
     </div>
   );

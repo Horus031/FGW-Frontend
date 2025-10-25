@@ -1,13 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
-// import { useUserStore } from "../../store/user";
+import { useUserStore } from "../../store/user";
 
 const ActionButtons = () => {
-  // const { user } = useUserStore();
-  const role = localStorage.getItem("role");
+  const { user } = useUserStore();
   return (
     <div>
-      {role === "Student" ? (
+      {user?.role?.name === "Student" ? (
         <div className="grid grid-cols-2 gap-6 mb-6 text-3xl">
           <NavLink
             to="/attendance"

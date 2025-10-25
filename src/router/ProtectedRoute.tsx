@@ -1,59 +1,60 @@
-// import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-// import { useUserStore } from "../store/user";
-// import { useQuery } from "@tanstack/react-query";
-// import { getMe } from "../api/requests/auth.api";
+import { useUserStore } from "../store/user";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../api/requests/auth.api";
 
 type ProtectedRouteProps = {
   allowedRoles?: string[];
 };
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = (props: ProtectedRouteProps) => {
-  // const { user, setUser, clearUser } = useUserStore();
-  const role = localStorage.getItem("role");
+const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
+  const { user, setUser, clearUser } = useUserStore();
   const { allowedRoles } = props;
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  // const { data, isLoading, isError, isSuccess } = useQuery({
-  //   queryKey: ["user-info"],
-  //   queryFn: getMe,
-  //   retry: false,
-  //   refetchOnWindowFocus: false,
-  //   staleTime: 60_000,
-  // });
+  const { data, isLoading, isError, isSuccess } = useQuery({
+    queryKey: ["user-info"],
+    queryFn: getMe,
+    retry: false,
+    refetchOnWindowFocus: false,
+    staleTime: 60_000,
+  });
 
-  // useEffect(() => {
-  //   if (isSuccess && data) {
-  //     setUser({
-  //       id: data.id,
-  //       email: data.email,
-  //       role: data.role,
-  //       avatar: data.avatar,
-  //       givenName: data.givenName,
-  //       student: data.student,
-  //       campus: data.campus,
-  //     });
-  //     localStorage.setItem("user", JSON.stringify(data)); // bỏ data vào localstorage để debug
-  //   }
-  // }, [isSuccess, data, setUser]);
+  useEffect(() => {
+    if (isSuccess && data) {
+      // Validate that we have at least an email or id
+      if (!data.id && !data.email) {
+        clearUser();
+        return;
+      }
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     clearUser();
-  //   }
-  // }, [isError, clearUser]);
+      setUser({
+        id: data.id,
+        email: data.email,
+        role: data.role,
+        avatar: data.avatar,
+        givenName: data.givenName,
+        student: data.student,
+        campus: data.campus,
+      });
+    }
+  }, [isSuccess, data, setUser, clearUser]);
 
-  // if (isLoading) return null;
+  useEffect(() => {
+    if (isError) {
+      clearUser();
+      setShouldRedirect(true);
+    }
+  }, [isError, clearUser]);
 
-  // if (isError) return <Navigate to="/login" replace />;
+  if (isLoading) return null;
+
+  if (isError && shouldRedirect) return <Navigate to="/login" replace />;
 
   if (allowedRoles) {
-    const userRole = role;
-    // const role = user?.role;
-    // if (!role?.name || !allowedRoles.includes(role.name)) {
-    //   return <Navigate to="/not-found" replace />;
-    // }
-
-    if (!userRole || !allowedRoles.includes(userRole)) {
+    const role = user?.role;
+    if (!role?.name || !allowedRoles.includes(role.name)) {
       return <Navigate to="/not-found" replace />;
     }
   }

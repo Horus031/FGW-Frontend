@@ -1,11 +1,10 @@
 import { NavLink } from "react-router-dom";
-// import { useUserStore } from "../../store/user";
+import { useUserStore } from "../../store/user";
 const RegistrationAndFeedback = () => {
-  // const { user } = useUserStore();
-  const role = localStorage.getItem("role");
+  const { user } = useUserStore();
   return (
     <div>
-      {role === "Student" ? (
+      {user?.role?.name === "Student" ? (
         // Student Layout
         <div className="grid grid-cols-2 gap-8">
           <div className="space-y-6">
