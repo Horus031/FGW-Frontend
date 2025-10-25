@@ -36,6 +36,10 @@ const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
 );
 
+const PendingFeedbackPage = React.lazy(
+  () => import("../pages/HomeTemplate/PendingFeedbackPage")
+);
+
 const NotFoundPage = React.lazy(
   () => import("../pages/HomeTemplate/NotFoundPage")
 );
@@ -47,9 +51,19 @@ const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
 const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 
 // Teacher Route
-const ActivitiesPage = React.lazy(() => import("../pages/HomeTemplate/ActivitiesPage"))
+const ActivitiesPage = React.lazy(
+  () => import("../pages/HomeTemplate/ActivitiesPage")
+);
 
-const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"))
+const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"));
+
+const TimetablePage = React.lazy(
+  () => import("../pages/HomeTemplate/TimetablePage")
+);
+
+const CheckAttendancePage = React.lazy(
+  () => import("../pages/HomeTemplate/CheckAttendancePage")
+);
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -114,6 +128,13 @@ export const routes: RouteObject[] = [
             element: withSuspense(CourseOverview),
           },
           {
+            path: "pending-feedback",
+            element: <ProtectedRoute allowedRoles={["Student"]} />,
+            children: [
+              { path: "", element: withSuspense(PendingFeedbackPage) },
+            ],
+          },
+          {
             path: "not-found",
             element: withSuspense(NotFoundPage),
           },
@@ -127,7 +148,19 @@ export const routes: RouteObject[] = [
             path: "grade",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
             children: [{ path: "", element: withSuspense(GradePage) }],
-          }
+          },
+          {
+            path: "timetable",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [{ path: "", element: withSuspense(TimetablePage) }],
+          },
+          {
+            path: "check-attendance",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [
+              { path: "", element: withSuspense(CheckAttendancePage) },
+            ],
+          },
         ],
       },
       {
