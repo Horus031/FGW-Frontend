@@ -1,34 +1,28 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-// import Cookies from "js-cookie";
 
 const api: AxiosInstance = axios.create({
   baseURL: "/requests",
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true,
+  withCredentials: true, // This ensures cookies are sent automatically
 });
 
-api.interceptors.request.use((config) => {
-  // const accessToken = Cookies.get("access_token");
-  
-  // if (accessToken) {
-  //   config.headers.Authorization = `Bearer ${accessToken}`;
-  // }
-  return config;
-});
+// Request interceptor (cookies are sent automatically with withCredentials: true)
+api.interceptors.request.use(
+  (config) => config,
+  (error) => Promise.reject(error)
+);
 
-// Response interceptor: xử lý lỗi chung
+// Response interceptor: Handle errors
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
     const status = error.response?.status;
+
     if (status === 401) {
-      // logout();
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
-    if (status >= 500) {
-      console.error("Server error:", error);
-    }
+
     return Promise.reject(error);
   }
 );
