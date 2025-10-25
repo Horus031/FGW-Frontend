@@ -9,17 +9,22 @@ export const exchangeToken = async (code: string | null): Promise<UserInfo> => {
   if (!code) throw new Error("Authorization code is missing");
 
   const response = await api.post<UserInfo>("/auth/exchange", { code });
-  const data: UserInfo = response.data;
+  const data = response.data;
 
-  // Check if backend returned a message object instead of user data
-  if (typeof data === "string" || (data && "message" in data && !data.id && !data.email)) {
-    // Backend returned a success message, fetch user info from /auth/me
-    // The cookies will be sent automatically
+  console.log("exchangeToken - Backend response:", data);
+
+  // Check if backend returned tokens instead of user data
+  // The backend returns {accessToken, refreshToken} so we need to fetch user info
+  if (!data.id && !data.email) {
+    console.log("exchangeToken - Tokens received, fetching user data from /auth/me");
+    
+    // The cookies/tokens should be set by the backend, now fetch user info
     const userResponse = await api.get<UserInfo>("/auth/me");
+    console.log("exchangeToken - User data from /auth/me:", userResponse.data);
     return userResponse.data;
   }
 
-  return response.data;
+  return data;
 };
 
 export const getMe = async () => {

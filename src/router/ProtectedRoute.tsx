@@ -13,7 +13,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const { allowedRoles } = props;
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const { data, isLoading, isError, isSuccess } = useQuery({
+  // Add 'error' to the destructuring
+  const { data, isLoading, isError, isSuccess, error } = useQuery({
     queryKey: ["user-info"],
     queryFn: getMe,
     retry: false,
@@ -23,8 +24,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
 
   useEffect(() => {
     if (isSuccess && data) {
+      console.log("ProtectedRoute - getMe response:", data);
+      console.log("ProtectedRoute - response type:", typeof data);
+
+      // Check if data is a proper UserInfo object
+      if (typeof data === "string") {
+        console.error("ProtectedRoute - Backend returned string instead of user object:", data);
+        console.error("ProtectedRoute - This is likely a backend API issue");
+        clearUser();
+        return;
+      }
+
       // Validate that we have at least an email or id
       if (!data.id && !data.email) {
+        console.error("ProtectedRoute - Invalid user data received:", data);
         clearUser();
         return;
       }
@@ -38,15 +51,26 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
         student: data.student,
         campus: data.campus,
       });
+      console.log("ProtectedRoute - User loaded successfully:", data.email);
     }
   }, [isSuccess, data, setUser, clearUser]);
 
   useEffect(() => {
     if (isError) {
-      clearUser();
-      setShouldRedirect(true);
+      console.error("ProtectedRoute - getMe failed:", error);
+      console.error("ProtectedRoute - Error details:", {
+        message: error?.message,
+        response: error?.response?.data,
+        status: error?.response?.status,
+      });
+
+      // Add a 3 second delay before redirecting so you can see the error in console
+      setTimeout(() => {
+        clearUser();
+        setShouldRedirect(true);
+      }, 3000);
     }
-  }, [isError, clearUser]);
+  }, [isError, error, clearUser]);
 
   if (isLoading) return null;
 
