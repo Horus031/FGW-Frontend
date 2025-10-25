@@ -1,11 +1,7 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${
-    import.meta.env.VITE_NODE_ENV == "development"
-      ? import.meta.env.VITE_DEV_URL
-      : import.meta.env.VITE_BACKEND_URL
-  }`,
+  baseURL: "/requests",
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
@@ -21,13 +17,12 @@ api.interceptors.request.use((config) => {
 
 // Response interceptor: xử lý lỗi chung
 api.interceptors.response.use(
-  (response: AxiosResponse) => response, // ✅ trả về full AxiosResponse
+  (response: AxiosResponse) => response,
   (error) => {
     const status = error.response?.status;
     if (status === 401) {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-      window.location.href = "/login";
+      // logout();
+      // window.location.href = "/login";
     }
     if (status >= 500) {
       console.error("Server error:", error);
