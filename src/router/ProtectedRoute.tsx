@@ -47,9 +47,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
         email: data.email,
         role: data.role,
         avatar: data.avatar,
-        givenName: data.givenName,
-        student: data.student,
+        fullName: data.fullName,
         campus: data.campus,
+        academicYear: data.academicYear,
+        yearOfStudy: data.yearOfStudy,
+        faculty: data.faculty,
       });
       console.log("ProtectedRoute - User loaded successfully:", data.email);
     }
@@ -58,11 +60,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   useEffect(() => {
     if (isError) {
       console.error("ProtectedRoute - getMe failed:", error);
-      console.error("ProtectedRoute - Error details:", {
-        message: error?.message,
-        response: error?.response?.data,
-        status: error?.response?.status,
-      });
+      // console.error("ProtectedRoute - Error details:", {
+      //   message: error?.message,
+      //   response: error?.response?.data,
+      //   status: error?.response?.status,
+      // });
 
       // Add a 3 second delay before redirecting so you can see the error in console
       setTimeout(() => {

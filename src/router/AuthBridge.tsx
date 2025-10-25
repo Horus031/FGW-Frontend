@@ -49,9 +49,11 @@ const AuthBridge = () => {
         email: data.email,
         role: data.role,
         avatar: data.avatar,
-        givenName: data.givenName,
-        student: data.student,
+        fullName: data.fullName,
         campus: data.campus,
+        academicYear: data.academicYear,
+        yearOfStudy: data.yearOfStudy,
+        faculty: data.faculty,
       });
       console.log("AuthBridge - User saved successfully:", data.email);
       console.log("AuthBridge - Full user data:", data);
@@ -66,13 +68,13 @@ const AuthBridge = () => {
 
   useEffect(() => {
     if (isError) {
-      console.error("AuthBridge - Auth exchange failed:", error);
-      console.error("AuthBridge - Error details:", {
-        message: error?.message,
-        response: error?.response?.data,
-        status: error?.response?.status,
-      });
-      console.log("AuthBridge - Redirecting to login in 5 seconds...");
+      // console.error("AuthBridge - Auth exchange failed:", error);
+      // console.error("AuthBridge - Error details:", {
+      //   message: error?.message,
+      //   response: error?.response?.data,
+      //   status: error?.response?.status,
+      // });
+      // console.log("AuthBridge - Redirecting to login in 5 seconds...");
 
       // Add 5 second delay so you can see the error
       setTimeout(() => {
