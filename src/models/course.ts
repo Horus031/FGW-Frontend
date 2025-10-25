@@ -38,7 +38,7 @@ export type CourseMark = Pick<Course, "courseName" | "classCode" | "grade" | "gr
   termLabel?: string;
 };
 
-export type CourseFeedback = Pick<Course, "courseName" | "classCode">
+export type CourseFeedback = Pick<Course, "classCode" | "courseName">
 
 export type ScheduleRowData = {
   timeSlot: string;

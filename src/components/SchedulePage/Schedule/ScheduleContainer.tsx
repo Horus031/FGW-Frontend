@@ -253,9 +253,9 @@ const ScheduleContainer = () => {
           color="bg-primary"
           textColor="text-white"
           textSize="text-sm"
-          height="h-[94px]"
           bordered
           schedule
+          activity
         />
       </div>
     </div>

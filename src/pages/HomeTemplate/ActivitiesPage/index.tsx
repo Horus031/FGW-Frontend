@@ -3,7 +3,7 @@ import PageTitle from "../../../components/shared/PageTitle"
 
 const ActivitiesPage = () => {
   return (
-    <div className="space-y-4.5">
+    <div className="space-y-6">
       <PageTitle breadcrumb="View Activities" />
 
       <ActivitiesContainer/>
