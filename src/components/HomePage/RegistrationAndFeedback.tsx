@@ -14,24 +14,24 @@ const RegistrationAndFeedback = () => {
             </h5>
             <div className="w-full h-1 bg-[#3ABFF0] mb-4"></div>
             <div className="text-secondary font-medium text-xl">
-              <button className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left py-1 justify-center items-center">
+              <button className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left py-2 justify-center items-center">
                 Course Re-registration
               </button>
               <NavLink
                 to="/request/document"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-1 justify-center items-center"
+                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-2 justify-center items-center"
               >
                 Document Requests
               </NavLink>
               <NavLink
                 to="/request/verification"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-1 justify-center items-center"
+                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-2 justify-center items-center"
               >
                 Student Status Verification
               </NavLink>
               <NavLink
                 to="/req-status"
-                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-1 justify-center items-center"
+                className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left py-2 justify-center items-center"
               >
                 View My Requests
               </NavLink>
