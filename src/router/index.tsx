@@ -147,7 +147,6 @@ export const routes: RouteObject[] = [
     element: withSuspense(LoginPage),
   },
   {
-    // Query parameter for path
     path: "/auth/bridge",
     element: withSuspense(AuthBridge),
   },

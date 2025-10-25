@@ -10,8 +10,6 @@ const AuthBridge = () => {
   const queryParams = new URLSearchParams(location.search);
   const code = queryParams.get("code");
 
-  console.log(location.search);
-
   const { data, isSuccess, isError, error } = useQuery({
     queryKey: ["exchange-token", code],
     queryFn: async () => exchangeToken(code),
@@ -21,15 +19,14 @@ const AuthBridge = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      console.log("Auth exchange successful:", data);
-      // navigate("/", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [isSuccess, data, navigate]);
 
   useEffect(() => {
     if (isError) {
       console.error("Auth exchange failed:", error);
-      // navigate("/login", { replace: true });
+      navigate("/login", { replace: true });
     }
   }, [isError, error, navigate]);
 

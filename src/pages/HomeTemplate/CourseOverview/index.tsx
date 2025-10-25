@@ -4,7 +4,7 @@ import type { UserInfo } from '../../../models/user';
 import { Search } from "lucide-react";
 import { Input } from "../../../components/ui/input";
 import FilterButton from '../../../components/shared/Filter';
-import  Pagination  from '../../../components/shared/Pagination';
+import Pagination from '../../../components/shared/Pagination';
 
 const CourseOverview = () => {
   const sampleStudents: Pick<UserInfo, "avatar">[] = [

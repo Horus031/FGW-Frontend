@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
+// import Cookies from "js-cookie";
 
 const api: AxiosInstance = axios.create({
   baseURL: "/requests",
@@ -8,10 +9,11 @@ const api: AxiosInstance = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("access_token");
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
+  // const accessToken = Cookies.get("access_token");
+  
+  // if (accessToken) {
+  //   config.headers.Authorization = `Bearer ${accessToken}`;
+  // }
   return config;
 });
 

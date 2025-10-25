@@ -10,7 +10,6 @@ export const exchangeToken = async (code: string | null): Promise<UserAuth> => {
 
   try {
     const response = await api.post<UserAuth>("/auth/exchange", { code });
-
     return response.data;
   } catch (error) {
     console.error("exchangeToken error:", error);
