@@ -1,6 +1,6 @@
 import AttendanceSlotDetail from "./AttendanceSlot";
-import type { AttendanceSlot } from "../../models/attendance";
-import Pagination from "../shared/Pagination";
+import type { AttendanceSlot } from "../../../models/attendance";
+import Pagination from "../../shared/Pagination";
 
 
 
