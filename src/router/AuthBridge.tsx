@@ -15,8 +15,8 @@ const AuthBridge = () => {
   // If no code, redirect immediately
   useEffect(() => {
     if (!code) {
-      console.error("AuthBridge - No authorization code found in URL");
-      console.log("AuthBridge - Redirecting to login in 3 seconds...");
+      // console.error("AuthBridge - No authorization code found in URL");
+      // console.log("AuthBridge - Redirecting to login in 3 seconds...");
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 3000);
@@ -32,13 +32,13 @@ const AuthBridge = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      console.log("AuthBridge - exchangeToken response:", data);
-      console.log("AuthBridge - response type:", typeof data);
+      // console.log("AuthBridge - exchangeToken response:", data);
+      // console.log("AuthBridge - response type:", typeof data);
 
       // Validate that we have at least an email or id
       if (!data.id && !data.email) {
-        console.error("AuthBridge - Invalid user data received:", data);
-        console.error("AuthBridge - This should not happen if exchangeToken properly fetched user data");
+        // console.error("AuthBridge - Invalid user data received:", data);
+        // console.error("AuthBridge - This should not happen if exchangeToken properly fetched user data");
         navigate("/login", { replace: true });
         return;
       }
@@ -55,11 +55,11 @@ const AuthBridge = () => {
         yearOfStudy: data.yearOfStudy,
         faculty: data.faculty,
       });
-      console.log("AuthBridge - User saved successfully:", data.email);
-      console.log("AuthBridge - Full user data:", data);
+      // console.log("AuthBridge - User saved successfully:", data.email);
+      // console.log("AuthBridge - Full user data:", data);
 
       // Add 2 second delay so you can see the console logs
-      console.log("AuthBridge - Navigating to home in 2 seconds...");
+      // console.log("AuthBridge - Navigating to home in 2 seconds...");
       setTimeout(() => {
         navigate("/", { replace: true });
       }, 10000);

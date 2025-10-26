@@ -2,9 +2,11 @@ import AttendanceCourseSelect from "../../../components/AttendancePage/Student/A
 import AttendanceDetails from "../../../components/AttendancePage/Student/AttendanceDetails";
 import AttendanceContainer from "../../../components/AttendancePage/Teacher/AttendanceContainer";
 import PageTitle from "../../../components/shared/PageTitle";
+import { useUserStore } from "../../../store/user";
 
 const AttendancePage = () => {
-  const role = localStorage.getItem("role");
+  const role = useUserStore((state) => state.user?.role.name);
+
 
   return (
     <div className="space-y-6">

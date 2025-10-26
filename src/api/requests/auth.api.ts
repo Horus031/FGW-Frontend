@@ -29,6 +29,7 @@ export const exchangeToken = async (code: string | null): Promise<UserInfo> => {
 
 export const getMe = async () => {
   const response = await api.get<UserInfo>("/auth/me");
+  console.log("getMe - Backend response:", response.data);
   return response.data;
 };
 
