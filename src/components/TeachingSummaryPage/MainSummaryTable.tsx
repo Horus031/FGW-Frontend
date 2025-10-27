@@ -118,7 +118,7 @@ const MainSummaryTable = () => {
     return (
       <div className="w-fit mx-auto">
         <Badge
-          className={`${statusMap[status]} border px-3 py-1 text-xs font-semibold `}
+          className={`${statusMap[status]} border px-3 py-1 text-xs font-semibold`}
         >
           {status}
         </Badge>

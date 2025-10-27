@@ -78,7 +78,6 @@ const SubTableDetails = () => {
       key: "attended",
       title: "Attended",
       width: "120px",
-      render: (value) => <span className={`font-semibold `}>{value}</span>,
     },
   ];
 

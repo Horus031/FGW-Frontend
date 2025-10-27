@@ -13,7 +13,7 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
   const renderSelectOption = () => {
     return data.map((item, index) => {
       // If isSummary, not render the last button
-      if (isSummary && index === item.selectOptions.length)
+      if (isSummary && index === data.length - 1)
         return <div key={index} className="flex items-center gap-8 py-2">
           <div className="text-right text-primary w-[80px]">
             <span className="text-sm font-medium w-fit">
