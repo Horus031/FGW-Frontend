@@ -13,6 +13,8 @@
   --color-turquoise: #3addc2;
   --color-gray: #9a979c;
   --color-gray-weak: #666666;
+  --color-green-700: #00830D;
+  --color-green-100: #EDFFEE;
 
   /* Accessibility Colors */
   --color-danger: #ff5454;
@@ -126,7 +128,7 @@
 }
 
 .table-cell {
-  @apply text-left px-6 py-3 border border-gray-300;
+  @apply border border-gray-300;
 }
 
 .table-cell:first-child {
@@ -138,11 +140,11 @@
 }
 
 .custom-table {
-  @apply py-2 px-3 ;
+  @apply py-2 px-3 border border-gray-300;
 }
 
 .rounded-table {
-  @apply border-collapse rounded-md p-10 border-1 border-solid overflow-hidden border-gray-300 shadow-[0_0_0_1px] shadow-gray-300;
+  @apply border-collapse rounded-lg p-10 border-solid overflow-hidden border-gray-300 shadow-[0_0_0_1px] shadow-gray-300;
 }
 
 .task-new {
