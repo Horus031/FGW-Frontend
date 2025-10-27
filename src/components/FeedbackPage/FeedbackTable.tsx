@@ -20,7 +20,7 @@ const FeedbackTable = ({ data }: FeedbackTableProps) => {
 
   return (
     <div>
-      <Table columns={columns} data={data} feedback height="h-13" padding="p-4" />
+      <Table columns={columns} data={data} feedback headHeight="h-13" padding="p-4" />
     </div>
   );
 };

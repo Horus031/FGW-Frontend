@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import CourseCard from "../shared/CourseCard";
+import CourseCard from "../shared/CourseAttendanceCard";
 import { useUserStore } from "../../store/user";
 
 const ProfileCard = () => {
@@ -19,7 +19,7 @@ const ProfileCard = () => {
           </Avatar>
 
           <span className="text-[40px] font-bold text-primary">
-            {user?.givenName}
+            {user?.fullName}
           </span>
         </div>
 
@@ -32,7 +32,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="studentId"
-              value={user?.student?.studentCode}
+              value={user?.id}
             />
           </div>
           <div className="space-y-1">
@@ -54,7 +54,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="faculty"
-              value={user?.student?.faculty}
+              value={user?.faculty}
             />
           </div>
           <div className="space-y-1">
@@ -65,7 +65,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="year"
-              value={user?.student?.year}
+              value={user?.yearOfStudy}
             />
           </div>
         </div>

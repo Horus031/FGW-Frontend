@@ -24,7 +24,7 @@ const GradeSearch = (props: GradeSearchProps) => {
     <div className='space-y-2'>
       <Label>Search Student Grade</Label>
       <div className='flex items-center gap-3'>
-        <InputWithIcon ref={inputRef} placeholder='Enter Roll Number...'/>
+        <InputWithIcon ref={inputRef} placeholder='Enter Roll Number or Student Name...'/>
         <Button onClick={handleSearch} className='h-11 cursor-pointer active:scale-95'>Search</Button>
       </div>
     </div>

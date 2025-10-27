@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import CourseFeedbackList from "./CourseFeedbackList";
 import FeedbackTable from "./FeedbackTable";
-import { getTeacherFeedbacks, type CourseFeedbackGroup } from "../../models/feedback";
+import {
+  getTeacherFeedbacks,
+  type CourseFeedbackGroup,
+} from "../../models/feedback";
 
 const FeedbackContainer = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["teacher-feedbacks"],
-    queryFn: () => getTeacherFeedbacks(), // optionally pass teacherId
-    staleTime: 60_000,
-    refetchOnWindowFocus: false,
-  });
-
-  const groups: CourseFeedbackGroup[] = data ?? [];
+  const [groups, setGroups] = useState<CourseFeedbackGroup[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    getTeacherFeedbacks().then((data) => {
+      setGroups(data ?? []);
+    });
+  }, []);
 
   const listData = groups.map((g) => ({
     classCode: g.classCode,
@@ -22,7 +23,6 @@ const FeedbackContainer = () => {
 
   const tableData = groups[selectedIndex]?.feedbacks ?? [];
 
-  if (isLoading) return null;
 
   return (
     <div className="space-y-4.5">

@@ -32,11 +32,15 @@ const RequestStatusPage = React.lazy(
 const SchedulePage = React.lazy(
   () => import("../pages/HomeTemplate/SchedulePage")
 );
-const FeedbackPage = React.lazy(
-  () => import("../pages/HomeTemplate/FeedbackPage")
+const StudentFeedbackPage = React.lazy(
+  () => import("../pages/HomeTemplate/StudentFeedbackPage")
 );
 const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
+);
+
+const PendingFeedbackPage = React.lazy(
+  () => import("../pages/HomeTemplate/PendingFeedbackPage")
 );
 
 const NotFoundPage = React.lazy(
@@ -50,9 +54,19 @@ const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
 const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 
 // Teacher Route
-const ActivitiesPage = React.lazy(() => import("../pages/HomeTemplate/ActivitiesPage"))
+const ActivitiesPage = React.lazy(
+  () => import("../pages/HomeTemplate/ActivitiesPage")
+);
 
-const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"))
+const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"));
+
+const TimetablePage = React.lazy(
+  () => import("../pages/HomeTemplate/TimetablePage")
+);
+
+const CheckAttendancePage = React.lazy(
+  () => import("../pages/HomeTemplate/CheckAttendancePage")
+);
 
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
@@ -110,7 +124,7 @@ export const routes: RouteObject[] = [
           },
           {
             path: "feedback",
-            element: withSuspense(FeedbackPage),
+            element: withSuspense(StudentFeedbackPage),
           },
           {
             path: "booking",
@@ -119,6 +133,13 @@ export const routes: RouteObject[] = [
           {
             path: "course-overview",
             element: withSuspense(CourseOverview),
+          },
+          {
+            path: "pending-feedback",
+            element: <ProtectedRoute allowedRoles={["Student"]} />,
+            children: [
+              { path: "", element: withSuspense(PendingFeedbackPage) },
+            ],
           },
           {
             path: "not-found",
@@ -134,7 +155,19 @@ export const routes: RouteObject[] = [
             path: "grade",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
             children: [{ path: "", element: withSuspense(GradePage) }],
-          }
+          },
+          {
+            path: "timetable",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [{ path: "", element: withSuspense(TimetablePage) }],
+          },
+          {
+            path: "check-attendance",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [
+              { path: "", element: withSuspense(CheckAttendancePage) },
+            ],
+          },
         ],
       },
       {
@@ -154,7 +187,6 @@ export const routes: RouteObject[] = [
     element: withSuspense(LoginPage),
   },
   {
-    // Query parameter for path
     path: "/auth/bridge",
     element: withSuspense(AuthBridge),
   },

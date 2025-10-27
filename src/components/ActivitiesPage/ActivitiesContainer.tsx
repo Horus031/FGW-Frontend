@@ -265,7 +265,7 @@ const ActivitiesContainer = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <ActivitiesSelect tab={tab} setTab={setTab} />
         <ActivitiesFilter />
@@ -279,7 +279,7 @@ const ActivitiesContainer = () => {
           textSize="text-sm"
           padding="px-4 py-3"
           bordered
-          height="52px"
+          headHeight="52px"
           schedule
           activity
         />
