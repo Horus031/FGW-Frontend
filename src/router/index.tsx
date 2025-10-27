@@ -65,6 +65,10 @@ const CheckAttendancePage = React.lazy(
   () => import("../pages/HomeTemplate/CheckAttendancePage")
 );
 
+const TeachingSummaryPage = React.lazy(
+  () => import("../pages/HomeTemplate/TeachingSummaryPage")
+);
+
 const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
   return (
     <React.Suspense fallback={<LoadingPage />}>
@@ -161,6 +165,13 @@ export const routes: RouteObject[] = [
               { path: "", element: withSuspense(CheckAttendancePage) },
             ],
           },
+          {
+            path: "summary",
+            element: <ProtectedRoute allowedRoles={["Staff"]} />,
+            children: [
+              { path: "", element: withSuspense(TeachingSummaryPage) },
+            ],
+          }
         ],
       },
       {

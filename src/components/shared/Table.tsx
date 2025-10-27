@@ -1,3 +1,4 @@
+
 export type ColumnConfig<T> = {
   key: Extract<keyof T, Array<T> | string | number>;
   title: string | React.ReactNode;
@@ -20,6 +21,7 @@ type TableProps<T> = {
   feedback?: boolean;
   activity?: boolean;
   grade?: boolean;
+  summary?: boolean;
 };
 
 const Table = <T extends object>(props: TableProps<T>) => {
@@ -38,6 +40,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
     bordered,
     activity,
     grade,
+    summary,
   } = props;
 
   if (columns.length === 0) {
@@ -48,11 +51,11 @@ const Table = <T extends object>(props: TableProps<T>) => {
     <table
       className={`${
         activity === true
-          ? "lg:w-fit lg:scale-[99.1%] lg:origin-top-left xl:scale-100 xl:w-full overflow-x-hidden xl:whitespace-nowrap"
+          ? "lg:w-fit lg:scale-[99.1%] lg:origin-top-left xl:w-full xl:whitespace-nowrap"
           : "w-full"
       } ${
         centered === true ? "text-center" : "text-left"
-      } rounded-table rounded-lg`}
+      } rounded-table`}
     >
       <thead className={`${color || "bg-primary"}`}>
         <tr
@@ -66,7 +69,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
                 padding ? `${padding}` : "custom-table py-2"
               } ${bordered ? "border border-[#D2D6DB]" : ""} ${
                 headHeight ? headHeight : ""
-              }`}
+              } ${col.title === "Attend" ? "text-center" : ""}`}
               key={col.key}
               style={{ width: col.width || "auto" }}
             >
@@ -124,6 +127,36 @@ const Table = <T extends object>(props: TableProps<T>) => {
               } font-semibold `}
             >
               4
+            </td>
+          </tr>
+        )}
+        {summary && (
+          <tr
+            className={`text-primary ${
+              textSize ? textSize : ""
+            } h-18 bg-[#F0F0F0]`}
+          >
+            <td
+              className={`${
+                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+              } text-gray-weak text-sm`}
+              colSpan={2}
+            >
+              Summary (26 days ≈ 3.7 weeks) · Average: 3.8 slots/week
+            </td>
+            <td
+              className={`${
+                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+              } text-primary text-2xl font-bold`}
+            >
+              14
+            </td>
+            <td
+              className={`${
+                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+              } text-primary text-2xl font-bold`}
+            >
+              14
             </td>
           </tr>
         )}

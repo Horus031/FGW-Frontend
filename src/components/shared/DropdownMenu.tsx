@@ -97,6 +97,7 @@ const DropdownMenu = () => {
 
               {user?.role?.name === "Staff" && (
                 <button
+                  onClick={() => handleNavigate("summary")}
                   className="text-lg whitespace-nowrap flex items-center gap-4 w-full menu-items"
                   role="menuitem"
                 >
