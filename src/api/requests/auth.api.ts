@@ -33,6 +33,11 @@ export const getMe = async () => {
   return response.data;
 };
 
+export const refreshToken = async () => {
+  await api.post<UserInfo>("/auth/refresh");
+  return;
+};
+
 export const logout = async () => {
   const response = await api.post("/auth/logout");
 
