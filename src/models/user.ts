@@ -21,6 +21,7 @@ type Role = {
 
 
 export type UserAuth = {
+  user: UserInfo;
   accessToken: string;
   refreshToken: string;
 }

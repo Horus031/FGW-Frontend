@@ -14,10 +14,13 @@ const DropdownMenu = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { mutate: handleLogout } = useMutation({
-    mutationFn: () => logout(),
+    mutationFn: () => {
+      logout();
+      navigate("/login");
+      return Promise.resolve();
+    },
     onSuccess: () => {
       localStorage.clear();
-      navigate("/login");
       setIsShow(false);
     },
   });
