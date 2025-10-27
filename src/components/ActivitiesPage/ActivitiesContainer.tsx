@@ -279,7 +279,7 @@ const ActivitiesContainer = () => {
           textSize="text-sm"
           padding="px-4 py-3"
           bordered
-          height="52px"
+          headHeight="52px"
           schedule
           activity
         />

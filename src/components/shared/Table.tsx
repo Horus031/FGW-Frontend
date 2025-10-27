@@ -12,7 +12,8 @@ type TableProps<T> = {
   textSize?: string;
   textColor?: string;
   padding?: string;
-  height?: string;
+  headHeight?: string;
+  bodyHeight?: string;
   bordered?: boolean;
   centered?: boolean;
   schedule?: boolean;
@@ -29,7 +30,8 @@ const Table = <T extends object>(props: TableProps<T>) => {
     centered,
     textSize,
     textColor,
-    height,
+    headHeight,
+    bodyHeight,
     schedule,
     padding,
     feedback,
@@ -51,14 +53,14 @@ const Table = <T extends object>(props: TableProps<T>) => {
       <thead className={`${color || "bg-primary"}`}>
       <tr
         className={`${textColor ? textColor : "text-white"} ${
-        height ? height : ""
+        headHeight ? headHeight : ""
         } ${textSize ? textSize : "text-base"}`}
       >
         {columns.map((col) => (
         <th
           className={`font-medium ${
           padding ? `${padding}` : "custom-table py-2"
-          } ${bordered ? "border border-[#D2D6DB]" : ""}`}
+          } ${bordered ? "border border-[#D2D6DB]" : ""} ${headHeight ? headHeight : ""}`}
           key={col.key}
           style={{ width: col.width || "auto" }}
         >
@@ -71,7 +73,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
       {data.map((row, rowIdx) => (
         <tr
         className={`text-primary ${textSize ? textSize : ""} ${
-          height ? height : ""
+          bodyHeight ? bodyHeight : ""
         } ${
           schedule || feedback
           ? rowIdx % 2 !== 0
