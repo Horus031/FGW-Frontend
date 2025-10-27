@@ -135,7 +135,7 @@ const AttendanceContainer = () => {
       </div>
 
       <div className="flex items-start gap-6">
-        <CourseGroupList data={courseGroupData} />
+        <CourseGroupList courseGroupData={courseGroupData} />
 
         <div className="flex flex-col">
           <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
