@@ -19,7 +19,7 @@ const AuthBridge = () => {
       // console.log("AuthBridge - Redirecting to login in 3 seconds...");
       setTimeout(() => {
         navigate("/login", { replace: true });
-      }, 3000);
+      }, 100);
     }
   }, [code, navigate]);
 
@@ -36,7 +36,7 @@ const AuthBridge = () => {
       // console.log("AuthBridge - response type:", typeof data);
 
       // Validate that we have at least an email or id
-      if (!data.id && !data.email) {
+      if (!data.user.id && !data.user.email) {
         // console.error("AuthBridge - Invalid user data received:", data);
         // console.error("AuthBridge - This should not happen if exchangeToken properly fetched user data");
         navigate("/login", { replace: true });
@@ -45,15 +45,13 @@ const AuthBridge = () => {
 
       // Save user data to Zustand store (which also saves to localStorage)
       setUser({
-        id: data.id,
-        email: data.email,
-        role: data.role,
-        avatar: data.avatar,
-        fullName: data.fullName,
-        campus: data.campus,
-        academicYear: data.academicYear,
-        yearOfStudy: data.yearOfStudy,
-        faculty: data.faculty,
+        id: data.user.id,
+        email: data.user.email,
+        role: data.user.role,
+        avatar: data.user.avatar,
+        fullName: data.user.fullName,
+        campus: data.user.campus,
+        student: data.user.student,
       });
       // console.log("AuthBridge - User saved successfully:", data.email);
       // console.log("AuthBridge - Full user data:", data);
@@ -62,7 +60,7 @@ const AuthBridge = () => {
       // console.log("AuthBridge - Navigating to home in 2 seconds...");
       setTimeout(() => {
         navigate("/", { replace: true });
-      }, 10000);
+      }, 100);
     }
   }, [isSuccess, data, navigate, setUser]);
 
