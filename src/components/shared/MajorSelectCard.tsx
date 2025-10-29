@@ -6,24 +6,27 @@ type MajorSelectCardProps = {
     selectOptions: string[];
   }[];
   isSummary?: boolean;
+  noMajor?: boolean;
 };
 
 const MajorSelectCard = (props: MajorSelectCardProps) => {
-  const { data, isSummary } = props;
+  const { data, isSummary, noMajor } = props;
   const renderSelectOption = () => {
     return data.map((item, index) => {
       // If isSummary, not render the last button
       if (isSummary && index === data.length - 1)
-        return <div key={index} className="flex items-center gap-8 py-2">
-          <div className="text-right text-primary w-[80px]">
-            <span className="text-sm font-medium w-fit">
-              From:
-            </span>
+        return (
+          <div key={index} className="flex items-center gap-8 py-2">
+            <div className="text-right text-primary w-[80px]">
+              <span className="text-sm font-medium w-fit">From:</span>
+            </div>
+            <div className="flex items-center gap-2 w-fit font-semibold">
+              <SummaryPicker /> to <SummaryPicker />
+            </div>
           </div>
-          <div className="flex items-center gap-2 w-fit font-semibold">
-            <SummaryPicker/> to <SummaryPicker/>
-          </div>
-        </div>;
+        );
+
+      if (noMajor && index === data.length - 1) return;
       return (
         <div key={item.selectName} className="flex items-center gap-8 py-2">
           <div className="text-right text-primary w-[80px]">

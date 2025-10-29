@@ -9,7 +9,7 @@ const CourseCard = (props: CourseCardProps) => {
     const { percent, active } = props;
 
   return (
-    <div className={`${active ? "border-bright border-3" : "border-gray-400 border-1"} p-5 rounded-lg w-full cursor-pointer active:scale-95`}>
+    <div className={`${active ? "border-primary border-2" : "border-gray-400 border-1"} p-5 rounded-lg w-full cursor-pointer active:scale-95`}>
       <div className="flex items-center justify-between gap-3">
         <div className="flex flex-col gap-2">
           <span className="text-base font-semibold text-primary text-nowrap">
