@@ -6,19 +6,19 @@ import Pagination from "../../shared/Pagination";
 
 const data: AttendanceSlot[] = [
   {
-    date: "Thu - Jan 09, 2024", status: "present", slot: "Slot 4", code: "TDS1502",
+    date: "Thu - Jan 09, 2024", status: "present", slot: "Slot 4", classid: "TDS1502",
   },
   {
-    date: "Wed - Jan 08, 2024", status: "absent", slot: "Slot 3", code: "TDS1502",
+    date: "Wed - Jan 08, 2024", status: "absent", slot: "Slot 3", classid: "TDS1502clear",
   },
   {
-    date: "Tue - Jan 07, 2024", status: "present", slot: "Slot 2", code: "TDS1502",
+    date: "Tue - Jan 07, 2024", status: "present", slot: "Slot 2", classid: "TDS1502",
   },
   {
-    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", classid: "TDS1502",
   },
   {
-    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", code: "TDS1502",
+    date: "Mon - Jan 06, 2024", status: "present", slot: "Slot 1", classid: "TDS1502",
   },
 ];
 
@@ -46,10 +46,10 @@ const AttendanceDetails = () => {
 
 
       <div className="flex flex-col overflow-y-hidden max-h-[500px]">
-        <AttendanceSlotDetail data={data} />
+        <AttendanceSlotDetail schedule={data} />
       </div>
 
-      <Pagination/>
+      <Pagination />
 
     </div>
   );

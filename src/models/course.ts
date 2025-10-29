@@ -1,8 +1,8 @@
 import type { UserInfo } from "./user";
 
-export type ScheduleStatus = "present" | "absent" | "pending";
+export type ScheduleStatus = "PRESENT" | "ABSENT" | "PENDING";
 export type GradeStatus = "pass" | "fail";
-export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6 | null;
 
 
 export type CourseSchedule = {
@@ -12,7 +12,7 @@ export type CourseSchedule = {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
-  date: string;
+  date: string ;
   room: string;
   instructor: string;
 };

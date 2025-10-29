@@ -19,6 +19,7 @@ type Role = {
 }
 
 interface student {
+  id: string;
   faculty: string;
   yearOfStudy: number;
   startTerm: string;
