@@ -9,7 +9,7 @@ const data: AttendanceSlot[] = [
     date: "Thu - Jan 09, 2024", status: "PRESENT", slot: "Slot 4", classid: "TDS1502",
   },
   {
-    date: "Wed - Jan 08, 2024", status: "ABSENT", slot: "Slot 3", classid: "TDS1502clear",
+    date: "Wed - Jan 08, 2024", status: "ABSENT", slot: "Slot 3", classid: "TDS1502",
   },
   {
     date: "Tue - Jan 07, 2024", status: "PRESENT", slot: "Slot 2", classid: "TDS1502",

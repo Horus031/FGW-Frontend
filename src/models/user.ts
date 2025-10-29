@@ -25,6 +25,7 @@ interface student {
   startTerm: string;
   endTerm: string;
   studentCode: string;
+  startYear: number;
 }
 
 export type UserAuth = {
