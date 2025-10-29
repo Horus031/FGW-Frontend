@@ -14,10 +14,13 @@ const DropdownMenu = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { mutate: handleLogout } = useMutation({
-    mutationFn: () => logout(),
+    mutationFn: () => {
+      logout();
+      navigate("/login");
+      return Promise.resolve();
+    },
     onSuccess: () => {
       localStorage.clear();
-      navigate("/login");
       setIsShow(false);
     },
   });
@@ -81,7 +84,7 @@ const DropdownMenu = () => {
             >
               <div className="flex flex-col gap-2 px-5 py-3">
                 <p className="text-lg">{user?.fullName}</p>
-                <p className="text-gray-400">{user?.id}</p>
+                <p className="text-gray-400">{user?.student?.studentCode}</p>
               </div>
 
               <button

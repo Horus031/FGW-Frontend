@@ -6,159 +6,121 @@ import { Badge } from "../../ui/badge";
 import { MapPin, User } from "lucide-react";
 import { useWeekStore } from "../../../store/week";
 import Table from "../../shared/Table";
+import type { AttendanceSlot } from "../../../models/attendance";
 
-const ScheduleContainer = () => {
+
+const ScheduleContainer = ({ schedule }: { schedule: AttendanceSlot[] }) => {
   const { selectedWeek } = useWeekStore();
   const daysInWeek = useDaysInWeek(selectedWeek);
 
-  const courseSchedules: CourseSchedule[] = [
-    {
-      classCode: "COS1204",
-      courseName: "DESI1219.3",
-      status: "present",
-      startTime: "08:00",
-      endTime: "09:30",
-      dayOfWeek: 0,
-      date: "2025-09-29",
-      room: "A101",
-      instructor: "SonND24",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "COMP1841",
-      status: "present",
-      startTime: "08:00",
-      endTime: "09:30",
-      dayOfWeek: 2,
-      date: "2025-10-01",
-      room: "A101",
-      instructor: "SonND24",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "COMP1234",
-      status: "absent",
-      startTime: "9:30",
-      endTime: "11:00",
-      dayOfWeek: 1,
-      date: "2025-09-30",
-      room: "B202",
-      instructor: "SonND24",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "COMP1234",
-      status: "absent",
-      startTime: "12:00",
-      endTime: "13:30",
-      dayOfWeek: 1,
-      date: "2025-09-30",
-      room: "B202",
-      instructor: "SonND24",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "COMP1234",
-      status: "absent",
-      startTime: "13:30",
-      endTime: "15:00",
-      dayOfWeek: 1,
-      date: "2025-09-30",
-      room: "B202",
-      instructor: "SonND24",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "COMP1652",
-      status: "present",
-      startTime: "12:00",
-      endTime: "13:30",
-      dayOfWeek: 0,
-      date: "2025-09-29",
-      instructor: "SonND24",
-      room: "B202",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "Physics",
-      status: "pending",
-      startTime: "15:30",
-      endTime: "17:00",
-      dayOfWeek: 3,
-      date: "2025-10-02",
-      room: "C305",
-      instructor: "SarahK",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "Chemistry",
-      status: "present",
-      startTime: "12:00",
-      endTime: "13:30",
-      dayOfWeek: 4,
-      date: "2025-10-03",
-      room: "E501",
-      instructor: "SarahK",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "Chemistry",
-      status: "present",
-      startTime: "12:00",
-      endTime: "13:30",
-      dayOfWeek: 5,
-      date: "2025-10-04",
-      room: "E501",
-      instructor: "SarahK",
-    },
-    {
-      classCode: "COS1204",
-      courseName: "Chemistry",
-      status: "present",
-      startTime: "12:00",
-      endTime: "13:30",
-      dayOfWeek: 6,
-      date: "2025-10-05",
-      room: "E501",
-      instructor: "SarahK",
-    },
-  ];
+  // console.log('📅 ScheduleContainer render', {
+  //   selectedWeek,
+  //   scheduleLength: schedule?.length || 0,
+  //   schedule: schedule,
+  //   daysInWeek
+  // });
+
+  // if (!schedule || schedule.length === 0) {
+  //   return (
+  //     <div className="flex flex-col gap-4">
+  //       <div className="w-full text-center py-8 text-gray-500">
+  //         No classes scheduled for this week
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  // ✅ Helper function to normalize time format from HH:mm:ss to HH:mm
+  const normalizeTime = (time: string | undefined): string => {
+    if (!time) return "";
+    // If time is "07:30:00", return "07:30"
+    // If time is already "07:30", return as is
+    return time.substring(0, 5);
+  };
 
   const scheduleData: ScheduleRowData[] = TIME_SLOTS.map(
-    ({ start, end }, index) => {
+    ({ start, end }, slotIndex) => {
       const row: ScheduleRowData = {
-        timeSlot: `Slot ${index + 1}`,
+        timeSlot: `Slot ${slotIndex + 1}`,
       };
 
-      daysInWeek.forEach((dayDate, index) => {
-        const dayKey = DAY_NAMES[index].toLowerCase() as keyof Omit<
-          ScheduleRowData,
-          "timeSlot"
-        >;
+      daysInWeek.forEach((dayDate, dayIndex) => {
+        const dayKey = DAY_NAMES[dayIndex].toLowerCase() as keyof Omit<ScheduleRowData, "timeSlot">;
 
-        const courseForSlot = courseSchedules.find((course) => {
-          const courseDate = new Date(course.date); // Ngày course đang lặp
-          const currentDayDate = new Date(dayDate); // Ngày của tuần
 
-          courseDate.setHours(0, 0, 0, 0);
+        const courseForSlot = schedule.find((slot) => {
+          if (!slot.date) return false;
+
+          // ✅ Parse the date string from API (assuming format like "2025-10-28")
+          const courseDateStr = slot.date.split('T')[0]; // Handle ISO format
+          const courseDate = new Date(courseDateStr + 'T00:00:00'); // Force local timezone
+
+          const currentDayDate = new Date(dayDate);
           currentDayDate.setHours(0, 0, 0, 0);
 
-          return (
-            course.startTime === start &&
-            course.endTime === end &&
-            course.dayOfWeek === index &&
-            courseDate.getTime() === currentDayDate.getTime()
-          );
+          const dateMatch = courseDate.getTime() === currentDayDate.getTime();
+
+          // ✅ Convert API day numbering (0=Sunday) to your system (0=Monday)
+          // If API uses 0=Sunday: Sunday=0, Monday=1, Tuesday=2, etc.
+          // Your system: Monday=0, Tuesday=1, Wednesday=2, etc.
+          const apiDay = slot.day ?? -1;
+          const adjustedDay = apiDay === 0 ? 6 : apiDay - 1; // Convert Sunday=0 to Sunday=6, and shift others down
+          const dayMatch = adjustedDay === dayIndex;
+
+          // ✅ Normalize time formats for comparison
+          const normalizedSlotStart = normalizeTime(slot.slotStartTime);
+          const normalizedSlotEnd = normalizeTime(slot.slotEndTime);
+          const timeMatch = normalizedSlotStart === start && normalizedSlotEnd === end;
+
+          // Debug logging for first slot only
+          // if (slotIndex === 0 && dayIndex === 0) {
+          //   console.log('🔍 Checking first slot:', {
+          //     slot,
+          //     courseDateStr,
+          //     courseDate: courseDate.toDateString(),
+          //     currentDayDate: currentDayDate.toDateString(),
+          //     dateMatch,
+          //     apiDay,
+          //     adjustedDay,
+          //     dayIndex,
+          //     dayMatch,
+          //     normalizedSlotStart,
+          //     normalizedSlotEnd,
+          //     start,
+          //     end,
+          //     timeMatch,
+          //     allMatch: dateMatch && dayMatch && timeMatch
+          //   });
+          // }
+
+          return dateMatch && dayMatch && timeMatch;
         });
 
         if (courseForSlot) {
-          row[dayKey] = courseForSlot;
+          // console.log('✅ Found course for slot:', {
+          //   dayKey,
+          //   slotIndex,
+          //   course: courseForSlot
+          // });
+
+          row[dayKey] = {
+            classCode: courseForSlot.class || "",
+            courseName: courseForSlot.course || "",
+            status: courseForSlot.status || "PENDING",
+            startTime: courseForSlot.slotStartTime || "",
+            endTime: courseForSlot.slotEndTime || "",
+            dayOfWeek: courseForSlot.day ?? null,
+            date: courseForSlot.date || "",
+            room: courseForSlot.room || "",
+            instructor: courseForSlot.teacher || "",
+          };
         }
       });
 
       return row;
     }
   );
+
 
   const columns: ColumnConfig<ScheduleRowData>[] = [
     {
@@ -193,32 +155,30 @@ const ScheduleContainer = () => {
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 lg:px-1 xl:px-2 flex flex-col justify-between gap-1 font-semibold rounded-sm border px-3 pb-1 py-1.5 mx-auto ${
-              course.status === "present"
-                ? "border-green-700 bg-green-700/10"
-                : course.status === "absent"
+            className={`lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 lg:px-1 xl:px-2 flex flex-col justify-between gap-1 font-semibold rounded-sm border px-3 pb-1 py-1.5 mx-auto ${course.status === "PRESENT"
+              ? "border-green-700 bg-green-700/10"
+              : course.status === "ABSENT"
                 ? "border-danger bg-danger/10"
                 : "border-gray-500 bg-gray-500/10"
-            }`}
+              }`}
           >
             <div className="flex items-center leading-0 justify-between lg:text-[8px] xl:text-[11px]">
               <span className="text-secondary font-semibold lg:text-[10px] xl:text-[11px]">
                 {course.classCode}
               </span>
               <Badge
-                className={`px-1 py-0 lg:text-[8px] xl:text-[11px] font-medium rounded-sm ${
-                  course.status === "present"
-                    ? "border-approve text-approve bg-approve/10"
-                    : course.status === "absent"
+                className={`px-1 py-0 lg:text-[8px] xl:text-[11px] font-medium rounded-sm ${course.status === "PRESENT"
+                  ? "border-approve text-approve bg-approve/10"
+                  : course.status === "ABSENT"
                     ? "border-danger text-danger bg-danger/10"
                     : "border-gray-500 text-gray-500 bg-gray-500/10"
-                }`}
+                  }`}
               >
-                {course.status === "present"
+                {course.status === "PRESENT"
                   ? "Attended"
-                  : course.status === "absent"
-                  ? "Absent"
-                  : "Not yet"}
+                  : course.status === "ABSENT"
+                    ? "Absent"
+                    : "Not yet"}
               </Badge>
             </div>
             <span className="lg:text-[10px] xl:text-xs">

@@ -6,6 +6,8 @@ import { useUserStore } from "../../store/user";
 
 const ProfileCard = () => {
   const user = useUserStore((state) => state.user);
+  const currentYear = new Date().getFullYear();
+  const yearOfStudy = currentYear - Number(user?.student?.startYear);
 
   return (
     <div className="flex flex-col gap-18 lg:w-10/12 w-8/12">
@@ -32,7 +34,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="studentId"
-              value={user?.id}
+              value={user?.student?.studentCode || "null"}
             />
           </div>
           <div className="space-y-1">
@@ -48,13 +50,13 @@ const ProfileCard = () => {
           </div>
           <div className="space-y-1">
             <Label htmlFor="faculty" className="mb-2">
-              Faculty
+              Facultyi
             </Label>
             <Input
               className="py-2.5 border-gray-400"
               disabled
               id="faculty"
-              value={user?.faculty}
+              value={user?.student?.faculty}
             />
           </div>
           <div className="space-y-1">
@@ -65,7 +67,7 @@ const ProfileCard = () => {
               className="py-2.5 border-gray-400"
               disabled
               id="year"
-              value={user?.yearOfStudy}
+              value={yearOfStudy || "null"}
             />
           </div>
         </div>
