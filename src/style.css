@@ -128,7 +128,7 @@
 }
 
 .table-cell {
-  @apply border border-gray-300;
+  @apply border border-gray-300 py-3 px-4;
 }
 
 .table-cell:first-child {

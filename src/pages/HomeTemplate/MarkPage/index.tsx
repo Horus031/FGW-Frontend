@@ -2,8 +2,9 @@ import { useState } from "react";
 import MarkCourse from "../../../components/MarkPage/MarkCourse";
 import MarkTable from "../../../components/MarkPage/MarkTable";
 import PageTitle from "../../../components/shared/PageTitle";
-import TermSelect from "../../../components/shared/TermSelect";
 import type { CourseMark } from "../../../models/course";
+import MajorSelectCard from "../../../components/shared/MajorSelectCard";
+import { majorData } from "../../../constants/temp";
 
 const data: CourseMark[] = [
   {
@@ -54,11 +55,13 @@ const MarkPage = () => {
       <PageTitle breadcrumb="Mark Report" />
 
       <div className="flex flex-col gap-6">
-        <TermSelect />
+        <div className="w-fit">
+          <MajorSelectCard data={majorData} noMajor/>
+        </div>
 
-        <div className="flex gap-12">
-          <div className="flex flex-col gap-2.5 w-5/12">{renderCourse()}</div>
-          <div className="w-7/12">
+        <div className="flex gap-8.5 justify-between">
+          <div className="flex flex-col gap-2.5">{renderCourse()}</div>
+          <div className="w-fit">
             <MarkTable />
           </div>
         </div>
