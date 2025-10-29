@@ -35,10 +35,10 @@ const processQueue = (error: unknown, token: string | null = null): void => {
 // --- Request interceptor (for logging) ---
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    console.log(`API Request - ${config.method?.toUpperCase()} ${config.url}`, {
-      withCredentials: config.withCredentials,
-      headers: config.headers,
-    });
+    // console.log(`API Request - ${config.method?.toUpperCase()} ${config.url}`, {
+    //   withCredentials: config.withCredentials,
+    //   headers: config.headers,
+    // });
     // console.log('API Request - Cookies will be sent automatically by browser');
     return config;
   },
