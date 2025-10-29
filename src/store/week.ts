@@ -11,6 +11,7 @@ interface WeekState {
   setSelectedWeek: (week: Weeks) => void;
 }
 
+
 const currentYear = new Date().getFullYear().toString();
 
 function sameWeek(a: Weeks | null, b: Weeks | null) {
@@ -22,25 +23,34 @@ function sameWeek(a: Weeks | null, b: Weeks | null) {
   );
 }
 
+const initialWeeks = getWeeksInYear(currentYear);
+const today = new Date();
+const initialWeek = initialWeeks.find(
+  (week) => week.start <= today && today <= week.end
+) || initialWeeks[0] || null;
+
 export const useWeekStore = create<WeekState>((set) => ({
   selectedYear: currentYear,
-  weeksInYear: getWeeksInYear(currentYear),
-  selectedWeek: null,
+  weeksInYear: initialWeeks,
+  selectedWeek: initialWeek, // ✅ Initialize with current week instead of null
   setSelectedYear: (year: string) =>
     set((state) => {
       if (year === state.selectedYear) {
         return state;
       }
       const weeks = getWeeksInYear(year);
-      return { selectedYear: year, weeksInYear: weeks };
+      return { 
+        selectedYear: year, 
+        weeksInYear: weeks,
+        selectedWeek: null // Reset when year changes
+      };
     }),
   setSelectedWeek: (week: Weeks) =>
     set((state) => {
       if (sameWeek(state.selectedWeek, week)) {
-        // return the same state object so zustand won't notify subscribers
         return state;
       }
-      return { ...state, selectedWeek: week };
+      return { selectedWeek: week };
     }),
 }));
 // ...existing code...

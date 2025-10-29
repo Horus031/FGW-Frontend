@@ -39,7 +39,7 @@ api.interceptors.request.use(
       withCredentials: config.withCredentials,
       headers: config.headers,
     });
-    console.log('API Request - Cookies will be sent automatically by browser');
+    // console.log('API Request - Cookies will be sent automatically by browser');
     return config;
   },
   (error: AxiosError) => Promise.reject(error)
@@ -64,13 +64,13 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        console.log("API Interceptor - Refreshing token...");
+        // console.log("API Interceptor - Refreshing token...");
         await refreshToken();
         processQueue(null);
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        console.error("API Interceptor - Token refresh failed", refreshError);
+        // console.error("API Interceptor - Token refresh failed", refreshError);
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

@@ -29,7 +29,7 @@ export const TIME_SLOTS = [
     end: "09:30"
   },
   {
-    start: "9:30", 
+    start: "09:30", 
     end: "11:00"
   },
   {

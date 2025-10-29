@@ -1,15 +1,24 @@
-import type { ScheduleStatus } from "./course";
+import type { DayOfWeek, ScheduleStatus } from "./course";
 
-export type AttendanceSlot = {
-  slot: string;
-  date: string;
-  status: ScheduleStatus;
-  code: string;
-};
+export interface AttendanceSlot {
+  class?: string;
+  course?: string;
+  room?: string;
+  teacher?: string;
+  status?: ScheduleStatus;
+  day?: DayOfWeek;
+  slot?: string;
+  slotStartTime?: string;
+  slotEndTime?: string;
+  date?: string;
+  classid?: string;
+}
 
-
-export type AttendanceSlotProps = {
-  data: AttendanceSlot[];
+export interface AttendanceResponse {
+  studentId?: number;
+  startDate?: string;
+  endDate?: string;
+  schedule: AttendanceSlot[];
 }
 
 
