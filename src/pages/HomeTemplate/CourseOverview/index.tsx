@@ -1,79 +1,126 @@
+import { useState, useEffect } from 'react';
 import CourseOverviewCard from '../../../components/CourseOverviewPage/CourseOverviewCard';
 import type { Course } from '../../../models/course';
-import type { UserInfo } from '../../../models/user';
 import { Search } from "lucide-react";
 import { Input } from "../../../components/ui/input";
 import FilterButton from '../../../components/shared/Filter';
 import Pagination from '../../../components/shared/Pagination';
+import { getAllCourseForStudent } from '../../../api/requests/course.api';
+
+// Define the filter type for this component
+interface CourseFilters {
+  departmentid?: number;
+  code?: string;
+  teacherid?: string;
+  level?: string;
+  [key: string]: string | number | undefined;
+}
 
 const CourseOverview = () => {
-  const sampleStudents: Pick<UserInfo, "avatar">[] = [
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' },
-    { avatar: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F775956210820654804%2F&psig=AOvVaw05aF1aUbjVfWl55D5TTTh4&ust=1760344085806000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCIChkvqenpADFQAAAAAdAAAAABAj' }
-  ];
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState<CourseFilters>({});
 
-  const sampleCourses: Course[] = [
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Design Research Project",
-      classCode: "TDS1502",
-      totalSlots: 40,
-      attendancePercent: 75,
-      instructor: "SonND24",
-      students: sampleStudents
-    },
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Advanced Programming",
-      classCode: "PRG1001",
-      totalSlots: 35,
-      attendancePercent: 85,
-      instructor: "NguyenVH",
-      students: sampleStudents.slice(0, 6)
-    },
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Database Systems",
-      classCode: "DBS2001",
-      totalSlots: 45,
-      attendancePercent: 90,
-      instructor: "TranTM",
-      students: sampleStudents.slice(0, 5)
-    },
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Database Systems",
-      classCode: "DBS2001",
-      totalSlots: 45,
-      attendancePercent: 90,
-      instructor: "TranTM",
-      students: sampleStudents.slice(0, 5)
-    },
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Database Systems",
-      classCode: "DBS2001",
-      totalSlots: 45,
-      attendancePercent: 90,
-      instructor: "TranTM",
-      students: sampleStudents.slice(0, 5)
-    },
-    {
-      courseTerm: "Summer 2024",
-      courseName: "Database Systems",
-      classCode: "DBS2001",
-      totalSlots: 45,
-      attendancePercent: 90,
-      instructor: "TranTM",
-      students: sampleStudents.slice(0, 5)
-    }
-  ];
+  const itemsPerPage = 6;
+
+  // Define filter options
+  // const filterOptions = [
+  //   {
+  //     label: 'Department',
+  //     value: 'departmentid',
+  //     type: 'number' as const,
+  //     placeholder: 'Enter department ID...'
+  //   },
+  //   {
+  //     label: 'Class Code',
+  //     value: 'code',
+  //     type: 'text' as const,
+  //     placeholder: 'Enter class code...'
+  //   },
+  //   {
+  //     label: 'Teacher ID',
+  //     value: 'teacherid',
+  //     type: 'text' as const,
+  //     placeholder: 'Enter teacher ID...'
+  //   },
+  //   {
+  //     label: 'Level',
+  //     value: 'level',
+  //     type: 'select' as const,
+  //     options: [
+  //       { label: 'Beginner', value: 'beginner' },
+  //       { label: 'Intermediate', value: 'intermediate' },
+  //       { label: 'Advanced', value: 'advanced' }
+  //     ],
+  //     placeholder: 'Select level...'
+  //   }
+  // ];
+
+  // Fetch courses from API
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await getAllCourseForStudent(currentPage, itemsPerPage);
+
+        if (!Array.isArray(response)) {
+          setCourses([]);
+          return;
+        }
+
+        // Sample student avatars
+        const sampleStudents = [
+          { avatar: 'https://i.pravatar.cc/150?img=1' },
+          { avatar: 'https://i.pravatar.cc/150?img=2' },
+          { avatar: 'https://i.pravatar.cc/150?img=3' },
+          { avatar: 'https://i.pravatar.cc/150?img=4' },
+          { avatar: 'https://i.pravatar.cc/150?img=5' },
+        ];
+
+        // 🔁 Transform API response to match CourseOverviewCard props
+        const transformedCourses: Course[] = response.map((item) => ({
+          courseTerm: "Fall 2025",              // static or map from item if available
+          courseName: item.title || "Untitled", // from API
+          classCode: item.code || "N/A",
+          totalSlots: item.slot || 0,
+          attendancePercent: Math.floor(Math.random() * 40) + 60, // mock 60–100%
+          instructor: `${item.teacherId}`,
+          students: sampleStudents.slice(0, Math.min(5, item.slot / 10)),
+        }));
+
+        setCourses(transformedCourses);
+
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+        setError("Failed to fetch courses. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, [currentPage, searchQuery, filters]);
+  // Handle search input
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Handle filter changes
+  const handleFilterChange = (newFilters: CourseFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="max-w-7xl mx-auto pt-6">
@@ -87,26 +134,62 @@ const CourseOverview = () => {
           <Input
             placeholder="Search..."
             className="pl-10 font-medium"
+            value={searchQuery}
+            onChange={handleSearch}
           />
         </div>
         {/* Filter button */}
         <div className="ml-4">
-          <FilterButton />
+          <FilterButton<CourseFilters>
+            // filters={filterOptions}
+            onFilterChange={handleFilterChange}
+          />
+
         </div>
       </div>
-      {/* Course cards*/}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sampleCourses.map((course, _index) => (
-          <CourseOverviewCard
-            key={course.classCode}
-            course={course}
-            students={course.students}
-          />
-        ))}
-      </div>
-      <div className='pt-10'>
-        <Pagination />
-      </div>
+
+      {/* Loading state */}
+      {loading && (
+        <div className="text-center py-12">
+          <p className="text-gray-500">Loading courses...</p>
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div className="text-center py-12">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
+
+      {/* Course cards */}
+      {!loading && !error && (
+        <>
+          {courses.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course, index) => (
+                <CourseOverviewCard
+                  key={`${course.classCode}-${index}`}
+                  course={course}
+                  students={course.students}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No courses found.</p>
+            </div>
+          )}
+
+          {/* ✅ Always show pagination, even when empty */}
+          <div className="pt-10">
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

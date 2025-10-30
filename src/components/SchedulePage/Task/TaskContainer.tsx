@@ -22,7 +22,14 @@ const TaskContainer = () => {
           ))}
         </div>
         <div className="flex justify-center">
-          <Pagination />
+          <div className="flex justify-center">
+            <Pagination
+              currentPage={1}
+              totalPages={6}
+              onPageChange={(page) => console.log("Go to page:", page)}
+            />
+          </div>
+
         </div>
       </div>
     </div>
