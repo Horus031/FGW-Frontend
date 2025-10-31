@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import { useWeekStore } from "../../../store/week";
 import type { Weeks } from "../../../hooks/useWeeksInYear";
 import DatePicker from "../../shared/DatePicker";
@@ -29,43 +29,21 @@ const ScheduleSelect = () => {
     selectedWeek,
   } = useWeekStore();
 
-  const prevWeeksRef = useRef<Weeks[] | null>(null);
-  useEffect(() => {
-    if (prevWeeksRef.current !== weeksInYear) {
-      prevWeeksRef.current = weeksInYear;
-    }
-
-    if (weeksInYear.length > 0) {
-      const today = new Date();
-      const currentYear = today.getFullYear();
-
-      let defaultWeek: Weeks | null = null;
-
-      if (Number(selectedYear) === currentYear) {
-        defaultWeek =
-          weeksInYear.find(
-            (week) => week.start <= today && today <= week.end
-          ) || null;
-      } else {
-        defaultWeek = weeksInYear[0];
-      }
-
-      if (defaultWeek && !isSameWeek(defaultWeek, selectedWeek)) {
-        setSelectedWeek(defaultWeek);
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weeksInYear, selectedYear, setSelectedWeek]);
+  // ✅ Remove the entire useEffect that sets default week
+  // The store now handles initialization
 
   const handleWeekChange = (value: string) => {
+    // console.log('🔵 handleWeekChange called');
     const parsed: Weeks = JSON.parse(value);
     parsed.start = new Date(parsed.start);
     parsed.end = new Date(parsed.end);
 
     if (!isSameWeek(parsed, selectedWeek)) {
+      // console.log('🔵 Setting week:', parsed);
       setSelectedWeek(parsed);
     }
   };
+
 
   const renderWeeks = useMemo(() => {
     if (weeksInYear.length === 0) return null;
@@ -104,7 +82,12 @@ const ScheduleSelect = () => {
         </SelectContent>
       </Select>
 
-      <DatePicker weeksInYear={weeksInYear} selectedWeek={selectedWeek} handleWeekChange={handleWeekChange} renderWeeks={() => renderWeeks} />
+      <DatePicker
+        weeksInYear={weeksInYear}
+        selectedWeek={selectedWeek}
+        handleWeekChange={handleWeekChange}
+        renderWeeks={() => renderWeeks}
+      />
     </div>
   );
 };

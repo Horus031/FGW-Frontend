@@ -13,7 +13,7 @@ const AttendancePage = () => {
       <PageTitle breadcrumb="Attendance Report" />
 
       {role === "Student" ? (
-        <div className="flex flex-row gap-8 justify-between">
+        <div className="space-y-6">
           <AttendanceCourseSelect />
 
           <AttendanceDetails />

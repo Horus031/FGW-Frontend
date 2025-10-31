@@ -19,11 +19,13 @@ type Role = {
 }
 
 interface student {
+  id: string;
   faculty: string;
   yearOfStudy: number;
   startTerm: string;
   endTerm: string;
   studentCode: string;
+  startYear: number;
 }
 
 export type UserAuth = {

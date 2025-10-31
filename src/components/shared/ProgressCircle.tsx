@@ -34,7 +34,7 @@ const ProgressCircle = (props: ProgressCircleProps) => {
           />
         </svg>
         <div className="absolute text-center top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-          <span className="text-center text-sm font-medium text-gray-400">
+          <span className="text-center text-sm font-medium text-primary">
             Absent <br /> 5%
           </span>
         </div>
