@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import CourseCard from "../shared/CourseAttendanceCard";
 import { useUserStore } from "../../store/user";
 
 const ProfileCard = () => {
@@ -95,16 +94,6 @@ const ProfileCard = () => {
               value={user?.campus?.name || "null"}
             />
           </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-6 w-full">
-        <h2 className="text-lg font-semibold">Course</h2>
-
-        <div className="grid grid-cols-3 gap-5">
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
         </div>
       </div>
     </div>
