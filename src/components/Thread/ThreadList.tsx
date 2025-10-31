@@ -1,5 +1,5 @@
 import ThreadCard from "./ThreadCard"
-import { MessageSquare  } from "lucide-react"
+import { MessageSquare } from "lucide-react"
 
 interface Thread {
   id: number
@@ -19,11 +19,6 @@ interface Thread {
       name: string
     }
   }>
-  taggedUsers: Array<{
-    id: number
-    email: string
-    name: string
-  }>
 }
 
 interface ThreadListProps {
@@ -34,7 +29,6 @@ interface ThreadListProps {
 }
 
 export default function ThreadList({ threads, currentUserId, isLoading }: ThreadListProps) {
-
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -59,7 +53,6 @@ export default function ThreadList({ threads, currentUserId, isLoading }: Thread
 
   return (
     <div className="space-y-4">
-    {/* <pre>{JSON.stringify(threads, null, 2)}</pre> */}
       {threads.map((thread) => (
         <ThreadCard key={thread.id} thread={thread} currentUserId={currentUserId} />
       ))}

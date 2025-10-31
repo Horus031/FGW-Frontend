@@ -3,8 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Badge } from "../ui/badge"
-import { MessageCircle, Tag } from "lucide-react"
-import { useNavigate } from "react-router-dom"
+import { MessageCircle } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 
 interface ThreadCardProps {
@@ -26,44 +25,34 @@ interface ThreadCardProps {
         name: string
       }
     }>
-    taggedUsers: Array<{
-      id: number
-      email: string
-      name: string
-    }>
   }
   currentUserId: number
+  onClick?: (threadId: number) => void
 }
 
-export default function ThreadCard({ thread, currentUserId }: ThreadCardProps) {
-  const navigate = useNavigate()
+export default function ThreadCard({ thread, currentUserId, onClick }: ThreadCardProps) {
   const isCreator = thread.createdBy.id === currentUserId
-  const isTagged = thread.taggedUsers.some((user) => user.id === currentUserId)
 
-  const getInitials = (name: string) => {
-    return name
+  const getInitials = (name: string) =>
+    name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase()
-  }
 
   return (
-    <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => navigate(`/thread/${thread.id}`)}>
+    <Card
+      className="hover:shadow-md transition-shadow cursor-pointer border-l-4 border-l-primary"
+      onClick={() => onClick?.(thread.id)}
+    >
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <CardTitle className="text-xl">{thread.title}</CardTitle>
+              <CardTitle className="text-lg">{thread.title}</CardTitle>
               {isCreator && (
                 <Badge variant="secondary" className="text-xs">
                   Creator
-                </Badge>
-              )}
-              {isTagged && !isCreator && (
-                <Badge variant="outline" className="text-xs gap-1">
-                  <Tag className="size-3" />
-                  Tagged
                 </Badge>
               )}
             </div>
@@ -72,7 +61,7 @@ export default function ThreadCard({ thread, currentUserId }: ThreadCardProps) {
                 <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${thread.createdBy.email}`} />
                 <AvatarFallback>{getInitials(thread.createdBy.email)}</AvatarFallback>
               </Avatar>
-              <span>
+              <span className="text-sm">
                 {thread.createdBy.email} • {formatDistanceToNow(new Date(thread.createdAt), { addSuffix: true })}
               </span>
             </CardDescription>
@@ -80,28 +69,12 @@ export default function ThreadCard({ thread, currentUserId }: ThreadCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-2">
-        <p className="text-foreground line-clamp-2">{thread.content}</p>
-
-        {thread.taggedUsers.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {thread.taggedUsers.slice(0, 3).map((user) => (
-              <Badge key={user.id} variant="outline" className="text-xs">
-                @{user.email}
-              </Badge>
-            ))}
-            {thread.taggedUsers.length > 3 && (
-              <Badge variant="outline" className="text-xs">
-                +{thread.taggedUsers.length - 3} more
-              </Badge>
-            )}
-          </div>
-        )}
+      <CardContent className="space-y-3">
+        <p className="text-foreground line-clamp-2 text-sm">{thread.content}</p>
 
         <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2">
           <div className="flex items-center gap-1">
             <MessageCircle className="size-4" />
-            {/* <span>{thread.comments.length} comments</span> */}
           </div>
         </div>
       </CardContent>
