@@ -5,6 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import { refreshToken } from "./requests/auth.api";
+import { useUserStore } from "../store/user";
 
 const api: AxiosInstance = axios.create({
   baseURL: "/requests",
@@ -50,6 +51,13 @@ api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined;
+    if (originalRequest?.url?.includes('/auth/refresh')) {
+      console.error("Refresh token expired or invalid, redirecting to login...");
+      useUserStore.getState().clearUser();
+      window.location.href = "/login";
+      return Promise.reject(error);
+    }
+
 
     if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
       if (isRefreshing) {
@@ -70,7 +78,13 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        // console.error("API Interceptor - Token refresh failed", refreshError);
+        // 🚨 Refresh token expired or invalid → redirect to login
+        console.error("API Interceptor - Token refresh failed", refreshError);
+        // Optionally clear user data (if you store anything)
+        useUserStore.getState().clearUser();
+        // Redirect user to login
+        window.location.href = "/login";
+        
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
