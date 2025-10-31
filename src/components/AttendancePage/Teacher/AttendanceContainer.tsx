@@ -7,7 +7,6 @@ import Table from "../../shared/Table";
 import { Info } from "lucide-react";
 import {
   courseGroupData,
-  majorData,
 } from "../../../constants/temp";
 import type { MajorState } from "../../../models/major";
 import { useQuery } from "@tanstack/react-query";
@@ -145,7 +144,7 @@ const AttendanceContainer = () => {
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">
-        <MajorSelectCard major={major} setMajor={setMajor} data={majorData} />
+        <MajorSelectCard major={major} setMajor={setMajor} />
 
         <ClassGroupCard data={data} />
       </div>

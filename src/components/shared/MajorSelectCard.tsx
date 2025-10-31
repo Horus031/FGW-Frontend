@@ -14,10 +14,6 @@ import SkeletonDemo from "./SkeletonLoading";
 import type { MajorState } from "../../models/major";
 
 type MajorSelectCardProps = {
-  data: {
-    selectName: string;
-    selectOptions: string[];
-  }[];
   isSummary?: boolean;
   noMajor?: boolean;
   major: MajorState;

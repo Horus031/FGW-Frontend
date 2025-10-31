@@ -1,11 +1,11 @@
 import {
-  classGroupData,
+  // classGroupData,
   courseGroupData,
-  majorData,
+  // majorData,
 } from "../../constants/temp";
-import ClassGroupCard from "../shared/ClassGroupCard";
+// import ClassGroupCard from "../shared/ClassGroupCard";
 import CourseGroupList from "../shared/CourseGroupList";
-import MajorSelectCard from "../shared/MajorSelectCard";
+// import MajorSelectCard from "../shared/MajorSelectCard";
 import Table, { type ColumnConfig } from "../shared/Table";
 
 type TimetableRow = {
@@ -157,9 +157,9 @@ const TimetableContainer = () => {
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">
-        <MajorSelectCard data={majorData} />
+        {/* <MajorSelectCard data={majorData} />
 
-        <ClassGroupCard data={classGroupData} />
+        <ClassGroupCard data={classGroupData} /> */}
       </div>
 
       <div className="flex items-start gap-6">
