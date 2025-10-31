@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import ClassGroupCard from "../../shared/ClassGroupCard";
 import CourseGroupList from "../../shared/CourseGroupList";
 import MajorSelectCard from "../../shared/MajorSelectCard";
@@ -6,10 +6,12 @@ import type { ColumnConfig } from "../../shared/Table";
 import Table from "../../shared/Table";
 import { Info } from "lucide-react";
 import {
-  classGroupData,
   courseGroupData,
   majorData,
 } from "../../../constants/temp";
+import type { MajorState } from "../../../models/major";
+import { useQuery } from "@tanstack/react-query";
+import { getAllClasses } from "../../../api/requests/class.api";
 
 type StudentAttendanceRow = {
   studentId: string;
@@ -69,11 +71,25 @@ const studentAttendanceData: StudentAttendanceRow[] = [
   },
 ];
 
+const defaultMajor: MajorState = {
+  programme: { index: 0, id: 1 },
+  year: { index: 0, academicYear: "" },
+  term: { index: 0, id: 0 },
+  semester: { index: 0, code: "" },
+  major: { index: 0, id: 0 },
+};
+
 const AttendanceContainer = () => {
   const handleInfo = useCallback((row: StudentAttendanceRow) => {
     // TODO: open modal/side-panel with details
     console.log("Info clicked for:", row.studentId, row.studentName);
   }, []);
+
+  const [major, setMajor] = useState<MajorState>(defaultMajor);
+  const { data } = useQuery({
+    queryKey: ["class-group", major.programme.id, major.term.id, major.major.id],
+    queryFn: () => getAllClasses(major.programme.id, major.term.id, major.major.id),
+  })
 
   const columns: ColumnConfig<StudentAttendanceRow>[] = [
     { key: "studentId", title: "ID", width: "300px" },
@@ -129,9 +145,9 @@ const AttendanceContainer = () => {
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">
-        <MajorSelectCard data={majorData} />
+        <MajorSelectCard major={major} setMajor={setMajor} data={majorData} />
 
-        <ClassGroupCard data={classGroupData} />
+        <ClassGroupCard data={data} />
       </div>
 
       <div className="flex items-start gap-6">

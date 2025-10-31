@@ -1,15 +1,17 @@
+import type { ClassGroup } from "../../models/class";
 
 type ClassGroupProps = {
-    data: string[];
+    data: ClassGroup[] | undefined;
 }
+
 
 const ClassGroupCard = (props: ClassGroupProps) => {
     const { data } = props;
 
     const renderClassGroup = () => {
-        return data.map((item) => {
+        return data?.map((item) => {
             return (
-                <button key={item} className="text-gray-800 font-medium justify-self-start cursor-pointer active:scale-95">{item.trim()}</button>
+                <button key={item.id} className="text-gray-800 font-medium justify-self-start cursor-pointer active:scale-95 h-fit">{item.name}</button>
             )
         })
     }
