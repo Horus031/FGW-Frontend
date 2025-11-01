@@ -7,9 +7,22 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useUserStore } from "../../store/user";
 
-const DropdownMenu = () => {
+
+interface DropdownMenuProps {
+  onOpenDropdown?: () => void;
+}
+
+
+const DropdownMenu = ({ onOpenDropdown }: DropdownMenuProps) => {
   const user = useUserStore((state) => state.user);
   const [isShow, setIsShow] = useState(false);
+
+
+  const handleToggle = () => {
+    const next = !isShow;
+    setIsShow(next);
+    if (next && onOpenDropdown) onOpenDropdown(); // 🔹 call when opening
+  };
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +71,7 @@ const DropdownMenu = () => {
         >
           <span className="shadow-sm">
             <button
-              onClick={() => setIsShow(!isShow)}
+              onClick={() => handleToggle()}
               className="flex items-center gap-2 cursor-pointer w-full text-gray-700 bg-white "
               type="button"
               aria-haspopup="true"

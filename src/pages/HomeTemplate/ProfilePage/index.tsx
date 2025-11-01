@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { Course } from "../../../models/course";
 import CourseOverviewCard from "../../../components/CourseOverviewPage/CourseOverviewCard";
 import { getAllCourseForStudent } from "../../../api/requests/course.api";
+import CourseOverviewSkeleton from "../../../components/shared/CourseOverviewSkeleton";
 
 const ProfilePage = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -79,8 +80,10 @@ const ProfilePage = () => {
 
         {/* ✅ Loading and Error States appear under 'My Courses' */}
         {loading && (
-          <div className="text-center py-12">
-            <p className="text-gray-500">Loading courses...</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <CourseOverviewSkeleton />
+            <CourseOverviewSkeleton />
+            <CourseOverviewSkeleton />
           </div>
         )}
 
