@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, type RouteObject } from "react-router-dom";
-import LoadingPage from "../components/shared/LoadingPage";
 import ProtectedRoute from "./ProtectedRoute";
 
 // If using relative paths:
@@ -35,11 +34,9 @@ const StudentFeedbackPage = React.lazy(
 const RoomBookingPage = React.lazy(
   () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
 );
-
 const PendingFeedbackPage = React.lazy(
   () => import("../pages/HomeTemplate/PendingFeedbackPage")
 );
-
 const NotFoundPage = React.lazy(
   () => import("../pages/HomeTemplate/NotFoundPage")
 );
@@ -50,32 +47,20 @@ const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
 // Admin Route
 const AdminLayout = React.lazy(() => import("../layouts/AdminLayout"));
 
-// Teacher Route
+// Teacher Routes
 const ActivitiesPage = React.lazy(
   () => import("../pages/HomeTemplate/ActivitiesPage")
 );
-
 const GradePage = React.lazy(() => import("../pages/HomeTemplate/GradePage"));
-
 const TimetablePage = React.lazy(
   () => import("../pages/HomeTemplate/TimetablePage")
 );
-
 const CheckAttendancePage = React.lazy(
   () => import("../pages/HomeTemplate/CheckAttendancePage")
 );
-
 const TeachingSummaryPage = React.lazy(
   () => import("../pages/HomeTemplate/TeachingSummaryPage")
 );
-
-const withSuspense = (Component: React.LazyExoticComponent<React.FC>) => {
-  return (
-    <React.Suspense fallback={<LoadingPage />}>
-      <Component />
-    </React.Suspense>
-  );
-};
 
 export const routes: RouteObject[] = [
   {
@@ -83,117 +68,71 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: withSuspense(MainLayout),
+        element: <MainLayout />,
         children: [
-          {
-            path: "",
-            element: withSuspense(HomePage),
-          },
-          {
-            path: "profile",
-            element: withSuspense(ProfilePage),
-          },
-          {
-            path: "attendance",
-            element: withSuspense(AttendancePage),
-          },
-          {
-            path: "mark",
-            element: withSuspense(MarkPage),
-          },
-          {
-            path: "class",
-            element: withSuspense(ClassOverviewPage),
-          },
+          { path: "", element: <HomePage /> },
+          { path: "profile", element: <ProfilePage /> },
+          { path: "attendance", element: <AttendancePage /> },
+          { path: "mark", element: <MarkPage /> },
+          { path: "class", element: <ClassOverviewPage /> },
           {
             path: "request/:requestType",
             element: <ProtectedRoute allowedRoles={["Student"]} />,
-            children: [{ path: "", element: withSuspense(SendRequestPage) }],
+            children: [{ path: "", element: <SendRequestPage /> }],
           },
           {
             path: "req-status",
             element: <ProtectedRoute allowedRoles={["Student"]} />,
-            children: [{ path: "", element: withSuspense(RequestStatusPage) }],
+            children: [{ path: "", element: <RequestStatusPage /> }],
           },
-          {
-            path: "schedule",
-            element: withSuspense(SchedulePage),
-          },
-          {
-            path: "feedback",
-            element: withSuspense(StudentFeedbackPage),
-          },
-          {
-            path: "booking",
-            element: withSuspense(RoomBookingPage),
-          },
-          {
-            path: "course-overview",
-            element: withSuspense(CourseOverview),
-          },
+          { path: "schedule", element: <SchedulePage /> },
+          { path: "feedback", element: <StudentFeedbackPage /> },
+          { path: "booking", element: <RoomBookingPage /> },
+          { path: "course-overview", element: <CourseOverview /> },
           {
             path: "pending-feedback",
             element: <ProtectedRoute allowedRoles={["Student"]} />,
-            children: [
-              { path: "", element: withSuspense(PendingFeedbackPage) },
-            ],
+            children: [{ path: "", element: <PendingFeedbackPage /> }],
           },
-          {
-            path: "not-found",
-            element: withSuspense(NotFoundPage),
-          },
+          { path: "not-found", element: <NotFoundPage /> },
 
+          // Staff routes
           {
             path: "activities",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
-            children: [{ path: "", element: withSuspense(ActivitiesPage) }],
+            children: [{ path: "", element: <ActivitiesPage /> }],
           },
           {
             path: "grade",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
-            children: [{ path: "", element: withSuspense(GradePage) }],
+            children: [{ path: "", element: <GradePage /> }],
           },
           {
             path: "timetable",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
-            children: [{ path: "", element: withSuspense(TimetablePage) }],
+            children: [{ path: "", element: <TimetablePage /> }],
           },
           {
             path: "check-attendance",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
-            children: [
-              { path: "", element: withSuspense(CheckAttendancePage) },
-            ],
+            children: [{ path: "", element: <CheckAttendancePage /> }],
           },
           {
             path: "summary",
             element: <ProtectedRoute allowedRoles={["Staff"]} />,
-            children: [
-              { path: "", element: withSuspense(TeachingSummaryPage) },
-            ],
-          }
+            children: [{ path: "", element: <TeachingSummaryPage /> }],
+          },
         ],
       },
       {
         path: "/admin",
         element: <ProtectedRoute allowedRoles={["admin"]} />,
-        children: [
-          {
-            path: "",
-            element: withSuspense(AdminLayout),
-          },
-        ],
+        children: [{ path: "", element: <AdminLayout /> }],
       },
     ],
   },
-  {
-    path: "/login",
-    element: withSuspense(LoginPage),
-  },
-  {
-    path: "/auth/bridge",
-    element: withSuspense(AuthBridge),
-  },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/auth/bridge", element: <AuthBridge /> },
 ];
 
 export const generateRoutes = () => {

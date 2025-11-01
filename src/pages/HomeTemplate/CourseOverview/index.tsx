@@ -6,7 +6,7 @@ import { Input } from "../../../components/ui/input";
 import FilterButton from '../../../components/shared/Filter';
 import Pagination from '../../../components/shared/Pagination';
 import { getAllCourseForStudent } from '../../../api/requests/course.api';
-import LoadingPage from '../../../components/shared/LoadingPage';
+
 
 // Define the filter type for this component
 interface CourseFilters {
@@ -150,7 +150,12 @@ const CourseOverview = () => {
       </div>
 
       {/* Loading state */}
-      {loading && <LoadingPage />}
+      {loading &&
+        // <LoadingPage />
+        <div className="text-center py-12">
+          <p className="text-gray-500">Loading courses...</p>
+        </div>
+      }
 
       {/* Error state */}
       {error && (

@@ -1,5 +1,4 @@
-// ...existing code...
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import ScheduleContainer from "./Schedule/ScheduleContainer";
 import TaskContainer from "./Task/TaskContainer";
@@ -12,17 +11,24 @@ type TabsContainerProps = {
 };
 
 const TabsContainer = ({ slotData }: TabsContainerProps) => {
-  const [tab, setTab] = useState("schedule");
+  const [tab, setTab] = useState<"schedule" | "task">("schedule");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!slotData) setLoading(true);
+    else setLoading(false);
+  }, [slotData]);
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Header Tabs */}
       <div className="flex items-center justify-between">
         <div className="border border-gray-300 w-fit rounded-md text-black">
           <Button
             onClick={() => setTab("schedule")}
             className={`rounded-r-none cursor-pointer text-sm font-semibold ${tab === "schedule"
-              ? "bg-primary text-white"
-              : "bg-white text-[var(--color-gray-weak)]"
+                ? "bg-primary text-white"
+                : "bg-white text-[var(--color-gray-weak)]"
               }`}
           >
             Today's classes
@@ -30,31 +36,31 @@ const TabsContainer = ({ slotData }: TabsContainerProps) => {
           <Button
             onClick={() => setTab("task")}
             className={`rounded-l-none cursor-pointer text-sm font-semibold ${tab === "task"
-              ? "bg-primary text-white"
-              : "bg-white text-[var(--color-gray-weak)]"
+                ? "bg-primary text-white"
+                : "bg-white text-[var(--color-gray-weak)]"
               }`}
           >
             Your task
           </Button>
         </div>
-        {/* ✅ Always render ScheduleSelect, just hide it */}
-        <div className={tab === "schedule" ? "block" : "hidden"}>
-          <ScheduleSelect />
-        </div>
-        <div className={tab === "task" ? "block" : "hidden"}>
-          <FilterButton />
-        </div>
+
+        {/* Dynamic controls */}
+        {tab === "schedule" ? <ScheduleSelect /> : <FilterButton />}
       </div>
 
+      {/* Tab Content */}
       <div>
-        <div className={tab === "schedule" ? "block" : "hidden"}>
-          <ScheduleContainer schedule={slotData?.schedule || []} />
-        </div>
-        <div className={tab === "task" ? "block" : "hidden"}>
+        {tab === "schedule" ? (
+          <ScheduleContainer
+            schedule={slotData?.schedule || []}
+            loading={loading}
+          />
+        ) : (
           <TaskContainer />
-        </div>
+        )}
       </div>
     </div>
   );
 };
+
 export default TabsContainer;

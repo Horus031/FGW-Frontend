@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
 import TabsContainer from "../../../components/SchedulePage/TabsContainer";
 import PageTitle from "../../../components/shared/PageTitle";
 import { getAttendanceByStudentID } from "../../../api/requests/attendance.api";
 import { useWeekStore } from "../../../store/week";
-import debounce from "lodash.debounce";
-import type { AttendanceResponse } from "../../../models/attendance";
-import LoadingPage from "../../../components/shared/LoadingPage";
 import { useUserStore } from "../../../store/user";
+import type { AttendanceResponse } from "../../../models/attendance";
 
 const SchedulePage = () => {
   const { selectedWeek } = useWeekStore();
-  const { user } = useUserStore(); // ✅ moved here
+  const { user } = useUserStore();
   const [slotData, setSlotData] = useState<AttendanceResponse | null>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const studentId = user?.student?.id;
@@ -21,25 +19,18 @@ const SchedulePage = () => {
     const startDate = selectedWeek.start.toISOString().split("T")[0];
     const endDate = selectedWeek.end.toISOString().split("T")[0];
 
-    const handler = debounce(async () => {
+    const fetchAttendance = debounce(async () => {
       try {
-        setLoading(true);
         const data = await getAttendanceByStudentID(studentId, startDate, endDate);
         setSlotData(data);
       } catch (error) {
-        console.error("Failed to fetch attendance:", error);
-      } finally {
-        setLoading(false);
+        console.error("❌ Failed to fetch attendance:", error);
       }
     }, 800);
 
-    handler();
-    return () => handler.cancel();
-  }, [selectedWeek, user]); // ✅ include `user` as dependency
-
-  if (loading) {
-    return <LoadingPage />;
-  }
+    fetchAttendance();
+    return () => fetchAttendance.cancel();
+  }, [selectedWeek, user]);
 
   return (
     <div className="space-y-4.5">
