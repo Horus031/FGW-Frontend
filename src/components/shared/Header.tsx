@@ -61,8 +61,8 @@ const Header = () => {
             {[
               { to: "/", label: "Home" },
               { to: "/schedule", label: "Schedule" },
-              { to: "/task", label: "Task Management" },
-              { to: "/thread", label: "Thread" },
+              // { to: "/task", label: "Task Management" },
+              { to: "/thread", label: "Threads" },
               { to: "/library", label: "Library" },
             ].map((link) => (
               <NavLink
