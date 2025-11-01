@@ -22,7 +22,7 @@ const CourseOverviewCard = ({
     <div className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full max-w-sm">
       {/* Header */}
       <div className="mb-3">
-        <p className="text-sm font-medium text-[var(--color-gray-weak)] mb-1"></p>
+        <p className="text-sm font-medium text-[var(--color-gray-weak)] mb-1">{course.courseTerm}</p>
         <h5 className="text-2xl font-bold text-[var(--color-primary)]">{course.courseName}</h5>
       </div>
 
