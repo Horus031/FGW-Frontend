@@ -101,7 +101,7 @@ const Header = () => {
 
           {/* --- Notification Dropdown --- */}
           {showNotifications && (
-            <div className="absolute right-0 top-12 w-96 bg-white shadow-lg border border-gray-200 rounded-xl overflow-hidden">
+            <div className="absolute right-0 top-12 w-96 bg-white shadow-lg border border-gray-200 rounded-xl overflow-hidden z-60">
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
                 <h3 className="font-semibold text-gray-800">
                   Notification (5)
