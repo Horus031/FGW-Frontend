@@ -107,6 +107,7 @@ export default function ThreadPage() {
               <ThreadDetailPanel
                 thread={selectedThread}
                 currentUserId={Number(user.id)}
+                currentUserRole={user.role.name}
                 isLoadingComments={isLoadingComments}
                 onCommentAdded={() => selectedThreadId && fetchComments(selectedThreadId)}
               />

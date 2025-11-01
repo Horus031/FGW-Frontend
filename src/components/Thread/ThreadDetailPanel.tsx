@@ -1,7 +1,13 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -25,6 +31,7 @@ interface ThreadDetailPanelProps {
     comments?: Comment[]
   }
   currentUserId: number
+  currentUserRole: string
   isLoadingComments?: boolean
   onCommentAdded?: () => void
 }
@@ -32,6 +39,7 @@ interface ThreadDetailPanelProps {
 export default function ThreadDetailPanel({
   thread,
   currentUserId,
+  currentUserRole,
   isLoadingComments = false,
   onCommentAdded,
 }: ThreadDetailPanelProps) {
@@ -41,68 +49,133 @@ export default function ThreadDetailPanel({
   const [mentionResults, setMentionResults] = useState<User[]>([])
   const [showMentions, setShowMentions] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
+  const [highlightIndex, setHighlightIndex] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const isCreator = thread.createdBy.id === currentUserId
+  const isStudent = currentUserRole?.toLowerCase() === "student"
 
-
+  // 🔍 Search user mention
   useEffect(() => {
+    if (isStudent) return
+    const query = mentionQuery.startsWith("@") ? mentionQuery.slice(1).trim() : ""
+    const shouldSearchAll = mentionQuery === "@"
+
+    if (!query && !shouldSearchAll) {
+      setMentionResults([])
+      return
+    }
+
     const delay = setTimeout(async () => {
-      if (mentionQuery.startsWith("@")) {
-        const query = mentionQuery.length > 1 ? mentionQuery.slice(1) : ""
+      try {
         setIsSearching(true)
-        try {
-          const res = await searchUsers(query)
-          const filtered = res.filter((user) => Number(user.id) !== currentUserId)
-          
-          setMentionResults(filtered)
-        } catch (err) {
-          console.error("searchUsers failed:", err)
-          setMentionResults([])
-        } finally {
-          setIsSearching(false)
-        }
-      } else {
+        const res = await searchUsers(query)
+        const filtered = res.filter((u) => Number(u.id) !== currentUserId)
+        setMentionResults(filtered)
+        setHighlightIndex(0)
+      } catch (err) {
+        console.error("searchUsers failed:", err)
         setMentionResults([])
+      } finally {
         setIsSearching(false)
       }
     }, 300)
 
     return () => clearTimeout(delay)
-  }, [mentionQuery, currentUserId])
+  }, [mentionQuery, currentUserId, isStudent])
+
+  useEffect(() => {
+    setReplyText("")
+    setTaggedUsers([])
+    setShowMentions(false)
+  }, [thread.id])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setReplyText(value)
-
     const cursor = e.target.selectionStart || 0
     const textBefore = value.slice(0, cursor)
     const match = textBefore.match(/@\w*$/)
+
+    if (isStudent) {
+      setShowMentions(false)
+      setMentionQuery("")
+      return
+    }
+
     if (match) {
       setMentionQuery(match[0])
       setShowMentions(true)
     } else {
+      setMentionQuery("")
       setShowMentions(false)
     }
   }
 
-  const handleSelectMention = (user: any) => {
+  // 🧩 Select mention
+  const handleSelectMention = (user: User) => {
     const newText = replyText.replace(/@\w*$/, `@${user.email} `)
     setReplyText(newText)
     setTaggedUsers((prev) => Array.from(new Set([...prev, user.id])))
     setShowMentions(false)
+    setMentionQuery("")
     inputRef.current?.focus()
   }
 
+  // ⌨️ Keyboard navigation for dropdown
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (showMentions && mentionResults.length > 0) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault()
+        setHighlightIndex((prev) => (prev + 1) % mentionResults.length)
+        return
+      }
+
+      if (e.key === "ArrowUp") {
+        e.preventDefault()
+        setHighlightIndex(
+          (prev) => (prev - 1 + mentionResults.length) % mentionResults.length
+        )
+        return
+      }
+
+      if (e.key === "Enter") {
+        e.preventDefault()
+        const selectedUser = mentionResults[highlightIndex]
+        if (selectedUser) {
+          handleSelectMention(selectedUser)
+          setMentionQuery("")
+        }
+        return
+      }
+
+      if (e.key === "Escape") {
+        setShowMentions(false)
+        return
+      }
+    }
+  }
+
+  // 🚀 Submit comment
   const handleReplySubmit = async () => {
-    if (replyText.trim()) {
+    if (!replyText.trim() || isSubmitting) return
+
+    setIsSubmitting(true)
+    try {
       await addComment(thread.id, {
         content: replyText.trim(),
-        taggedUserIds: taggedUserIds.map((id) => Number(id)),
+        taggedUserIds: isStudent ? [] : taggedUserIds.map((id) => Number(id)),
       })
       setReplyText("")
       setTaggedUsers([])
+      setShowMentions(false)
+      setMentionResults([])
       onCommentAdded?.()
+    } catch (err) {
+      console.error("Add comment failed:", err)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -113,17 +186,27 @@ export default function ThreadDetailPanel({
       .join("")
       .toUpperCase()
 
-  const renderContentWithMentions = (text: string) => {
+  // ✅ Highlight mentions thực sự được tag
+  const renderContentWithMentions = (
+    text: string,
+    taggedUsers: { id: number; email: string }[]
+  ) => {
+    if (!taggedUsers?.length) return text
     const parts = text.split(/(@[^\s]+)/g)
-    return parts.map((part, index) =>
-      part.startsWith("@") ? (
-        <span key={index} className="text-secondary font-medium">
-          {part}
-        </span>
-      ) : (
-        part
-      )
-    )
+    return parts.map((part, i) => {
+      if (part.startsWith("@")) {
+        const email = part.slice(1)
+        const isTagged = taggedUsers.some((u) => u.email === email)
+        if (isTagged) {
+          return (
+            <span key={i} className="text-blue-500 font-medium">
+              {part}
+            </span>
+          )
+        }
+      }
+      return part
+    })
   }
 
   const comments = thread.comments ?? []
@@ -137,11 +220,12 @@ export default function ThreadDetailPanel({
             <CardDescription className="flex items-center gap-2">
               <span className="text-sm">
                 {thread.createdBy.email} •{" "}
-                {formatDistanceToNow(new Date(thread.createdAt), { addSuffix: true })}
+                {formatDistanceToNow(new Date(thread.createdAt), {
+                  addSuffix: true,
+                })}
               </span>
             </CardDescription>
           </div>
-
           {isCreator && (
             <div className="flex gap-2">
               <Button size="sm" variant="ghost" className="gap-2">
@@ -211,7 +295,7 @@ export default function ThreadDetailPanel({
                     </span>
                   </div>
                   <p className="text-sm text-foreground whitespace-pre-line">
-                    {renderContentWithMentions(comment.content)}
+                   {renderContentWithMentions(comment.content, comment.taggedUsers || [])}
                   </p>
                 </div>
               </div>
@@ -219,7 +303,7 @@ export default function ThreadDetailPanel({
           ))
         )}
 
-        {/* Input reply + mentions */}
+        {/* 💬 Reply input */}
         <div className="pl-2 relative">
           <div className="flex gap-3">
             <Avatar className="size-10 flex-shrink-0">
@@ -231,23 +315,37 @@ export default function ThreadDetailPanel({
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
+                  if (showMentions) return // 🚫 không gửi khi dropdown đang mở
                   handleReplySubmit()
                 }}
               >
                 <Input
                   ref={inputRef}
-                  placeholder="Reply (use @ to mention)"
+                  placeholder={
+                    isStudent
+                      ? "Reply (mentions disabled for students)"
+                      : "Reply (use @ to mention)"
+                  }
                   value={replyText}
                   onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
                 />
-                <Button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7" type="submit" size="icon" disabled={!replyText.trim()}>
-                  <ArrowUp className="size-4" />
+                <Button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7"
+                  type="submit"
+                  size="icon"
+                  disabled={!replyText.trim() || isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span className="animate-spin border-2 border-current border-t-transparent rounded-full size-4"></span>
+                  ) : (
+                    <ArrowUp className="size-4" />
+                  )}
                 </Button>
               </form>
 
-
-              {/* 🧩 mention suggestions */}
-              {showMentions && (
+              {/* 🧩 Dropdown mention */}
+              {!isStudent && showMentions && (
                 <div className="absolute z-50 left-0 mt-2 w-full bg-popover border rounded-md shadow-lg max-h-48 overflow-auto">
                   {isSearching ? (
                     <div className="p-2 space-y-2">
@@ -259,11 +357,13 @@ export default function ThreadDetailPanel({
                       ))}
                     </div>
                   ) : mentionResults.length > 0 ? (
-                    mentionResults.map((user) => (
+                    mentionResults.map((user, idx) => (
                       <div
                         key={user.id}
                         onClick={() => handleSelectMention(user)}
-                        className="p-2 hover:bg-accent cursor-pointer flex items-center gap-2"
+                        className={`p-2 flex items-center gap-2 cursor-pointer ${
+                          highlightIndex === idx ? "bg-accent" : "hover:bg-accent"
+                        }`}
                       >
                         <Avatar className="size-6">
                           <AvatarImage
@@ -275,7 +375,9 @@ export default function ThreadDetailPanel({
                       </div>
                     ))
                   ) : (
-                    <div className="p-2 text-sm text-muted-foreground">No users found</div>
+                    <div className="p-2 text-sm text-muted-foreground">
+                      No users found
+                    </div>
                   )}
                 </div>
               )}

@@ -25,6 +25,7 @@ export interface Comment {
     }
   }
   taggedUserIds?: number[]
+  taggedUsers?: { id: number; email: string }[]
 }
 
 export interface GetCommentsResponse {
