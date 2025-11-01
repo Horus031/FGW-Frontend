@@ -4,14 +4,14 @@ import LogoWithName from "../icons/LogoWithName";
 import BellIcon from "../icons/BellIcon";
 import MagnifyClass from "../icons/MagnifyClass";
 import DropdownMenu from "./DropdownMenu";
-import { Input } from "../ui/input";
-import { Search } from "lucide-react";
+// import { Input } from "../ui/input";
+// import { Search } from "lucide-react";
 
 const Header = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  // const [showSearch, setShowSearch] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const toggleSearch = () => setShowSearch((prev) => !prev);
+  // const toggleSearch = () => setShowSearch((prev) => !prev);
   const toggleNotifications = () => setShowNotifications((prev) => !prev);
 
   const notifications = [
@@ -85,7 +85,7 @@ const Header = () => {
         <div className="flex items-center justify-between gap-9 relative">
           <div className="flex items-center gap-4">
             <button
-              onClick={toggleSearch}
+              // onClick={toggleSearch}
               className="text-primary cursor-pointer p-1.5"
             >
               <MagnifyClass className="size-6 2xl:size-8" />
@@ -144,7 +144,7 @@ const Header = () => {
       </div>
 
       {/* --- Search Bar (toggles on click) --- */}
-      {showSearch && (
+      {/* {showSearch && (
         <div className="py-4">
           <div className="mx-auto w-full max-w-4xl relative">
             <Search
@@ -157,7 +157,7 @@ const Header = () => {
             />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
