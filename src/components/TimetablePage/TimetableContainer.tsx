@@ -1,11 +1,11 @@
 import {
-  classGroupData,
-  courseGroupData,
-  majorData,
+  // classGroupData,
+  // courseGroupData,
+  // majorData,
 } from "../../constants/temp";
-import ClassGroupCard from "../shared/ClassGroupCard";
-import CourseGroupList from "../shared/CourseGroupList";
-import MajorSelectCard from "../shared/MajorSelectCard";
+// import ClassGroupCard from "../shared/ClassGroupCard";
+// import CourseGroupList from "../shared/CourseGroupList";
+// import MajorSelectCard from "../shared/MajorSelectCard";
 import Table, { type ColumnConfig } from "../shared/Table";
 
 type TimetableRow = {
@@ -157,13 +157,13 @@ const TimetableContainer = () => {
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">
-        <MajorSelectCard data={majorData} />
+        {/* <MajorSelectCard data={majorData} />
 
-        <ClassGroupCard data={classGroupData} />
+        <ClassGroupCard data={classGroupData} /> */}
       </div>
 
       <div className="flex items-start gap-6">
-        <CourseGroupList courseGroupData={courseGroupData} />
+        {/* <CourseGroupList courseGroupData={courseGroupData} /> */}
 
         <div className="flex flex-col">
           <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
