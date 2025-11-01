@@ -1,15 +1,12 @@
+import type { Dispatch, SetStateAction } from "react";
+import type { CourseGroup, CourseState } from "../../models/course";
 import TimeSlotCard from "../CheckAttendancePage/TimeSlotCard";
 import CourseGroupCard from "./CourseGroupCard";
 
 export type CourseGroupProps = {
+  currentClassName: string;
   isAttendance?: boolean;
-  courseGroupData?: {
-    className: string;
-    courseGroup: {
-      courseCode: string;
-      courseName: string;
-    }[];
-  };
+  courseGroupData?: CourseGroup[];
   timeSlotData?: {
     className: string;
     timeSlotGroup: {
@@ -19,18 +16,24 @@ export type CourseGroupProps = {
       status: string;
     }[];
   };
+  selectedCourse: CourseState;
+  setSelectedCourse: Dispatch<SetStateAction<CourseState>>;
 };
 
 const CourseGroupList = (props: CourseGroupProps) => {
-  const { courseGroupData, isAttendance, timeSlotData } = props;
+  const { courseGroupData, isAttendance, timeSlotData, currentClassName, selectedCourse, setSelectedCourse } = props;
 
   const renderCourseGroup = () => {
-    return courseGroupData?.courseGroup.map((item) => {
+    return courseGroupData?.map((item, index) => {
       return (
         <CourseGroupCard
-          key={item.courseCode}
-          courseCode={item.courseCode}
-          courseName={item.courseName}
+          key={item.code}
+          currentIndex={index}
+          courseId={item.id}
+          courseCode={item.code}
+          courseName={item.title}
+          selectedCourse={selectedCourse}
+          setSelectedCourse={setSelectedCourse}
         />
       );
     });
@@ -46,7 +49,7 @@ const CourseGroupList = (props: CourseGroupProps) => {
     <div className="p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-3/12 2xl:basis-4/12">
       <div className="flex items-center justify-between">
         <span className="font-semibold text-sm">
-          {courseGroupData?.className || timeSlotData?.className}
+          {currentClassName || timeSlotData?.className}
         </span>
 
         {isAttendance && (
