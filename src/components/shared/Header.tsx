@@ -49,7 +49,7 @@ const Header = () => {
   ];
 
   return (
-    <div className="fixed top-0 w-full bg-white z-40 border-b border-gray-200 font-public">
+    <div className="fixed top-0 w-full bg-white z-40 font-public">
       {/* --- Top Navigation --- */}
       <div className="px-20 mx-auto md:max-w-screen-2xl flex items-center justify-between py-3">
         <div className="flex items-center gap-14 basis-8/12">
