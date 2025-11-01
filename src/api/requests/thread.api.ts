@@ -18,8 +18,11 @@ export interface Comment {
   createdAt: string
   createdBy: {
     id: number
-    name: string
+    fullName: string
     email: string
+    role: {
+      name: string
+    }
   }
   taggedUserIds?: number[]
 }

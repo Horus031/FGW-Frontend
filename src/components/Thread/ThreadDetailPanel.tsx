@@ -8,20 +8,9 @@ import { Input } from "../ui/input"
 import { Skeleton } from "../ui/skeleton"
 import { Edit, Trash2, ArrowUp } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
-import { addComment } from "../../api/requests/thread.api"
+import { addComment, type Comment } from "../../api/requests/thread.api"
 import { searchUsers, type User } from "../../api/requests/user.api"
 
-interface ThreadComment {
-  id: number
-  content: string
-  createdBy: {
-    id: number
-    name?: string
-    email: string
-  }
-  taggedUserIds?: number[]
-  createdAt?: string
-}
 interface ThreadDetailPanelProps {
   thread: {
     id: number
@@ -33,7 +22,7 @@ interface ThreadDetailPanelProps {
       name: string
       email: string
     }
-    comments?: ThreadComment[]
+    comments?: Comment[]
   }
   currentUserId: number
   isLoadingComments?: boolean
@@ -56,7 +45,7 @@ export default function ThreadDetailPanel({
 
   const isCreator = thread.createdBy.id === currentUserId
 
-  // 🧠 Search users when typing @
+
   useEffect(() => {
     const delay = setTimeout(async () => {
       if (mentionQuery.startsWith("@")) {
@@ -124,14 +113,6 @@ export default function ThreadDetailPanel({
       .join("")
       .toUpperCase()
 
-  const getDisplayName = (email: string) => {
-    if (email.includes("staff")) return "Linh • Staff"
-    if (email.includes("nghiavmgcs")) return "Vo Minh Nghia (GCS...) • Students"
-    if (email.includes("tainhgcs")) return "Nguyen Huu Tai (GCS...) • Students"
-    if (email.includes("traNLT2")) return "TraNLT2 • Teacher"
-    return email.split("@")[0] + " • Students"
-  }
-
   const renderContentWithMentions = (text: string) => {
     const parts = text.split(/(@[^\s]+)/g)
     return parts.map((part, index) =>
@@ -148,7 +129,7 @@ export default function ThreadDetailPanel({
   const comments = thread.comments ?? []
 
   return (
-    <Card className="pt-8 relative">
+    <Card className="pt-8 relative gap-2">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
@@ -180,7 +161,7 @@ export default function ThreadDetailPanel({
         </div>
       </CardHeader>
 
-      <CardContent className="mb-3">
+      <CardContent className="mb-4">
         <p className="text-foreground leading-relaxed">{thread.content}</p>
       </CardContent>
 
@@ -216,8 +197,9 @@ export default function ThreadDetailPanel({
 
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm">
-                      {getDisplayName(comment.createdBy.email)}
+                    <span className="font-medium text-sm">{comment.createdBy.email}</span>
+                    <span className="text-xs text-muted-foreground">
+                      • {comment.createdBy.role.name}
                     </span>
                     <span className="text-xs text-muted-foreground">
                       •{" "}
@@ -246,28 +228,23 @@ export default function ThreadDetailPanel({
             </Avatar>
 
             <div className="relative w-full">
-              <Input
-                ref={inputRef}
-                placeholder="Reply (use @ to mention)"
-                value={replyText}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault()
-                    handleReplySubmit()
-                  }
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  handleReplySubmit()
                 }}
-                className="bg-background pr-12"
-              />
-
-              <Button
-                size="icon"
-                onClick={handleReplySubmit}
-                disabled={!replyText.trim()}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7"
               >
-                <ArrowUp className="size-4" />
-              </Button>
+                <Input
+                  ref={inputRef}
+                  placeholder="Reply (use @ to mention)"
+                  value={replyText}
+                  onChange={handleInputChange}
+                />
+                <Button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7" type="submit" size="icon" disabled={!replyText.trim()}>
+                  <ArrowUp className="size-4" />
+                </Button>
+              </form>
+
 
               {/* 🧩 mention suggestions */}
               {showMentions && (
