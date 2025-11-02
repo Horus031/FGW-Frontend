@@ -1,5 +1,7 @@
 import {
+  useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type Dispatch,
@@ -22,48 +24,64 @@ type MajorSelectCardProps = {
 
 const MajorSelectCard = (props: MajorSelectCardProps) => {
   const { isSummary, noMajor, major, setMajor } = props;
+  const [uniqueYear, setUniqueYear] = useState<string[]>([]);
+  const lastProgrammeRef = useRef<number | null>(null);
   const { data: programmeData } = useQuery({
     queryKey: ["programmes"],
     queryFn: () => getAllProgrammes(),
   });
 
-  const {
-    data: termData,
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: [
-      "terms",
-      major.programme.id,
-      major.major.id,
-      major.year.academicYear,
-      major.semester.code,
-    ],
-    queryFn: () =>
-      getAllTerms(
-        major.programme.id,
-        major.major.id,
-        major.year.academicYear,
-        major.semester.code
-      ),
+  const { data: termData, isLoading } = useQuery({
+    queryKey: ["terms", major.programme.id],
+    queryFn: () => getAllTerms(major.programme.id),
     enabled: !!major.programme.id,
   });
 
-  const [uniqueYear, setUniqueYear] = useState<string[]>([]);
-  const [uniqueSemester, setUniqueSemester] = useState<
-    { code: string; name: string }[]
-  >([]);
-  const lastProgrammeRef = useRef<number | null>(null);
-  const lastYearRef = useRef<string | null>(null);
+  const semestersForSelectedYear = useMemo(() => {
+    if (!termData || !major.year.academicYear) return [];
+    const list = termData
+      .filter((t) => t.academicYear === major.year.academicYear)
+      .map((t) => ({ code: t.code || "", name: t.name || t.code || "" }));
+    const codes = Array.from(uniqueSet(list.map((s) => s.code)));
+    return codes.map(
+      (code) => list.find((s) => s.code === code) || { code, name: code }
+    );
+  }, [termData, major.year.academicYear]);
+
+  const termItemsForSelection = useMemo(() => {
+    if (!termData) return [];
+    // if a semester code is selected, narrow down to that semester, otherwise all terms for year
+    return termData.filter(
+      (t) =>
+        t.academicYear === major.year.academicYear &&
+        (major.semester.code ? t.code === major.semester.code : true)
+    );
+  }, [termData, major.year.academicYear, major.semester.code]);
+
+  const uniqueDepartmentsForSelection = useMemo(() => {
+    // collect departments from the selected term items and dedupe by id
+    const deps = termItemsForSelection.flatMap((t) => t.departments || []);
+    const seen = new Set<string>();
+    const uniq: { id: string; name: string }[] = [];
+    deps.forEach((d) => {
+      if (!d) return;
+      if (!seen.has(d.id)) {
+        seen.add(d.id);
+        uniq.push({ id: d.id, name: d.name });
+      }
+    });
+    return uniq;
+  }, [termItemsForSelection]);
+
+  const majorRef = useRef(major);
+  useEffect(() => {
+    majorRef.current = major;
+  }, [major]);
 
   useEffect(() => {
     const currentProgrammeId = major.programme.id;
-    if (currentProgrammeId === lastProgrammeRef.current) return;
-
-    if (!termData || termData.length === 0) {
-      // clear years and reset selected year when no data for this programme
+    if (!currentProgrammeId) {
       setUniqueYear([]);
-      lastYearRef.current = null;
       setMajor((prev) => ({
         ...prev,
         year: { index: 0, academicYear: "" },
@@ -73,140 +91,101 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
       }));
       return;
     }
+
+    if (!termData || termData.length === 0) {
+      setUniqueYear([]);
+      return;
+    }
+
+    if (lastProgrammeRef.current === currentProgrammeId) return;
 
     const years = Array.from(
       uniqueSet(termData.map((item) => item.academicYear || ""))
     );
-
     setUniqueYear(years);
 
+    // initialize selected year once per programme change (avoids repeated setMajor)
     const firstYear = years[0] || "";
-
-    setMajor((prev) => ({
-      ...prev,
-      year: { index: 0, academicYear: firstYear },
-      term: { index: 0, id: 0 },
-      semester: { index: 0, code: "" },
-      major: { index: 0, id: 0 },
-    }));
+    if (majorRef.current.year.academicYear !== firstYear) {
+      setMajor((prev) => ({
+        ...prev,
+        year: { index: 0, academicYear: firstYear },
+        term: { index: 0, id: 0 },
+        semester: { index: 0, code: "" },
+        major: { index: 0, id: 0 },
+      }));
+    }
 
     lastProgrammeRef.current = currentProgrammeId;
-    lastYearRef.current = null;
-  }, [termData, major.programme.id, setMajor]);
+  }, [termData, major.programme.id, setMajor, major.year.academicYear]);
 
-  useEffect(() => {
-    const currentYear = major.year.academicYear;
+  const handleSetMajor = useCallback(
+    (
+      title: "programme" | "year" | "semester" | "major",
+      subtitle: "id" | "academicYear" | "code",
+      index: number,
+      id: string | number
+    ) => {
+      // avoid unnecessary updates where possible
+      if (majorRef.current[title].index === index) return;
 
-    if (isFetching) return;
-
-    if (!termData || termData.length === 0 || !currentYear) {
-      setUniqueSemester([]);
-      console.log("clear semesters");
-      if (!currentYear) {
+      if (title === "programme") {
+        const programmeId = Number(id);
         setMajor((prev) => ({
           ...prev,
+          programme: { index, id: programmeId },
+          year: { index: 0, academicYear: "" },
+          term: { index: 0, id: 0 },
+          semester: { index: 0, code: "" },
+          major: { index: 0, id: 0 },
+        }));
+        return;
+      }
+
+      if (title === "year") {
+        const value = id as string;
+        setMajor((prev) => ({
+          ...prev,
+          year: { index, academicYear: value },
+          // clear semester/term/major when changing year
           semester: { index: 0, code: "" },
           term: { index: 0, id: 0 },
           major: { index: 0, id: 0 },
         }));
+        return;
       }
-      // lastYearRef.current = currentYear;
-      return;
-    }
 
-    if (lastYearRef.current === currentYear) return;
+      setMajor((prev) => {
+        const value = subtitle === "id" ? Number(id) : id;
+        return {
+          ...prev,
+          [title]: {
+            index: index,
+            [subtitle]: value,
+          },
+        } as typeof prev;
+      });
+    },
+    [setMajor]
+  );
 
-    const semestersRaw = termData
-      .filter((t) => t.academicYear === currentYear)
-      .map((t) => ({ code: t.code || "", name: t.name || t.code || "" }));
+  const programmeButtons = useMemo(() => {
+    return programmeData?.map((item, index) => (
+      <button
+        onClick={() => handleSetMajor("programme", "id", index, item.id)}
+        key={item.id ?? index}
+        className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+          major.programme.index === index
+            ? "border-1 bg-gray/0 border-bright text-secondary"
+            : ""
+        }`}
+      >
+        {item.name}
+      </button>
+    ));
+  }, [programmeData, handleSetMajor, major.programme.index]);
 
-    const uniqueCodes = Array.from(uniqueSet(semestersRaw.map((s) => s.code)));
-    const uniqueSemesters = uniqueCodes.map((code) => {
-      const found = semestersRaw.find((s) => s.code === code);
-      return { code, name: found?.name || code };
-    });
-
-    setUniqueSemester(uniqueSemesters);
-
-    const firstSemester = uniqueSemesters[0]?.code || "";
-
-    // Only set semester (don't overwrite year). Reset term/major indices.
-    setMajor((prev) => ({
-      ...prev,
-      semester: { index: 0, code: firstSemester },
-      term: { index: 0, id: 0 },
-      major: { index: 0, id: 0 },
-    }));
-
-    lastYearRef.current = currentYear;
-  }, [isFetching, major.year.academicYear, setMajor, termData]);
-
-  const handleSetMajor = async (
-    title: "programme" | "year" | "semester" | "major",
-    subtitle: "id" | "academicYear" | "code",
-    index: number,
-    id: string | number
-  ) => {
-    // if the old values equal new value, return
-    if (major[title].index === index) return;
-
-    if (title === "programme") {
-      const programmeId = Number(id);
-      setMajor((prev) => ({
-        ...prev,
-        programme: { index, id: programmeId },
-        year: { index: 0, academicYear: "" },
-        term: { index: 0, id: 0 },
-        semester: { index: 0, code: "" },
-        major: { index: 0, id: 0 },
-      }));
-      return;
-    }
-
-    if (title === "year") {
-      const value = id as string;
-      setMajor((prev) => ({
-        ...prev,
-        year: { index, academicYear: value },
-        // clear semester/term/major when changing year
-        semester: { index: 0, code: "" },
-        term: { index: 0, id: 0 },
-        major: { index: 0, id: 0 },
-      }));
-      return;
-    }
-
-    setMajor((prev) => {
-      const value = subtitle === "id" ? Number(id) : id;
-      return {
-        ...prev,
-        [title]: {
-          index: index,
-          [subtitle]: value,
-        },
-      } as typeof prev;
-    });
-  };
-
-  const renderMajor = () => {
-    return programmeData?.map((item, index) => {
-      return (
-        <button
-          onClick={() => handleSetMajor("programme", "id", index, item.id)}
-          key={index}
-          className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-            major.programme.index === index
-              ? "border-1 bg-gray/0 border-bright text-secondary"
-              : ""
-          }`}
-        >
-          {item.name}
-        </button>
-      );
-    });
-  };
-
-  const renderTerms = () => {
+  const termsBlock = useMemo(() => {
     return (
       <>
         <div className="flex items-center gap-8 py-2">
@@ -214,23 +193,21 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
             <span className="text-sm font-medium w-fit">Year:</span>
           </div>
           <div className="flex items-center gap-2 w-fit">
-            {uniqueYear.map((item, index) => {
-              return (
-                <button
-                  onClick={() =>
-                    handleSetMajor("year", "academicYear", index, item)
-                  }
-                  key={index}
-                  className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                    major.year.index === index
-                      ? "border-1 bg-gray/0 border-bright text-secondary"
-                      : ""
-                  }`}
-                >
-                  {item}
-                </button>
-              );
-            })}
+            {uniqueYear.map((item, index) => (
+              <button
+                onClick={() =>
+                  handleSetMajor("year", "academicYear", index, item)
+                }
+                key={item + index}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                  major.year.index === index
+                    ? "border-1 bg-gray/0 border-bright text-secondary"
+                    : ""
+                }`}
+              >
+                {item}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -239,23 +216,21 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
             <span className="text-sm font-medium w-fit">Semester:</span>
           </div>
           <div className="flex items-center gap-2 w-fit">
-            {uniqueSemester.map((item, index) => {
-              return (
-                <button
-                  onClick={() =>
-                    handleSetMajor("semester", "code", index, item.code)
-                  }
-                  key={index}
-                  className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                    major.semester.index === index
-                      ? "border-1 bg-gray/0 border-bright text-secondary"
-                      : ""
-                  }`}
-                >
-                  {item.name}
-                </button>
-              );
-            })}
+            {semestersForSelectedYear.map((s, index) => (
+              <button
+                onClick={() =>
+                  handleSetMajor("semester", "code", index, s.code)
+                }
+                key={s.code + index}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                  major.semester.index === index
+                    ? "border-1 bg-gray/0 border-bright text-secondary"
+                    : ""
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -265,23 +240,19 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
               <span className="text-sm font-medium w-fit">Major:</span>
             </div>
             <div className="flex items-center gap-2 w-fit">
-              {termData?.map((item, index) => {
-                return (
-                  <button
-                    onClick={() =>
-                      handleSetMajor("major", "id", index, item.id)
-                    }
-                    key={index}
-                    className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                      major.major.index === index
-                        ? "border-1 bg-gray/0 border-bright text-secondary"
-                        : ""
-                    }`}
-                  >
-                    {item.departments[index]?.name || ""}
-                  </button>
-                );
-              })}
+              {uniqueDepartmentsForSelection.map((dep, index) => (
+                <button
+                  onClick={() => handleSetMajor("major", "id", index, dep.id)}
+                  key={dep.id}
+                  className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                    major.major.index === index
+                      ? "border-1 bg-gray/0 border-bright text-secondary"
+                      : ""
+                  }`}
+                >
+                  {dep.name}
+                </button>
+              ))}
             </div>
           </div>
         ) : (
@@ -296,14 +267,25 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
         )}
       </>
     );
-  };
+  }, [
+    uniqueYear,
+    semestersForSelectedYear,
+    uniqueDepartmentsForSelection,
+    handleSetMajor,
+    isSummary,
+    noMajor,
+    major.year.index,
+    major.semester.index,
+    major.major.index,
+  ]);
 
-  console.log(uniqueSemester);
+ 
+  console.log("work");
   return (
     <div
       className={`${
         !isSummary ? "basis-7/12" : "w-fit"
-      } px-3 py-2 border-1 h-[222px] border-gray-400 whitespace-nowrap rounded-lg`}
+      } px-3 py-2 border-1 h-57 border-gray-400 whitespace-nowrap rounded-lg`}
     >
       {isLoading ? (
         <SkeletonDemo skeletonNum={9} />
@@ -315,11 +297,11 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                 <span className="text-sm font-medium w-fit">Programme:</span>
               </div>
               <div className="flex items-center gap-2 w-fit">
-                {renderMajor()}
+                {programmeButtons}
               </div>
             </div>
 
-            {renderTerms()}
+            {termsBlock}
           </div>
         </>
       )}

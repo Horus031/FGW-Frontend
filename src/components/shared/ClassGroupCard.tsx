@@ -42,8 +42,10 @@ const ClassGroupCard = (props: ClassGroupProps) => {
           onClick={() => handleSelectClass(item.id, index, item.name)}
           key={item.id}
           className={`${
-            selectedClass.index === index ? "text-secondary" : "text-gray-800"
-          } font-medium justify-self-start cursor-pointer active:scale-95 h-fit`}
+            selectedClass.index === index
+              ? "text-secondary font-semibold"
+              : "text-gray-800"
+          } justify-self-start cursor-pointer active:scale-95 h-fit`}
         >
           {item.name}
         </button>
@@ -51,9 +53,12 @@ const ClassGroupCard = (props: ClassGroupProps) => {
     });
   };
   return (
-    <div className="border-1 border-gray-400 p-6 rounded-lg flex-1 h-55.5">
-      <div className="grid text-left grid-cols-4 gap-x-3 gap-y-2 h-full">
-        {renderClassGroup()}
+    <div className="border-1 border-gray-400 px-3 py-5 rounded-lg flex-1 h-57">
+      <div className="flex flex-col gap-3">
+        <span className="text-primary font-medium text-sm">Groups:</span>
+        <div className="grid text-left grid-cols-4 gap-x-3 gap-y-2 h-full">
+          {renderClassGroup()}
+        </div>
       </div>
     </div>
   );
