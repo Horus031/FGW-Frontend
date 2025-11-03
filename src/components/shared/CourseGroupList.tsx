@@ -4,7 +4,6 @@ import TimeSlotCard from "../CheckAttendancePage/TimeSlotCard";
 import CourseGroupCard from "./CourseGroupCard";
 
 export type CourseGroupProps = {
-  currentClassName: string;
   isAttendance?: boolean;
   courseGroupData?: CourseGroup[];
   timeSlotData?: {
@@ -21,7 +20,7 @@ export type CourseGroupProps = {
 };
 
 const CourseGroupList = (props: CourseGroupProps) => {
-  const { courseGroupData, isAttendance, timeSlotData, currentClassName, selectedCourse, setSelectedCourse } = props;
+  const { courseGroupData, isAttendance, timeSlotData, selectedCourse, setSelectedCourse } = props;
 
   const renderCourseGroup = () => {
     return courseGroupData?.map((item, index) => {
@@ -49,7 +48,7 @@ const CourseGroupList = (props: CourseGroupProps) => {
     <div className="p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-3/12 2xl:basis-4/12">
       <div className="flex items-center justify-between">
         <span className="font-semibold text-sm">
-          {currentClassName || timeSlotData?.className}
+          {timeSlotData?.className || "Course"}
         </span>
 
         {isAttendance && (
