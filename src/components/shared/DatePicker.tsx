@@ -1,50 +1,50 @@
-import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Select, SelectContent, SelectGroup, SelectTrigger, SelectValue } from '../ui/select'
-import type { Weeks } from '../../hooks/useWeeksInYear'
+import { useState, useEffect } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
+import CalendarIcon from "../icons/CalendarIcon";
 
 type DatePickerProps = {
-    weeksInYear?: Weeks[]
-    selectedWeek?: Weeks | null
-    handleWeekChange?: (value: string) => void;
-    renderWeeks?: () => React.ReactNode;
-}
+  selected?: Date | undefined;
+  onSelect?: (date?: Date) => void;
+};
 
-const DatePicker = (props: DatePickerProps) => {
-    const { selectedWeek, handleWeekChange, renderWeeks } = props
+const DatePicker = ({ selected, onSelect }: DatePickerProps) => {
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(selected);
+
+  // keep local state in sync if parent controls selected
+  useEffect(() => setDate(selected), [selected]);
+
   return (
-    <div className="flex border border-black/30 rounded-md">
-        <Button className="rounded-r-none bg-white hover:bg-black/10 cursor-pointer">
-          <ChevronLeft color="gray" />
-        </Button>
-
-        <Select
-          value={
-            selectedWeek
-              ? JSON.stringify({
-                  start: selectedWeek.start,
-                  end: selectedWeek.end,
-                })
-              : undefined
-          }
-          onValueChange={handleWeekChange}
-        >
-          <SelectTrigger
-            noIcon
-            className="rounded-none border-y-0 hover:bg-black/10 cursor-pointer border-black/30"
+    <div className="flex flex-col gap-3">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild className={`hover:bg-transparent justify-start h-11 px-3.5 py-2.5 ${date ? "" : "hover:text-gray-400"}`}>
+          <Button
+            variant="outline"
+            id="date"
+            className={`w-40 font-medium text-sm ${date ? "" : "text-gray-400"} cursor-pointer`}
           >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="-left-5">
-            <SelectGroup className="text-center">{renderWeeks?.()}</SelectGroup>
-          </SelectContent>
-        </Select>
+            <CalendarIcon className="size-6 text-primary" />
 
-        <Button className="rounded-l-none bg-white hover:bg-black/10 cursor-pointer">
-          <ChevronRight color="gray" />
-        </Button>
-      </div>
-  )
-}
+            {date ? date.toLocaleDateString() : "DD/MM/YY"}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto overflow-hidden p-0" align="end">
+          <Calendar
+            mode="single"
+            selected={date}
+            captionLayout="dropdown"
+            onSelect={(d) => {
+              setDate(d);
+              onSelect?.(d);
+              setOpen(false);
+            }}
+          ></Calendar>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};
 
-export default DatePicker
+export default DatePicker;

@@ -1,12 +1,15 @@
 import DatePicker from "../shared/DatePicker";
-import InputWithIcon from "../shared/InputWithIcon";
 
-const ActivitiesFilter = () => {
+type ActivitiesFilterProps = {
+  selectedDate?: Date | undefined;
+  setSelectedDate: (d?: Date) => void;
+};
+
+const ActivitiesFilter = ({ selectedDate, setSelectedDate }: ActivitiesFilterProps) => {
   return (
     <div className="w-fit flex items-center gap-2">
-      <InputWithIcon placeholder="Search Lecturer by Staff Code..."/>
 
-      <DatePicker />
+      <DatePicker selected={selectedDate} onSelect={setSelectedDate} />
     </div>
   );
 };
