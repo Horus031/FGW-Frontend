@@ -6,7 +6,8 @@ import { Input } from "../../../components/ui/input";
 import FilterButton from '../../../components/shared/Filter';
 import Pagination from '../../../components/shared/Pagination';
 import { getAllCourseForStudent } from '../../../api/requests/course.api';
-import LoadingPage from '../../../components/shared/LoadingPage';
+import CourseOverviewSkeleton from '../../../components/shared/CourseOverviewSkeleton';
+
 
 // Define the filter type for this component
 interface CourseFilters {
@@ -150,7 +151,17 @@ const CourseOverview = () => {
       </div>
 
       {/* Loading state */}
-      {loading && <LoadingPage />}
+      {loading &&
+        // <LoadingPage />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CourseOverviewSkeleton />
+          <CourseOverviewSkeleton />
+          <CourseOverviewSkeleton />
+          <CourseOverviewSkeleton />
+          <CourseOverviewSkeleton />
+          <CourseOverviewSkeleton />
+        </div>
+      }
 
       {/* Error state */}
       {error && (

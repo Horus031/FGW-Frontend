@@ -9,7 +9,13 @@ import Table from "../../shared/Table";
 import type { AttendanceSlot } from "../../../models/attendance";
 
 
-const ScheduleContainer = ({ schedule }: { schedule: AttendanceSlot[] }) => {
+const ScheduleContainer = ({
+  schedule,
+  loading
+}: {
+  schedule: AttendanceSlot[];
+  loading?: boolean;
+}) => {
   const { selectedWeek } = useWeekStore();
   const daysInWeek = useDaysInWeek(selectedWeek);
 
@@ -128,6 +134,9 @@ const ScheduleContainer = ({ schedule }: { schedule: AttendanceSlot[] }) => {
       title: "Time",
       width: "90px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
+        if (loading) {
+          return <div className="h-12 bg-gray-200 animate-pulse rounded" />;
+        }
         const index = scheduleData.findIndex((row) => row.timeSlot === value);
         const { start, end } = TIME_SLOTS[index];
         return (
@@ -152,6 +161,17 @@ const ScheduleContainer = ({ schedule }: { schedule: AttendanceSlot[] }) => {
       ),
       width: "130px",
       render: (value: ScheduleRowData[keyof ScheduleRowData]) => {
+        if (loading) {
+          // Skeleton loader for schedule cells
+          return (
+            <div className="lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 flex flex-col gap-2 p-2">
+              <div className="h-3 bg-gray-200 animate-pulse rounded w-3/4" />
+              <div className="h-3 bg-gray-200 animate-pulse rounded w-full" />
+              <div className="h-3 bg-gray-200 animate-pulse rounded w-1/2" />
+            </div>
+          );
+        }
+
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div

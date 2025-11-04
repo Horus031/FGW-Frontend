@@ -29,6 +29,24 @@ export type Course = {
   students?: Pick<UserInfo, "avatar">[];
 };
 
+export type CourseGroup = {
+  id: string;
+  departmentId: string;
+  code: string;
+  title: string;
+  credits: number;
+  level: string;
+  teacherId: string;
+  slot: number;
+  status: string;
+}
+
+export type CourseState = {
+    index: number;
+    id: string;
+}
+
+
 // Course card display (summary view)
 export type CourseAttendance = Pick<Course, "courseName" | "classCode" | "totalSlots" | "attendancePercent"> & {
   termLabel: string;

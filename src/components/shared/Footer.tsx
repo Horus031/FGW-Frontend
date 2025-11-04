@@ -55,8 +55,13 @@ const Footer = () => {
 
         <h3 className="text-xs text-center text-gray-400">
           &copy; Powered by{" "}
-          <span className="text-blue-500 underline">Greenwich Vietnam</span> |{" "}
-          <span className="text-blue-500 underline">CMS</span>{" "}
+          <a href="https://www.greenwich.edu.vn/" target="_blank" rel="noopener noreferrer">
+            <span className="text-blue-500 hover:underline">Greenwich Vietnam</span>
+          </a>{" "}
+          |{" "}
+          <a href="https://www.greenwich.edu.vn/" target="_blank" rel="noopener noreferrer">
+            <span className="text-blue-500 hover:underline">CMS</span>
+          </a>
         </h3>
       </div>
     </div>

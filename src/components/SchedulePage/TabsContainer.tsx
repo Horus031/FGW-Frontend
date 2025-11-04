@@ -1,4 +1,3 @@
-// ...existing code...
 import { useState } from "react";
 import { Button } from "../ui/button";
 import ScheduleContainer from "./Schedule/ScheduleContainer";
@@ -9,13 +8,15 @@ import type { AttendanceResponse } from "../../models/attendance";
 
 type TabsContainerProps = {
   slotData: AttendanceResponse | null;
+  loading: boolean;
 };
 
-const TabsContainer = ({ slotData }: TabsContainerProps) => {
-  const [tab, setTab] = useState("schedule");
+const TabsContainer = ({ slotData, loading }: TabsContainerProps) => {
+  const [tab, setTab] = useState<"schedule" | "task">("schedule");
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Header Tabs */}
       <div className="flex items-center justify-between">
         <div className="border border-gray-300 w-fit rounded-md text-black">
           <Button
@@ -37,24 +38,23 @@ const TabsContainer = ({ slotData }: TabsContainerProps) => {
             Your task
           </Button>
         </div>
-        {/* ✅ Always render ScheduleSelect, just hide it */}
-        <div className={tab === "schedule" ? "block" : "hidden"}>
-          <ScheduleSelect />
-        </div>
-        <div className={tab === "task" ? "block" : "hidden"}>
-          <FilterButton />
-        </div>
+
+        {tab === "schedule" ? <ScheduleSelect /> : <FilterButton />}
       </div>
 
+      {/* Tab Content */}
       <div>
-        <div className={tab === "schedule" ? "block" : "hidden"}>
-          <ScheduleContainer schedule={slotData?.schedule || []} />
-        </div>
-        <div className={tab === "task" ? "block" : "hidden"}>
+        {tab === "schedule" ? (
+          <ScheduleContainer
+            schedule={slotData?.schedule || []}
+            loading={loading}
+          />
+        ) : (
           <TaskContainer />
-        </div>
+        )}
       </div>
     </div>
   );
 };
+
 export default TabsContainer;

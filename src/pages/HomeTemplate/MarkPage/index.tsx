@@ -3,8 +3,8 @@ import MarkCourse from "../../../components/MarkPage/MarkCourse";
 import MarkTable from "../../../components/MarkPage/MarkTable";
 import PageTitle from "../../../components/shared/PageTitle";
 import type { CourseMark } from "../../../models/course";
-import MajorSelectCard from "../../../components/shared/MajorSelectCard";
-import { majorData } from "../../../constants/temp";
+// import MajorSelectCard from "../../../components/shared/MajorSelectCard";
+// import { majorData } from "../../../constants/temp";
 
 const data: CourseMark[] = [
   {
@@ -56,7 +56,7 @@ const MarkPage = () => {
 
       <div className="flex flex-col gap-6">
         <div className="w-fit">
-          <MajorSelectCard data={majorData} noMajor/>
+          {/* <MajorSelectCard data={majorData} noMajor/> */}
         </div>
 
         <div className="flex gap-8.5 justify-between">
