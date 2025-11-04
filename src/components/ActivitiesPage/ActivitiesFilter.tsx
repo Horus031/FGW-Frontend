@@ -5,7 +5,8 @@ type ActivitiesFilterProps = {
   setSelectedDate: (d?: Date) => void;
 };
 
-const ActivitiesFilter = ({ selectedDate, setSelectedDate }: ActivitiesFilterProps) => {
+const ActivitiesFilter = (props: ActivitiesFilterProps) => {
+  const { selectedDate, setSelectedDate } = props;
   return (
     <div className="w-fit flex items-center gap-2">
 
