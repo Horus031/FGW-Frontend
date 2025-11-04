@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import ScheduleContainer from "./Schedule/ScheduleContainer";
 import TaskContainer from "./Task/TaskContainer";
@@ -8,16 +8,11 @@ import type { AttendanceResponse } from "../../models/attendance";
 
 type TabsContainerProps = {
   slotData: AttendanceResponse | null;
+  loading: boolean;
 };
 
-const TabsContainer = ({ slotData }: TabsContainerProps) => {
+const TabsContainer = ({ slotData, loading }: TabsContainerProps) => {
   const [tab, setTab] = useState<"schedule" | "task">("schedule");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!slotData) setLoading(true);
-    else setLoading(false);
-  }, [slotData]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,8 +22,8 @@ const TabsContainer = ({ slotData }: TabsContainerProps) => {
           <Button
             onClick={() => setTab("schedule")}
             className={`rounded-r-none cursor-pointer text-sm font-semibold ${tab === "schedule"
-                ? "bg-primary text-white"
-                : "bg-white text-[var(--color-gray-weak)]"
+              ? "bg-primary text-white"
+              : "bg-white text-[var(--color-gray-weak)]"
               }`}
           >
             Today's classes
@@ -36,15 +31,14 @@ const TabsContainer = ({ slotData }: TabsContainerProps) => {
           <Button
             onClick={() => setTab("task")}
             className={`rounded-l-none cursor-pointer text-sm font-semibold ${tab === "task"
-                ? "bg-primary text-white"
-                : "bg-white text-[var(--color-gray-weak)]"
+              ? "bg-primary text-white"
+              : "bg-white text-[var(--color-gray-weak)]"
               }`}
           >
             Your task
           </Button>
         </div>
 
-        {/* Dynamic controls */}
         {tab === "schedule" ? <ScheduleSelect /> : <FilterButton />}
       </div>
 

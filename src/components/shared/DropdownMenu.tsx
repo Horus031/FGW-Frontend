@@ -78,12 +78,7 @@ const DropdownMenu = ({ onOpenDropdown }: DropdownMenuProps) => {
               aria-expanded="true"
               aria-controls="headlessui-menu-items-117"
             >
-              <Avatar className="size-8 2xl:size-11">
-                <AvatarImage src=".." />
-                <AvatarFallback className="text-base w-full lg:leading-8 2xl:leading-11 2xl:text-xl bg-bright text-white">
-                  NV
-                </AvatarFallback>
-              </Avatar>
+              <Avatar className="size-8 2xl:size-11"> <AvatarImage src={user?.avatar || "."} /> <AvatarFallback className="text-base w-full lg:leading-8 2xl:leading-11 2xl:text-xl bg-bright text-white"> {user?.fullName ? user.fullName.split(" ").slice(-2).map((n) => n[0]).join("").toUpperCase() : "NA"} </AvatarFallback> </Avatar>
 
               <ChevronDown className="text-primary size-4 2xl:size-5" />
             </button>

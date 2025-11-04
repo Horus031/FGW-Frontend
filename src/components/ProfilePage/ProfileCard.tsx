@@ -8,14 +8,25 @@ const ProfileCard = () => {
   const currentYear = new Date().getFullYear();
   const yearOfStudy = currentYear - Number(user?.student?.startYear);
 
+  const isStudent = !!user?.student;
+  const isStaff = !!user?.staff;
+
   return (
     <div className="flex flex-col gap-18 lg:w-10/12 w-8/12">
       <div className="flex flex-col gap-8 w-8/12">
+        {/* Avatar and Name */}
         <div className="flex items-center gap-8">
           <Avatar className="size-20">
-            <AvatarImage src="." />
+            <AvatarImage src={user?.avatar || "."} />
             <AvatarFallback className="text-4xl bg-bright text-white">
-              NV
+              {user?.fullName
+                ? user.fullName
+                  .split(" ")
+                  .slice(-2)
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()
+                : "NA"}
             </AvatarFallback>
           </Avatar>
 
@@ -24,77 +35,140 @@ const ProfileCard = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
-          <div className="space-y-1">
-            <Label htmlFor="studentId" className="mb-2">
-              Student ID
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="studentId"
-              value={user?.student?.studentCode || "null"}
-            />
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="email" className="mb-2">
-              Email
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="email"
-              value={user?.email}
-            />
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="faculty" className="mb-2">
-              Facultyi
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="faculty"
-              value={user?.student?.faculty}
-            />
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="year" className="mb-2">
-              Year
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="year"
-              value={yearOfStudy || "null"}
-            />
-          </div>
-        </div>
+        {/* STUDENT UI */}
+        {isStudent && (
+          <>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="space-y-1">
+                <Label htmlFor="studentId" className="mb-2">
+                  Student ID
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="studentId"
+                  value={user?.student?.studentCode || "null"}
+                />
+              </div>
 
-        <div className="flex flex-col gap-8">
-          <div className="space-y-1">
-            <Label htmlFor="academic" className="mb-2">
-              Academic
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="academic"
-              value="Sep 2024 - Sep 2026"
-            />
+              <div className="space-y-1">
+                <Label htmlFor="email" className="mb-2">
+                  Email
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="email"
+                  value={user?.email}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="faculty" className="mb-2">
+                  Faculty
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="faculty"
+                  value={user?.student?.faculty}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="year" className="mb-2">
+                  Year
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="year"
+                  value={yearOfStudy || "null"}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8">
+              <div className="space-y-1">
+                <Label htmlFor="academic" className="mb-2">
+                  Academic
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="academic"
+                  value={`${user?.student?.startTerm || "N/A"} - ${user?.student?.endTerm || "N/A"
+                    }`}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="campus" className="mb-2">
+                  Campus
+                </Label>
+                <Input
+                  className="py-2.5 border-gray-400"
+                  disabled
+                  id="campus"
+                  value={user?.campus?.name || "null"}
+                />
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* STAFF UI */}
+        {isStaff && (
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-1">
+              <Label htmlFor="teacherId" className="mb-2">
+                Teacher ID
+              </Label>
+              <Input
+                className="py-2.5 border-gray-400"
+                disabled
+                id="teacherId"
+                value={user?.staff?.staffCode || "null"}
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Label htmlFor="email" className="mb-2">
+                Email
+              </Label>
+              <Input
+                className="py-2.5 border-gray-400"
+                disabled
+                id="email"
+                value={user?.email || "null"}
+              />
+            </div>
+
+            <div className="space-y-1 col-span-2">
+              <Label htmlFor="faculty" className="mb-2">
+                Faculty
+              </Label>
+              <Input
+                className="py-2.5 border-gray-400"
+                disabled
+                id="faculty"
+                value={user?.staff?.faculty || "null"}
+              />
+            </div>
+
+            <div className="space-y-1 col-span-2">
+              <Label htmlFor="campus" className="mb-2">
+                Campus
+              </Label>
+              <Input
+                className="py-2.5 border-gray-400"
+                disabled
+                id="campus"
+                value={user?.campus?.name || "null"}
+              />
+            </div>
           </div>
-          <div className="space-y-1">
-            <Label htmlFor="campus" className="mb-2">
-              Campus
-            </Label>
-            <Input
-              className="py-2.5 border-gray-400"
-              disabled
-              id="campus"
-              value={user?.campus?.name || "null"}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
