@@ -51,7 +51,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
     <table
       className={`${
         activity === true
-          ? "lg:w-fit lg:scale-[99.1%] lg:origin-top-left xl:w-full xl:whitespace-nowrap"
+          ? "lg:w-fit lg:scale-[99.1%] lg:origin-top-left xl:scale-100 xl:w-full 2xl:w-full xl:whitespace-nowrap"
           : "w-full"
       } ${
         centered === true ? "text-center" : "text-left"
@@ -67,7 +67,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
             <th
               className={`font-medium ${
                 padding ? `${padding}` : "custom-table py-2"
-              } ${bordered ? "border border-[#D2D6DB]" : ""} ${
+              } ${bordered ? "" : ""} ${
                 headHeight ? headHeight : ""
               } ${col.title === "Attend" ? "text-center" : ""}`}
               key={col.key}

@@ -132,15 +132,15 @@
 }
 
 .table-cell:first-child {
-  @apply rounded-tl-md ;
+  @apply rounded-tl-lg ;
 }
 
 .table-cell:last-child {
-  @apply rounded-tr-md ;
+  @apply rounded-tr-lg ;
 }
 
 .custom-table {
-  @apply py-2 px-3 border border-gray-300;
+  @apply py-2 px-3 border ;
 }
 
 .rounded-table {

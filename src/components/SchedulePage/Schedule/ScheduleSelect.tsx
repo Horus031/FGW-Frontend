@@ -9,7 +9,7 @@ import {
 import React, { useMemo } from "react";
 import { useWeekStore } from "../../../store/week";
 import type { Weeks } from "../../../hooks/useWeeksInYear";
-import DatePicker from "../../shared/DatePicker";
+import WeekPicker from "../../shared/WeekPicker";
 
 const isSameWeek = (a: Weeks | null, b: Weeks | null) => {
   if (!a && !b) return true;
@@ -82,7 +82,7 @@ const ScheduleSelect = () => {
         </SelectContent>
       </Select>
 
-      <DatePicker
+      <WeekPicker
         weeksInYear={weeksInYear}
         selectedWeek={selectedWeek}
         handleWeekChange={handleWeekChange}

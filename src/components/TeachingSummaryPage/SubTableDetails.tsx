@@ -11,46 +11,13 @@ type ClassData = {
   attended: number;
 };
 
-const SubTableDetails = () => {
-  const [open, setOpen] = useState(false);
+type Props = {
+  classData?: ClassData[];
+};
 
-  const classData: ClassData[] = [
-    {
-      no: 1,
-      classCode: "BUSI1323",
-      className: "Leadership in Organizations",
-      planAttend: 15,
-      attended: 14,
-    },
-    {
-      no: 2,
-      classCode: "BUSI1632",
-      className: "Negotiations",
-      planAttend: 15,
-      attended: 15,
-    },
-    {
-      no: 3,
-      classCode: "DESI1219",
-      className: "Design Thinking",
-      planAttend: 15,
-      attended: 13,
-    },
-    {
-      no: 4,
-      classCode: "COMP1682",
-      className: "Computer Networks",
-      planAttend: 15,
-      attended: 15,
-    },
-    {
-      no: 5,
-      classCode: "BUSI1205",
-      className: "Business Analytics",
-      planAttend: 15,
-      attended: 12,
-    },
-  ];
+const SubTableDetails = ({ classData: propData }: Props) => {
+  const [open, setOpen] = useState(false);
+  const classData: ClassData[] = propData ?? [];
 
   const columns: ColumnConfig<ClassData>[] = [
     {
