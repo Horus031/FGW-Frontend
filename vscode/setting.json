@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": "always",
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always",
+    "source.sortImports": "always"
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "files.eol": "\n",
+  "typescript.suggest.autoImports": true
+}

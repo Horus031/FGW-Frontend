@@ -1,5 +1,15 @@
 # FGW-Frontend
 
+clone the project and make yourself through these
+
+### VScode Dependancies
+
+run the command below to help you in coding
+
+```
+yarn add -D eslint @eslint/js globals eslint-plugin-react-hooks eslint-plugin-react-refresh typescript-eslint prettier
+```
+
 ### Development
 
 ```bash

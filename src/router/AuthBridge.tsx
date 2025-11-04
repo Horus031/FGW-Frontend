@@ -52,6 +52,7 @@ const AuthBridge = () => {
         fullName: data.user.fullName,
         campus: data.user.campus,
         student: data.user.student,
+        staff: data.user.staff,
       });
       // console.log("AuthBridge - User saved successfully:", data.email);
       // console.log("AuthBridge - Full user data:", data);

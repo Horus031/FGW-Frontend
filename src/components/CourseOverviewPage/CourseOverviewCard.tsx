@@ -23,7 +23,7 @@ const CourseOverviewCard = ({
       {/* Header */}
       <div className="mb-3">
         <p className="text-sm font-medium text-[var(--color-gray-weak)] mb-1">{course.courseTerm}</p>
-        <h5 className="text-2xl font-bold text-[var(--color-primary)]">{course.courseName}</h5>
+        <h5 className="text-2xl font-bold text-[var(--color-primary)] hover:opacity-70 cursor-pointer">{course.courseName}</h5>
       </div>
 
       {/* Instructor */}
