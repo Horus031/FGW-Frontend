@@ -5,8 +5,16 @@ export interface UserInfo {
   fullName: string;
   avatar: string | null;
   campus: Campus;
-  student: student; 
-  course? : string; 
+  student?: student;
+  course?: string; 
+  staff?: staff;
+}
+
+interface staff {
+  id?: string;
+  staffCode?: string;
+  role?: Role;
+  faculty?: string;
 }
 interface Campus {
   id: string;
