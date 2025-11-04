@@ -19,7 +19,6 @@ const isSameWeek = (a: Weeks | null, b: Weeks | null) => {
     a.end.getTime() === b.end.getTime()
   );
 };
-
 const ScheduleSelect = () => {
   const {
     selectedYear,
@@ -31,6 +30,33 @@ const ScheduleSelect = () => {
 
   // ✅ Remove the entire useEffect that sets default week
   // The store now handles initialization
+  const handlePreviousWeek = () => {
+    if (!selectedWeek) return;
+    const currentIndex = weeksInYear.findIndex(week => isSameWeek(week, selectedWeek));
+    if (currentIndex > 0) {
+      setSelectedWeek(weeksInYear[currentIndex - 1]);
+    }
+  };
+
+  const handleNextWeek = () => {
+    if (!selectedWeek) return;
+    const currentIndex = weeksInYear.findIndex(week => isSameWeek(week, selectedWeek));
+    if (currentIndex < weeksInYear.length - 1) {
+      setSelectedWeek(weeksInYear[currentIndex + 1]);
+    }
+  };
+
+  const canGoPrevious = useMemo(() => {
+    if (!selectedWeek) return false;
+    const currentIndex = weeksInYear.findIndex(week => isSameWeek(week, selectedWeek));
+    return currentIndex > 0;
+  }, [selectedWeek, weeksInYear]);
+
+  const canGoNext = useMemo(() => {
+    if (!selectedWeek) return false;
+    const currentIndex = weeksInYear.findIndex(week => isSameWeek(week, selectedWeek));
+    return currentIndex < weeksInYear.length - 1;
+  }, [selectedWeek, weeksInYear]);
 
   const handleWeekChange = (value: string) => {
     // console.log('🔵 handleWeekChange called');
@@ -87,6 +113,10 @@ const ScheduleSelect = () => {
         selectedWeek={selectedWeek}
         handleWeekChange={handleWeekChange}
         renderWeeks={() => renderWeeks}
+        onPrevious={handlePreviousWeek}
+        onNext={handleNextWeek}
+        canGoPrevious={canGoPrevious}
+        canGoNext={canGoNext}
       />
     </div>
   );
