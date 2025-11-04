@@ -5,7 +5,7 @@ export type ClassGroup = {
 }
 
 export type ClassState = {
-    index: number;
-    id: string;
-    name: string;
+    index: number | undefined;
+    id: string | "";
+    name: string | "";
 }

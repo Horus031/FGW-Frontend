@@ -112,13 +112,27 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
     // initialize selected year once per programme change (avoids repeated setMajor)
     const firstYear = years[0] || "";
     if (majorRef.current.year.academicYear !== firstYear) {
-      setMajor((prev) => ({
-        ...prev,
-        year: { index: 0, academicYear: firstYear },
-        term: { index: 0, id: 0 },
-        semester: { index: 0, code: "" },
-        major: { index: 0, id: 0 },
-      }));
+      // try to pick a sensible default term + department for the initial year
+      const termsForYear = (termData || []).filter((t) => t.academicYear === firstYear);
+      if (termsForYear.length > 0) {
+        const firstTerm = termsForYear[0];
+        const firstDept = (firstTerm.departments && firstTerm.departments[0]) || null;
+        setMajor((prev) => ({
+          ...prev,
+          year: { index: 0, academicYear: firstYear },
+          semester: { index: 0, code: firstTerm.code || "" },
+          term: { index: 0, id: Number(firstTerm.id) || 0 },
+          major: { index: 0, id: Number(firstDept?.id) || 0 },
+        }));
+      } else {
+        setMajor((prev) => ({
+          ...prev,
+          year: { index: 0, academicYear: firstYear },
+          term: { index: 0, id: 0 },
+          semester: { index: 0, code: "" },
+          major: { index: 0, id: 0 },
+        }));
+      }
     }
 
     lastProgrammeRef.current = currentProgrammeId;
@@ -149,17 +163,63 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
 
       if (title === "year") {
         const value = id as string;
+        // try to pick the first term/department for this year from termData
+        const termsForYear = (termData || []).filter(
+          (t) => t.academicYear === value
+        );
+
+        if (termsForYear.length > 0) {
+          const firstTerm = termsForYear[0];
+          const firstDept = (firstTerm.departments && firstTerm.departments[0]) || null;
+          setMajor((prev) => ({
+            ...prev,
+            year: { index, academicYear: value },
+            semester: { index: 0, code: firstTerm.code || "" },
+            term: { index: 0, id: Number(firstTerm.id) || 0 },
+            major: { index: 0, id: Number(firstDept?.id) || 0 },
+          }));
+        } else {
+          // fallback: clear dependent selections
+          setMajor((prev) => ({
+            ...prev,
+            year: { index, academicYear: value },
+            semester: { index: 0, code: "" },
+            term: { index: 0, id: 0 },
+            major: { index: 0, id: 0 },
+          }));
+        }
+
+        return;
+      }
+
+      if (title === "semester") {
+        const code = id as string;
+        // determine terms that match current year and the selected semester code
+        const termsForSemester = (termData || []).filter(
+          (t) => t.academicYear === majorRef.current.year.academicYear && t.code === code
+        );
+
+        if (termsForSemester.length > 0) {
+          const firstTerm = termsForSemester[0];
+          const firstDept = (firstTerm.departments && firstTerm.departments[0]) || null;
+          setMajor((prev) => ({
+            ...prev,
+            semester: { index, code },
+            term: { index: 0, id: Number(firstTerm.id) || 0 },
+            major: { index: 0, id: Number(firstDept?.id) || 0 },
+          }));
+          return;
+        }
+
+        // fallback to setting only the semester code
         setMajor((prev) => ({
           ...prev,
-          year: { index, academicYear: value },
-          // clear semester/term/major when changing year
-          semester: { index: 0, code: "" },
-          term: { index: 0, id: 0 },
-          major: { index: 0, id: 0 },
+          semester: { index, code },
         }));
         return;
       }
 
+      // generic branch for setting major id (or other single-field updates)
       setMajor((prev) => {
         const value = subtitle === "id" ? Number(id) : id;
         return {
@@ -171,7 +231,7 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
         } as typeof prev;
       });
     },
-    [setMajor]
+    [setMajor, termData]
   );
 
   const programmeButtons = useMemo(() => {
@@ -233,7 +293,7 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                     : ""
                 }`}
               >
-                {s.name}
+                {s.code}
               </button>
             ))}
           </div>
@@ -286,9 +346,8 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
     summaryTo,
     setSummaryFrom,
     setSummaryTo,
-  ]);
+  ]); 
 
-  console.log("work");
   return (
     <div
       className={`${

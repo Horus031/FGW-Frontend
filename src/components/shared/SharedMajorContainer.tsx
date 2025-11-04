@@ -52,8 +52,6 @@ export function SharedMajorProvider({ children, initialMajor = defaultMajor }: P
       const first = programmeData[0];
       setMajor((prev) => ({
         ...prev,
-        // programme.id in MajorState is a number; API returns programme.id as string
-        // so coerce safely to number.
         programme: { index: 0, id: Number(first.id) },
       }));
     }
@@ -63,7 +61,9 @@ export function SharedMajorProvider({ children, initialMajor = defaultMajor }: P
 
   const value = useMemo(() => ({ major, setMajor, programmeData, termData, isLoading }), [major, setMajor, programmeData, termData, isLoading]);
 
+
   return <SharedMajorContext.Provider value={value}>{children}</SharedMajorContext.Provider>;
+
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

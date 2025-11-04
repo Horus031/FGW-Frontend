@@ -174,6 +174,7 @@ const AttendanceInner = () => {
     enabled: !!selectedClass.id,
   });
 
+
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">

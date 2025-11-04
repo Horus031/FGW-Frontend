@@ -21,7 +21,17 @@ const ClassGroupCard = (props: ClassGroupProps) => {
           name: data[0].name,
         };
       });
+    } else {
+      setSelectedClass((prev) => {
+      return {
+        ...prev,
+        index: undefined,
+        id: "",
+        name: "",
+      };
+    })
     }
+
   }, [data, setSelectedClass]);
 
   const handleSelectClass = (classId: string, index: number, name: string) => {
