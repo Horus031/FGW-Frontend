@@ -20,10 +20,15 @@ type MajorSelectCardProps = {
   noMajor?: boolean;
   major: MajorState;
   setMajor: Dispatch<SetStateAction<MajorState>>;
+  // when used in summary mode, allow parent to control the from/to dates
+  summaryFrom?: Date | undefined;
+  summaryTo?: Date | undefined;
+  setSummaryFrom?: Dispatch<SetStateAction<Date | undefined>>;
+  setSummaryTo?: Dispatch<SetStateAction<Date | undefined>>;
 };
 
 const MajorSelectCard = (props: MajorSelectCardProps) => {
-  const { isSummary, noMajor, major, setMajor } = props;
+  const { isSummary, noMajor, major, setMajor, summaryFrom, summaryTo, setSummaryFrom, setSummaryTo } = props;
   const [uniqueYear, setUniqueYear] = useState<string[]>([]);
   const lastProgrammeRef = useRef<number | null>(null);
   const { data: programmeData } = useQuery({
@@ -234,7 +239,16 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
           </div>
         </div>
 
-        {isSummary || !noMajor ? (
+        {isSummary || noMajor ? (
+          <div className="flex items-center gap-8 py-2">
+            <div className="text-right text-primary w-[80px]">
+              <span className="text-sm font-medium w-fit">From:</span>
+            </div>
+            <div className="flex items-center gap-2 w-fit font-semibold">
+              <SummaryPicker selected={summaryFrom} onSelect={setSummaryFrom} /> to <SummaryPicker selected={summaryTo} onSelect={setSummaryTo} />
+            </div>
+          </div>
+        ) : (
           <div className="flex items-center gap-8 py-2">
             <div className="text-right text-primary w-[80px]">
               <span className="text-sm font-medium w-fit">Major:</span>
@@ -255,15 +269,6 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
               ))}
             </div>
           </div>
-        ) : (
-          <div className="flex items-center gap-8 py-2">
-            <div className="text-right text-primary w-[80px]">
-              <span className="text-sm font-medium w-fit">From:</span>
-            </div>
-            <div className="flex items-center gap-2 w-fit font-semibold">
-              <SummaryPicker /> to <SummaryPicker />
-            </div>
-          </div>
         )}
       </>
     );
@@ -277,9 +282,12 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
     major.year.index,
     major.semester.index,
     major.major.index,
+    summaryFrom,
+    summaryTo,
+    setSummaryFrom,
+    setSummaryTo,
   ]);
 
- 
   console.log("work");
   return (
     <div
