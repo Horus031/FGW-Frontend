@@ -46,3 +46,51 @@ export async function getTeacherFeedbacks(): Promise<CourseFeedbackGroup[]> {
     },
   ];
 }
+
+// Student Feedback Types
+export type FeedbackForm = {
+  staffId: string;
+  teacherName: string;
+  staffCode: string;
+  courseId: string;
+  courseName: string;
+  classCode: string;
+  classId: string;
+  termId: string;
+  isSubmitted: boolean;
+};
+
+export type FeedbackQuestionOption = {
+  value: string;
+  label: string;
+  labelVi: string;
+};
+
+export type FeedbackQuestion = {
+  id: number;
+  questionText: string;
+  questionTextVi?: string;
+  questionType: string;
+  options?: FeedbackQuestionOption[];
+  questionOrder: number;
+  isActive?: boolean;
+};
+
+export type StudentFeedbackFormsResponse = {
+  forms: FeedbackForm[];
+  questions: FeedbackQuestion[];
+};
+
+export type FeedbackAnswer = {
+  questionId: number;
+  selectedOption: string;
+};
+
+export type SubmitFeedbackRequest = {
+  staffId: number;
+  courseId: number;
+  classId: number;
+  termId: number;
+  answers: FeedbackAnswer[];
+  notes?: string;
+};
