@@ -7,6 +7,7 @@ import { Input } from "../ui/input"
 import { Plus, MessageSquare, Search } from "lucide-react"
 import ThreadListItem from "./ThreadListItem"
 import CreateThreadModal from "./CreateThread"
+import { useUserStore } from "../../store/user"
 
 interface Thread {
   id: number
@@ -40,6 +41,7 @@ export default function ThreadListPanel({
   onThreadsUpdated,
 }: ThreadListPanelProps) {
   const [searchQuery, setSearchQuery] = useState("")
+  const role = useUserStore((state) => state.user?.role.name);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const filteredThreads = useMemo(() => {
@@ -63,7 +65,9 @@ export default function ThreadListPanel({
     <Card className="space-y-4 p-4 border-2 shadow-none">
       <div className="flex items-center justify-between mb-0">
         <h2 className="text-lg font-semibold text-foreground">Threads ({threads.length})</h2>
-        <Button
+        {role === "Student" ? (null
+        ) : (
+          <Button
           size="sm"
           variant="ghost"
           onClick={() => setIsCreateModalOpen(true)}
@@ -72,6 +76,7 @@ export default function ThreadListPanel({
           <Plus className="size-4" />
           New Threads
         </Button>
+        )}
       </div>
 
       <div className="relative mb-0">
