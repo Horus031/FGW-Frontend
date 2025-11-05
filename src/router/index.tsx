@@ -89,6 +89,7 @@ export const routes: RouteObject[] = [
             children: [{ path: "", element: <RequestStatusPage /> }],
           },
           { path: "schedule", element: <SchedulePage /> },
+          { path: "thread", element: <ThreadPage /> },
           { path: "feedback", element: <StudentFeedbackPage /> },
           { path: "booking", element: <RoomBookingPage /> },
           { path: "course-overview", element: <CourseOverview /> },

@@ -27,15 +27,15 @@ export default function ThreadListItem({ thread, isSelected, onSelect, currentUs
   return (
     <Card
       onClick={onSelect}
-      className={`p-4 cursor-pointer transition-all border-l-4 ${
+      className={`p-4 cursor-pointer transition-all ${
         isSelected
-          ? "border-l-primary bg-primary/5 shadow-md"
-          : "border-l-transparent hover:bg-muted/50 hover:shadow-sm"
+          ? "border-2 border-primary bg-white shadow-none"
+          : "border-2 border-gray-200 hover:border-gray-300 shadow-none bg-white"
       }`}
     >
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-sm text-foreground line-clamp-2">{thread.title}</h3>
+          <h3 className="font-semibold text-base text-gray-900 line-clamp-2">{thread.title}</h3>
           {isCreator && (
             <Badge variant="secondary" className="text-xs flex-shrink-0">
               Creator
@@ -43,7 +43,7 @@ export default function ThreadListItem({ thread, isSelected, onSelect, currentUs
           )}
         </div>
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-gray-500">
           {formatDistanceToNow(new Date(thread.createdAt), { addSuffix: true })}
         </p>
       </div>

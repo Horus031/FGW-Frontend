@@ -86,8 +86,8 @@ export default function ThreadPage() {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
+          <div className="lg:col-span-2">
             <ThreadListPanel
               threads={threads}
               isLoading={isLoadingThreads}
@@ -102,7 +102,7 @@ export default function ThreadPage() {
             />
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-5">
             {selectedThread ? (
               <ThreadDetailPanel
                 thread={selectedThread}

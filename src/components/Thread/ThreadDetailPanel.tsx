@@ -212,7 +212,7 @@ export default function ThreadDetailPanel({
   const comments = thread.comments ?? []
 
   return (
-    <Card className="pt-8 relative gap-2">
+    <Card className="pt-8 border-2 relative gap-2 shadow-none">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
@@ -331,7 +331,11 @@ export default function ThreadDetailPanel({
                   onKeyDown={handleKeyDown}
                 />
                 <Button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7"
+                  className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full h-7 w-7 ${
+                    isSubmitting || !replyText.trim()
+                      ? "opacity-50 cursor-not-allowed bg-primary"
+                      : "bg-secondary"
+                  }`}
                   type="submit"
                   size="icon"
                   disabled={!replyText.trim() || isSubmitting}

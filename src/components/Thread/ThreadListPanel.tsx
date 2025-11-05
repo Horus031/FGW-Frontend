@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Button } from "../ui/button"
+import { Card } from "../ui/card"
 import { Input } from "../ui/input"
 import { Plus, MessageSquare, Search } from "lucide-react"
 import ThreadListItem from "./ThreadListItem"
@@ -59,21 +60,21 @@ export default function ThreadListPanel({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <Card className="space-y-4 p-4 border-2 shadow-none">
+      <div className="flex items-center justify-between mb-0">
         <h2 className="text-lg font-semibold text-foreground">Threads ({threads.length})</h2>
         <Button
           size="sm"
           variant="ghost"
           onClick={() => setIsCreateModalOpen(true)}
-          className="gap-2 text-primary hover:bg-primary/10"
+          className="gap-2 text-secondary hover:bg-secondary/10"
         >
           <Plus className="size-4" />
           New Threads
         </Button>
       </div>
 
-      <div className="relative">
+      <div className="relative mb-0">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
         <Input
           placeholder="Search your threads"
@@ -83,7 +84,7 @@ export default function ThreadListPanel({
         />
       </div>
 
-      <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto">
+      <div className="space-y-3 max-h-[calc(100vh-300px)] overflow-y-auto">
         {error && <div className="text-sm text-destructive bg-destructive/10 p-3 rounded">{error}</div>}
 
         {filteredThreads.length === 0 ? (
@@ -113,6 +114,6 @@ export default function ThreadListPanel({
         }}
         userId={currentUserId}
       />
-    </div>
+    </Card>
   )
 }
