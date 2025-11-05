@@ -1,223 +1,57 @@
 import ActivitiesFilter from "./ActivitiesFilter";
 import ActivitiesSelect from "./ActivitiesSelect";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { ColumnConfig } from "../shared/Table";
 import { TIME_SLOTS } from "../../constants/constants";
 import Table from "../shared/Table";
 import type { ActivitySlot, RoomActivity } from "../../models/activity";
-
-const FLOOR_2_ACTIVITIES: RoomActivity[] = [
-  {
-    room: "F201",
-    capacity: 30,
-    slot1: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot2: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot3: null,
-    slot4: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot5: null,
-    slot6: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot7: null,
-    slot8: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot9: null,
-  },
-  {
-    room: "F202",
-    capacity: 35,
-    slot1: null,
-    slot2: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot3: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot4: null,
-    slot5: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot6: null,
-    slot7: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot8: null,
-    slot9: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-  },
-  {
-    room: "F203",
-    capacity: 40,
-    slot1: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot2: null,
-    slot3: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot4: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot5: null,
-    slot6: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot7: null,
-    slot8: null,
-    slot9: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-  },
-];
-
-const FLOOR_3_ACTIVITIES: RoomActivity[] = [
-  {
-    room: "F301",
-    capacity: 30,
-    slot1: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot2: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot3: null,
-    slot4: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot5: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot6: null,
-    slot7: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot8: null,
-    slot9: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-  },
-  {
-    room: "F302",
-    capacity: 35,
-    slot1: null,
-    slot2: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot3: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot4: null,
-    slot5: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot6: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot7: null,
-    slot8: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot9: null,
-  },
-  {
-    room: "F303",
-    capacity: 40,
-    slot1: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot2: null,
-    slot3: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot4: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot5: null,
-    slot6: null,
-    slot7: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot8: {
-      classCode: "TDS1502.1",
-      courseCode: "DESI1219.3",
-      teacherCode: "SonND24",
-    },
-    slot9: null,
-  },
-];
+import { FLOOR_2_ACTIVITIES, FLOOR_3_ACTIVITIES } from "../../constants/temp";
 
 const ActivitiesContainer = () => {
   const [tab, setTab] = useState(2);
 
-  const data = tab === 2 ? FLOOR_2_ACTIVITIES : FLOOR_3_ACTIVITIES;
+  // default to today so DatePicker shows today's date on first load
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
+
+  const rawData = tab === 2 ? FLOOR_2_ACTIVITIES : FLOOR_3_ACTIVITIES;
+
+  // Filter rooms by staff code and date. If both filters are empty, return rawData.
+  const data = useMemo(() => {
+    if (!selectedDate) return rawData;
+
+    // Use local date parts to avoid timezone shifts from toISOString()
+    const dateStr = selectedDate
+      ? `${selectedDate.getFullYear()}-${String(
+          selectedDate.getMonth() + 1
+        ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`
+      : null;
+
+    const slotKeys: (keyof RoomActivity)[] = [
+      "slot1",
+      "slot2",
+      "slot3",
+      "slot4",
+      "slot5",
+      "slot6",
+      "slot7",
+      "slot8",
+      "slot9",
+    ];
+
+    return rawData.filter((room) => {
+      for (const key of slotKeys) {
+        const slot = room[key] as ActivitySlot | null;
+        if (!slot) continue;
+
+        const matchesDate = dateStr ? slot.date === dateStr : true;
+
+        if (matchesDate) return true;
+      }
+      return false;
+    });
+  }, [rawData, selectedDate]);
 
   const renderActivity = (activity: ActivitySlot) => {
     if (!activity) return <span className="text-gray-400">-</span>;
@@ -268,10 +102,13 @@ const ActivitiesContainer = () => {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <ActivitiesSelect tab={tab} setTab={setTab} />
-        <ActivitiesFilter />
+        <ActivitiesFilter
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
 
-      <div className="">
+      <div className="w-full">
         <Table
           columns={columns}
           data={data}

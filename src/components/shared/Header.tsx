@@ -139,31 +139,33 @@ const Header = () => {
 
               <div className="max-h-96 overflow-y-auto">
                 {notifications.map((n) => (
-                  <div
-                    key={n.id}
-                    className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-xs text-gray-500 mb-1">
-                          {n.date} • {n.time}
-                        </p>
-                        <p
-                          className={`text-sm leading-snug ${n.isUnread
-                            ? "font-bold text-primary"
-                            : "font-medium text-primary"
-                            }`}
-                        >
-                          {n.title}
-                        </p>
+                  <UnderDevelopmentTooltip key={n.id}>
+                    <div
+                      className="px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <p className="text-xs text-gray-500 mb-1">
+                            {n.date} • {n.time}
+                          </p>
+                          <p
+                            className={`text-sm leading-snug ${n.isUnread
+                                ? "font-bold text-primary"
+                                : "font-medium text-primary"
+                              }`}
+                          >
+                            {n.title}
+                          </p>
+                        </div>
+                        {n.isUnread && (
+                          <span className="mt-1 ml-2 w-2 h-2 bg-secondary rounded-full shrink-0"></span>
+                        )}
                       </div>
-                      {n.isUnread && (
-                        <span className="mt-1 ml-2 w-2 h-2 bg-secondary rounded-full shrink-0"></span>
-                      )}
                     </div>
-                  </div>
+                  </UnderDevelopmentTooltip>
                 ))}
               </div>
+
             </div>
           )}
         </div>

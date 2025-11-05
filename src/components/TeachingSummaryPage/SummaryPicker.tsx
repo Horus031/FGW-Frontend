@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Popover, PopoverContent } from "../ui/popover";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "../ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 
-const SummaryPicker = () => {
+type SummaryPickerProps = {
+  selected?: Date | undefined;
+  onSelect?: (d?: Date) => void;
+};
+
+const SummaryPicker = ({ selected, onSelect }: SummaryPickerProps) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date | undefined>(selected);
+
+  useEffect(() => setDate(selected), [selected]);
 
   return (
     <div>
@@ -23,8 +30,9 @@ const SummaryPicker = () => {
             mode="single"
             selected={date}
             captionLayout="dropdown"
-            onSelect={(date) => {
-              setDate(date);
+            onSelect={(d) => {
+              setDate(d);
+              onSelect?.(d);
               setOpen(false);
             }}
           />

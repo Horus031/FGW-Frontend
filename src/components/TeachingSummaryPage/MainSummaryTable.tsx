@@ -14,99 +14,12 @@ type SlotAttendance = {
   attend: AttendStatus;
 };
 
-const MainSummaryTable = () => {
-  const [slotData] = useState<SlotAttendance[]>([
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Pending",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Absent",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Pending",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-    {
-      startDate: "12 Aug, 2025",
-      slot: 1,
-      room: "F201",
-      course: "Study Skill for University Success",
-      sectionNo: 5,
-      group: "AEG116_OJT4",
-      attend: "Attended",
-    },
-  ]);
+type Props = {
+  slotData?: SlotAttendance[];
+};
+
+const MainSummaryTable = ({ slotData: propData }: Props) => {
+  const [slotData] = useState<SlotAttendance[]>(propData ?? []);
 
   const renderAttendBadge = (status: AttendStatus) => {
     const statusMap = {

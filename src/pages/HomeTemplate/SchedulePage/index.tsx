@@ -7,6 +7,14 @@ import { useWeekStore } from "../../../store/week";
 import { useUserStore } from "../../../store/user";
 import type { AttendanceResponse } from "../../../models/attendance";
 
+// ✅ Helper to format date as YYYY-MM-DD in local timezone
+const formatLocalDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 const SchedulePage = () => {
   const { selectedWeek } = useWeekStore();
   const { user } = useUserStore();
@@ -19,10 +27,13 @@ const SchedulePage = () => {
 
     // ✅ Start loading as soon as week changes
     setLoading(true);
-    setSlotData(null); // optional: clear old data
+    setSlotData(null);
 
-    const startDate = selectedWeek.start.toISOString().split("T")[0];
-    const endDate = selectedWeek.end.toISOString().split("T")[0];
+    // ✅ Use local timezone formatting instead of toISOString()
+    const startDate = formatLocalDate(selectedWeek.start);
+    const endDate = formatLocalDate(selectedWeek.end);
+
+    // console.log('📅 Fetching attendance:', { startDate, endDate });
 
     // ✅ Debounce only the API call, not the loading state
     const debouncedFetch = debounce(async () => {
@@ -32,9 +43,9 @@ const SchedulePage = () => {
       } catch (error) {
         console.error("❌ Failed to fetch attendance:", error);
       } finally {
-        setLoading(false); // ✅ hide skeleton only when data is ready
+        setLoading(false);
       }
-    }, 400);
+    }, 500);
 
     debouncedFetch();
 
