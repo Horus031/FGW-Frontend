@@ -138,14 +138,14 @@ const FeedbackForm = ({
       selectedOption: answers[q.id]
     }));
 
+    const isUpdating = selectedForm.isSubmitted;
+
     try {
       await onSubmit(feedbackAnswers, notes);
       // Show success message
-      const isUpdating = selectedForm.isSubmitted;
       setSuccess(isUpdating ? "Feedback updated successfully!" : "Feedback submitted successfully!");
       setError(null);
     } catch {
-      const isUpdating = selectedForm.isSubmitted;
       setError(isUpdating ? "Failed to update feedback. Please try again." : "Failed to submit feedback. Please try again.");
       setSuccess(null);
     }

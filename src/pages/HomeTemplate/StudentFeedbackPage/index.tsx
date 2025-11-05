@@ -80,7 +80,7 @@ const StudentFeedbackPage = () => {
           submission: {
             answers,
             notes,
-            submittedAt: new Date().toISOString(),
+            submittedAt: updatedForms[activeFormIndex].submission?.submittedAt,
           },
         };
         return {
