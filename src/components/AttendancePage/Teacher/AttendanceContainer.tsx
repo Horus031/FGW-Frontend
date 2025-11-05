@@ -7,9 +7,13 @@ import Table from "../../shared/Table";
 import { Info } from "lucide-react";
 import type { MajorState } from "../../../models/major";
 import { useQuery } from "@tanstack/react-query";
-import { getAllClasses, getAllCourseInClass } from "../../../api/requests/class.api";
+import {
+  getAllClasses,
+  getAllCourseInClass,
+} from "../../../api/requests/class.api";
 import type { ClassState } from "../../../models/class";
 import type { CourseState } from "../../../models/course";
+import SharedMajorProvider, { useSharedMajor } from "../../shared/SharedMajorContainer";
 
 type StudentAttendanceRow = {
   studentId: string;
@@ -88,28 +92,17 @@ const defaultCourse: CourseState = {
   id: "",
 };
 
+const AttendanceInner = () => {
+  const { major, setMajor } = useSharedMajor();
 
-
-const AttendanceContainer = () => {
   const handleInfo = useCallback((row: StudentAttendanceRow) => {
     // TODO: open modal/side-panel with details
     console.log("Info clicked for:", row.studentId, row.studentName);
   }, []);
 
-  const [major, setMajor] = useState<MajorState>(defaultMajor);
-  const [selectedClass, setselectedClass] = useState<ClassState>(defaultClass);
+  // keep UI selection state local (class & course)
+  const [selectedClass, setSelectedClass] = useState<ClassState>(defaultClass);
   const [selectedCourse, setSelectedCourse] = useState<CourseState>(defaultCourse);
-  const { data: classGroupData } = useQuery({
-    queryKey: ["class-group", major.programme.id, major.term.id, major.major.id],
-    queryFn: () => getAllClasses(major.programme.id, major.term.id, major.major.id),
-  })
-
-  const { data: courseGroupData } = useQuery({
-    queryKey: ["course-group", selectedClass.id],
-    queryFn: () => getAllCourseInClass(selectedClass.id),
-    enabled: !!selectedClass.id
-  })
-
 
   const columns: ColumnConfig<StudentAttendanceRow>[] = [
     { key: "studentId", title: "ID", width: "300px" },
@@ -162,17 +155,44 @@ const AttendanceContainer = () => {
     },
   ];
 
+  // class/course queries use the shared `major`
+  const { data: classGroupData } = useQuery({
+    queryKey: [
+      "class-group",
+      major.programme.id,
+      major.term.id,
+      major.major.id,
+    ],
+    queryFn: () =>
+      getAllClasses(major.programme.id, major.term.id, major.major.id),
+    enabled: !!major.programme.id,
+  });
+
+  const { data: courseGroupData } = useQuery({
+    queryKey: ["course-group", selectedClass.id],
+    queryFn: () => getAllCourseInClass(selectedClass.id),
+    enabled: !!selectedClass.id,
+  });
+
 
   return (
     <div className="flex flex-col gap-5.5">
       <div className="flex items-center gap-8">
         <MajorSelectCard major={major} setMajor={setMajor} />
 
-        <ClassGroupCard selectedClass={selectedClass} setSelectedClass={setselectedClass} data={classGroupData} />
+        <ClassGroupCard
+          selectedClass={selectedClass}
+          setSelectedClass={setSelectedClass}
+          data={classGroupData}
+        />
       </div>
 
       <div className="flex items-start gap-6">
-        <CourseGroupList selectedCourse={selectedCourse} setSelectedCourse={setSelectedCourse} currentClassName={selectedClass.name} courseGroupData={courseGroupData} />
+        <CourseGroupList
+          selectedCourse={selectedCourse}
+          setSelectedCourse={setSelectedCourse}
+          courseGroupData={courseGroupData}
+        />
 
         <div className="flex flex-col">
           <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
@@ -187,6 +207,14 @@ const AttendanceContainer = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const AttendanceContainer = () => {
+  return (
+    <SharedMajorProvider initialMajor={defaultMajor}>
+      <AttendanceInner />
+    </SharedMajorProvider>
   );
 };
 

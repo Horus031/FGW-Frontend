@@ -9,7 +9,7 @@ interface UnderDevelopmentTooltipProps {
 
 const UnderDevelopmentTooltip = ({
     children,
-    message = "🚧 This feature is still under development",
+    message = "This feature is still under development!",
     position = "below",
 }: UnderDevelopmentTooltipProps) => {
     const [isHovered, setIsHovered] = useState(false);
