@@ -4,9 +4,10 @@ import PageTitle from "../../../components/shared/PageTitle";
 import FeedbackForm from "../../../components/StudentFeedbackPage/FeedbackForm";
 import InstructorList from "../../../components/StudentFeedbackPage/InstructorList";
 import { useUserStore } from "../../../store/user";
-import { getStudentFeedbackForms, submitStudentFeedback } from "../../../api/requests/feedback.api";
+import { getStudentFeedbackForms, submitStudentFeedback, updateStudentFeedback } from "../../../api/requests/feedback.api";
 import type { StudentFeedbackFormsResponse, FeedbackAnswer } from "../../../models/feedback";
-import LoadingPage from "../../../components/shared/LoadingPage";
+import { Skeleton } from "../../../components/ui/skeleton";
+import { getCurrentTerm } from "../../../api/requests/term.api";
 
 const StudentFeedbackPage = () => {
   const { user } = useUserStore();
@@ -26,9 +27,8 @@ const StudentFeedbackPage = () => {
     try {
       setLoading(true);
       setError(null);
-      // Use a default term ID or get it from user store/context
-      const termId = "8"; // You might want to get this from user context or state
-      const data = await getStudentFeedbackForms(termId);
+      const term = await getCurrentTerm();
+      const data = await getStudentFeedbackForms(term.id);
       setFeedbackData(data);
       
       if (data.forms.length > 0) {
@@ -52,25 +52,36 @@ const StudentFeedbackPage = () => {
     }
 
     const selectedForm = feedbackData.forms[activeFormIndex];
+    const feedbackPayload = {
+      staffId: parseInt(selectedForm.staffId, 10),
+      courseId: parseInt(selectedForm.courseId, 10),
+      classId: parseInt(selectedForm.classId, 10),
+      termId: parseInt(selectedForm.termId, 10),
+      answers,
+      notes,
+    };
 
     setIsSubmitting(true);
     try {
-      await submitStudentFeedback({
-        staffId: parseInt(selectedForm.staffId, 10),
-        courseId: parseInt(selectedForm.courseId, 10),
-        classId: parseInt(selectedForm.classId, 10),
-        termId: parseInt(selectedForm.termId, 10),
-        answers,
-        notes,
-      });
+      // Use update API if already submitted, otherwise use submit API
+      if (selectedForm.isSubmitted) {
+        await updateStudentFeedback(feedbackPayload);
+      } else {
+        await submitStudentFeedback(feedbackPayload);
+      }
       
-      // Update the form status to submitted
+      // Update the form status and submission data in local state
       setFeedbackData(prev => {
         if (!prev) return prev;
         const updatedForms = [...prev.forms];
         updatedForms[activeFormIndex] = {
           ...updatedForms[activeFormIndex],
           isSubmitted: true,
+          submission: {
+            answers,
+            notes,
+            submittedAt: new Date().toISOString(),
+          },
         };
         return {
           ...prev,
@@ -92,12 +103,28 @@ const StudentFeedbackPage = () => {
       {user?.role?.name === "Student" ? (
         <div className="space-y-6">
           {loading ? (
-              <LoadingPage />
-          ) : error ? (
-            <div className="flex items-center justify-center py-12 text-red-500">
-              <p>{error}</p>
+            <div className="space-y-6">
+              {/* Skeleton for instructor cards */}
+              <div className="flex items-center gap-6 overflow-x-auto pb-2">
+                <Skeleton className="h-24 w-[280px] rounded-lg" />
+                <Skeleton className="h-24 w-[280px] rounded-lg" />
+                <Skeleton className="h-24 w-[280px] rounded-lg" />
+              </div>
+              {/* Skeleton for form */}
+              <div className="space-y-6">
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-10 w-32" />
+              </div>
             </div>
-          ) : feedbackData ? (
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="text-red-500 text-lg font-semibold mb-2">Unable to Load Feedback Forms</div>
+              <p className="text-gray-600">{error}</p>
+            </div>
+          ) : feedbackData && feedbackData.forms.length > 0 ? (
             <>
               <InstructorList
                 forms={feedbackData.forms}
@@ -113,8 +140,9 @@ const StudentFeedbackPage = () => {
               />
             </>
           ) : (
-            <div className="flex items-center justify-center py-12 text-gray-500">
-              <p>No feedback forms available</p>
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="text-gray-700 text-lg font-semibold mb-2">No Feedback Forms Available</div>
+              <p className="text-gray-500">There are currently no feedback forms to complete for this term.</p>
             </div>
           )}
         </div>

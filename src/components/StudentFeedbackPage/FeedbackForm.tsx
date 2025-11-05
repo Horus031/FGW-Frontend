@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FeedbackQuestion, FeedbackForm as FeedbackFormType, FeedbackAnswer } from "../../models/feedback";
 import { Button } from "../ui/button";
 import { Alert, AlertDescription } from "../ui/alert";
@@ -10,13 +10,39 @@ type FeedbackFormProps = {
   isSubmitting?: boolean;
 };
 
-const FeedbackForm = ({ questions, selectedForm, onSubmit, isSubmitting = false }: FeedbackFormProps) => {
-  const [answers, setAnswers] = useState<Record<number, string>>({});
+const FeedbackForm = ({ 
+  questions, 
+  selectedForm, 
+  onSubmit, 
+  isSubmitting = false
+}: FeedbackFormProps) => {
+  const [answers, setAnswers] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const handleAnswerChange = (questionId: number, option: string) => {
+  // Pre-populate form with submitted data when form changes
+  useEffect(() => {
+    if (selectedForm?.isSubmitted && selectedForm.submission) {
+      // Convert FeedbackAnswer[] to Record<string, string>
+      const answersRecord = selectedForm.submission.answers.reduce((acc, answer) => {
+        acc[answer.questionId] = answer.selectedOption;
+        return acc;
+      }, {} as Record<string, string>);
+      
+      setAnswers(answersRecord);
+      setNotes(selectedForm.submission.notes || "");
+    } else {
+      // Reset form when not submitted
+      setAnswers({});
+      setNotes("");
+    }
+    // Clear messages when form changes
+    setError(null);
+    setSuccess(null);
+  }, [selectedForm]);
+
+  const handleAnswerChange = (questionId: string, option: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: option }));
   };
 
@@ -66,7 +92,7 @@ const FeedbackForm = ({ questions, selectedForm, onSubmit, isSubmitting = false 
                           value={option.value}
                           checked={answers[question.id] === option.value}
                           onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                          disabled={selectedForm?.isSubmitted}
+                          disabled={isSubmitting}
                         />
                         <label 
                           htmlFor={`${question.id}-${optionIndex}`} 
@@ -115,10 +141,12 @@ const FeedbackForm = ({ questions, selectedForm, onSubmit, isSubmitting = false 
     try {
       await onSubmit(feedbackAnswers, notes);
       // Show success message
-      setSuccess("Feedback submitted successfully!");
+      const isUpdating = selectedForm.isSubmitted;
+      setSuccess(isUpdating ? "Feedback updated successfully!" : "Feedback submitted successfully!");
       setError(null);
     } catch {
-      setError("Failed to submit feedback. Please try again.");
+      const isUpdating = selectedForm.isSubmitted;
+      setError(isUpdating ? "Failed to update feedback. Please try again." : "Failed to submit feedback. Please try again.");
       setSuccess(null);
     }
   };
@@ -166,18 +194,18 @@ const FeedbackForm = ({ questions, selectedForm, onSubmit, isSubmitting = false 
             onChange={handleNotesChange}
             className="w-full max-w-2xl h-40 border border-gray-300 rounded-lg p-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter your remarks here..."
-            disabled={selectedForm.isSubmitted || isSubmitting}
+            disabled={isSubmitting}
           ></textarea>
           <Button 
             type="submit"
-            disabled={selectedForm.isSubmitted || isSubmitting}
+            disabled={isSubmitting}
             className="w-fit bg-secondary px-8 py-3 text-white font-semibold hover:opacity-70"
             size="lg"
           >
             {isSubmitting ? (
-              "Submitting..."
+              selectedForm.isSubmitted ? "Updating..." : "Submitting..."
             ) : selectedForm.isSubmitted ? (
-              "Already Submitted"
+              "Update Feedback"
             ) : (
               "Submit"
             )}

@@ -9,3 +9,7 @@ export const getStudentFeedbackForms = async (termId: string): Promise<StudentFe
 export const submitStudentFeedback = async (feedbackData: SubmitFeedbackRequest): Promise<void> => {
   await api.post("/feedback/submit", feedbackData);
 };
+
+export const updateStudentFeedback = async (feedbackData: SubmitFeedbackRequest): Promise<void> => {
+  await api.patch("/feedback/submission", feedbackData);
+};
