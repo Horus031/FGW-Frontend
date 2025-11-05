@@ -30,6 +30,7 @@ const FeedbackForm = ({
         return acc;
       }, {} as Record<string, string>);
       
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAnswers(answersRecord);
       setNotes(selectedForm.submission.notes || "");
     } else {
