@@ -53,10 +53,10 @@ const StudentFeedbackPage = () => {
 
     const selectedForm = feedbackData.forms[activeFormIndex];
     const feedbackPayload = {
-      staffId: parseInt(selectedForm.staffId, 10),
-      courseId: parseInt(selectedForm.courseId, 10),
-      classId: parseInt(selectedForm.classId, 10),
-      termId: parseInt(selectedForm.termId, 10),
+      staffId: selectedForm.staffId,
+      courseId: selectedForm.courseId,
+      classId: selectedForm.classId,
+      termId: selectedForm.termId,
       answers,
       notes,
     };
