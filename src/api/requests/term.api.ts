@@ -6,3 +6,9 @@ export const getAllTerms = async (programmeId: number): Promise<Term[]> => {
 
     return response.data;
 }
+
+export const getCurrentTerm = async (): Promise<Term> => {
+    const response = await api.get<Term>("/terms/current/active");
+
+    return response.data;
+}
