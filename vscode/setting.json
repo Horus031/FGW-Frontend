@@ -4,10 +4,13 @@
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "always",
     "source.fixAll.eslint": "always",
-    "source.organizeImports": "always",
-    "source.sortImports": "always"
+    "source.organizeImports": "always"
   },
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "javascript.preferences.importModuleSpecifier": "shortest",
   "files.eol": "\n",
-  "typescript.suggest.autoImports": true
+  "source.sortImports": "always"
 }
