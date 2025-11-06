@@ -1,13 +1,17 @@
 // src/api/requests/attendance.api.ts
-import type { AttendanceResponse, AttendanceStats } from "../../models/attendance";
+import type {
+  AttendanceRecords,
+  AttendanceResponse,
+  AttendanceStats,
+} from "../../models/attendance";
 import api from "../apiRequest";
 
 export const getAttendanceByStudentID = async (
   studentId: string,
   startDate: string,
   endDate: string
-): Promise<AttendanceResponse > => {
-  const response = await api.get<AttendanceResponse >("/attendance/schedule", {
+): Promise<AttendanceResponse> => {
+  const response = await api.get<AttendanceResponse>("/attendance/schedule", {
     params: {
       studentId,
       startDate,
@@ -17,8 +21,24 @@ export const getAttendanceByStudentID = async (
   return response.data;
 };
 
-export const getStatsForStudents = async (courseId: string, classId: string): Promise<AttendanceStats[]> => {
-  const response = await api.get<AttendanceStats[]>(`/attendance/stats?courseId=${courseId}&classId=${classId}`)
+export const getStatsForStudents = async (
+  courseId: string,
+  classId: string
+): Promise<AttendanceStats[]> => {
+  const response = await api.get<AttendanceStats[]>(
+    `/attendance/stats?courseId=${courseId}&classId=${classId}`
+  );
 
   return response.data;
-}
+};
+
+export const listAttendanceRecords = async (
+  studentId: string | undefined,
+  courseId: string
+): Promise<AttendanceRecords[]> => {
+  const response = await api.get<AttendanceRecords[]>(
+    `/attendance?studentId=${studentId || ""}&courseId=${courseId}`
+  );
+
+  return response.data;
+};

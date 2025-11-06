@@ -5,18 +5,17 @@ import PageTitle from "../../../components/shared/PageTitle";
 import { useUserStore } from "../../../store/user";
 
 const AttendancePage = () => {
-  const role = useUserStore((state) => state.user?.role.name);
-
+  const { user } = useUserStore();
 
   return (
     <div className="space-y-6">
       <PageTitle breadcrumb="Attendance Report" />
 
-      {role === "Student" ? (
+      {user?.role.name === "Student" ? (
         <div className="space-y-6">
           <AttendanceCourseSelect />
 
-          <AttendanceDetails />
+          <AttendanceDetails studentId={user.student?.id} />
         </div>
       ) : (
         <AttendanceContainer />

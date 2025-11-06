@@ -15,14 +15,16 @@ export type CourseGroupProps = {
       status: string;
     }[];
   };
-  selectedCourse: CourseState;
-  setSelectedCourse: Dispatch<SetStateAction<CourseState>>;
+  selectedCourse?: CourseState;
+  setSelectedCourse?: Dispatch<SetStateAction<CourseState>>;
 };
 
 const CourseGroupList = (props: CourseGroupProps) => {
   const { courseGroupData, isAttendance, timeSlotData, selectedCourse, setSelectedCourse } = props;
 
   useEffect(() => {
+    if (!setSelectedCourse) return;
+
     if (courseGroupData && courseGroupData.length > 0) {
       setSelectedCourse((prev) => {
         return {
@@ -33,12 +35,12 @@ const CourseGroupList = (props: CourseGroupProps) => {
       });
     } else {
       setSelectedCourse((prev) => {
-      return {
-        ...prev,
-        index: undefined,
-        id: "",
-      };
-    })
+        return {
+          ...prev,
+          index: undefined,
+          id: "",
+        };
+      });
     }
   }, [courseGroupData, setSelectedCourse]);
 
@@ -60,20 +62,24 @@ const CourseGroupList = (props: CourseGroupProps) => {
 
   const renderTimeSlot = () => {
     return timeSlotData?.timeSlotGroup.map((item) => {
-      return <TimeSlotCard key={item.slot} slot={item.slot} startTime={item.startTime} endTime={item.endTime} status={item.status}  />;
+      return (
+        <TimeSlotCard
+          key={item.slot}
+          slot={item.slot}
+          startTime={item.startTime}
+          endTime={item.endTime}
+          status={item.status}
+        />
+      );
     });
   };
 
   return (
     <div className="p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-3/12 2xl:basis-4/12">
       <div className="flex items-center justify-between">
-        <span className="font-semibold text-sm">
-          {timeSlotData?.className || "Course"}
-        </span>
+        <span className="font-semibold text-sm">{timeSlotData?.className || "Course"}</span>
 
-        {isAttendance && (
-          <span className="font-semibold text-sm text-secondary">16 Oct, 2025</span>
-        )}
+        {isAttendance && <span className="font-semibold text-sm text-secondary">16 Oct, 2025</span>}
       </div>
       {isAttendance ? renderTimeSlot() : renderCourseGroup()}
     </div>

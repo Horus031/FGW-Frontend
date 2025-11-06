@@ -1,77 +1,36 @@
 // ...existing code...
-import { useState } from "react";
-import { Badge } from "../../ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { listAttendanceRecords } from "../../../api/requests/attendance.api";
+import type { AttendanceRecords } from "../../../models/attendance";
 import Table, { type ColumnConfig } from "../../shared/Table";
+import { Badge } from "../../ui/badge";
 
-type AttendanceStatus = "Present" | "Absent";
-
-type StudentAttendance = {
-  no: number;
-  date: string; // e.g. "Wed (28 Oct)"
-  slot: string | number;
-  lecturer: string;
-  groupName: string;
-  status: AttendanceStatus;
-  note: string;
+type AttendanceTableProps = {
+  studentId: string | undefined;
+  courseId: string;
 };
 
-const AttendanceTable = () => {
-  const [attendanceData] = useState<StudentAttendance[]>([
-    {
-      no: 1,
-      date: "Wed (28 Oct)",
-      slot: "1",
-      lecturer: "TRANLT02",
-      groupName: "DESI1219.1",
-      status: "Present",
-      note: "",
-    },
-    {
-      no: 2,
-      date: "Wed (28 Oct)",
-      slot: "1",
-      lecturer: "TRANLT02",
-      groupName: "DESI1219.1",
-      status: "Present",
-      note: "",
-    },
-    {
-      no: 3,
-      date: "Wed (28 Oct)",
-      slot: "2",
-      lecturer: "NGUYENV",
-      groupName: "DESI1219.1",
-      status: "Absent",
-      note: "Sick",
-    },
-    {
-      no: 4,
-      date: "Thu (29 Oct)",
-      slot: "3",
-      lecturer: "TRANLT02",
-      groupName: "DESI1219.1",
-      status: "Present",
-      note: "",
-    },
-    {
-      no: 5,
-      date: "Fri (30 Oct)",
-      slot: "1",
-      lecturer: "TRANLT02",
-      groupName: "DESI1219.1",
-      status: "Present",
-      note: "",
-    },
-  ]);
+const AttendanceTable = (props: AttendanceTableProps) => {
+  const { studentId, courseId } = props;
 
-  const renderStatusBadges = (row: StudentAttendance) => {
+  const { data: attendanceData } = useQuery({
+    queryKey: ["attendance-records", courseId],
+    queryFn: () => listAttendanceRecords(studentId, courseId),
+    enabled: !!courseId,
+  });
+
+  console.log(attendanceData);
+
+  const renderStatusBadges = (row: AttendanceRecords) => {
     return (
       <div className="flex items-center gap-2">
         <Badge
-          className={`px-3 py-1 text-xs select-none font-semibold mx-auto ${
-            row.status === "Present"
+          className={`px-3 py-1 text-xs rounded-sm select-none font-semibold mx-auto ${
+            row.status === "PRESENT"
               ? "bg-green-100 text-green-700 border-green-700"
-              : "bg-red-100 border-red-700 text-red-700"
+              : row.status === "ABSENT"
+                ? "bg-red-100 border-red-700 text-red-700"
+                : "bg-gray-100 border-gray-weak text-gray-weak"
           }`}
         >
           {row.status}
@@ -80,16 +39,30 @@ const AttendanceTable = () => {
     );
   };
 
-  const columns: ColumnConfig<StudentAttendance>[] = [
-    { key: "no", title: "No.", width: "60px" },
-    { key: "date", title: "Date", width: "120px" },
-    { key: "slot", title: "Slot", width: "72px" },
-    { key: "lecturer", title: "Lecturer", width: "120px" },
+  const columns: ColumnConfig<AttendanceRecords>[] = [
     {
-      key: "groupName",
+      key: "id",
+      title: "No.",
+      width: "60px",
+    },
+    {
+      key: "session",
+      title: "Date",
+      width: "120px",
+      render: (_, row) => <span>{row.session.dateOn.toLocaleString()}</span>,
+    },
+    { key: "studentId", title: "Slot", width: "72px" },
+    {
+      key: "sessionId",
+      title: "Lecturer",
+      width: "120px",
+      render: (_, row) => <span>{row.session.teacherId}</span>,
+    },
+    {
+      key: "student",
       title: "Group name",
       width: "120px",
-      render: (_, row) => <span className="font-medium">{row.groupName}</span>,
+      render: (_, row) => <span className="font-medium">{row.session.class.name}</span>,
     },
     {
       key: "status",
@@ -108,7 +81,7 @@ const AttendanceTable = () => {
     <div className="w-full overflow-x-auto">
       <Table
         columns={columns}
-        data={attendanceData}
+        data={attendanceData || []}
         color="bg-primary"
         textColor="text-white"
         bordered
