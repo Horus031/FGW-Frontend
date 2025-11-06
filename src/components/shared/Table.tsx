@@ -65,10 +65,9 @@ const Table = <T extends object>(props: TableProps<T>) => {
         >
           {columns.map((col) => (
             <th
-              className={`font-medium ${
+              className={`font-medium table-cell ${
                 padding ? `${padding}` : "custom-table py-2"
-              } ${bordered ? "" : ""} ${
-                headHeight ? headHeight : ""
+              } ${bordered ? "" : ""} ${headHeight ? headHeight : ""
               } ${col.title === "Attend" ? "text-center" : ""}`}
               key={col.key}
               style={{ width: col.width || "auto" }}
@@ -78,7 +77,8 @@ const Table = <T extends object>(props: TableProps<T>) => {
           ))}
         </tr>
       </thead>
-      <tbody>
+      { data && (
+        <tbody>
         {data.map((row, rowIdx) => (
           <tr
             className={`text-primary ${textSize ? textSize : ""} ${
@@ -115,7 +115,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
             <td
               colSpan={2}
               className={`${
-                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+                padding ? `${padding}` : "custom-table"
               } font-bold`}
             >
               Total GPA
@@ -123,7 +123,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
             <td
               colSpan={6}
               className={`${
-                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+                padding ? `${padding}` : "custom-table"
               } font-semibold `}
             >
               4
@@ -138,7 +138,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
           >
             <td
               className={`${
-                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+                padding ? `${padding}` : "custom-table"
               } text-gray-weak text-sm`}
               colSpan={2}
             >
@@ -161,6 +161,7 @@ const Table = <T extends object>(props: TableProps<T>) => {
           </tr>
         )}
       </tbody>
+      )}
     </table>
   );
 };

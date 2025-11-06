@@ -1,5 +1,5 @@
 // src/api/requests/attendance.api.ts
-import type { AttendanceResponse } from "../../models/attendance";
+import type { AttendanceResponse, AttendanceStats } from "../../models/attendance";
 import api from "../apiRequest";
 
 export const getAttendanceByStudentID = async (
@@ -16,3 +16,9 @@ export const getAttendanceByStudentID = async (
   });
   return response.data;
 };
+
+export const getStatsForStudents = async (courseId: string, classId: string): Promise<AttendanceStats[]> => {
+  const response = await api.get<AttendanceStats[]>(`/attendance/stats?courseId=${courseId}&classId=${classId}`)
+
+  return response.data;
+}

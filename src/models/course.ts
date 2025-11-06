@@ -42,8 +42,8 @@ export type CourseGroup = {
 }
 
 export type CourseState = {
-    index: number;
-    id: string;
+    index: number | undefined;
+    id: string | "";
 }
 
 

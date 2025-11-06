@@ -34,12 +34,14 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
   const { data: programmeData } = useQuery({
     queryKey: ["programmes"],
     queryFn: () => getAllProgrammes(),
+    staleTime: 2 * 60 * 1000
   });
 
   const { data: termData, isLoading } = useQuery({
     queryKey: ["terms", major.programme.id],
     queryFn: () => getAllTerms(major.programme.id),
     enabled: !!major.programme.id,
+    staleTime: 2 * 60 * 1000
   });
 
   const semestersForSelectedYear = useMemo(() => {

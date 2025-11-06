@@ -21,7 +21,6 @@ export interface AttendanceResponse {
   schedule: AttendanceSlot[];
 }
 
-
 // Module Details section (detailed view for selected course)
 export type CourseAttendanceDetails = {
   courseName: string;
@@ -33,3 +32,15 @@ export type CourseAttendanceDetails = {
   attendancePercent: number;
   slots: AttendanceSlot[];
 };
+
+export type AttendanceStats = {
+  studentId?: string;
+  studentCode: string;
+  studentName: string;
+  total?: number;
+  present?: number;
+  absent?: number;
+  pending?: number;
+  attendanceRate: number;
+  info?: string;
+}

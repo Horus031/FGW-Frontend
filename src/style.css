@@ -132,11 +132,11 @@
 }
 
 .table-cell:first-child {
-  @apply rounded-tl-lg ;
+  @apply rounded-tl-lg;
 }
 
 .table-cell:last-child {
-  @apply rounded-tr-lg ;
+  @apply rounded-tr-lg;
 }
 
 .custom-table {
@@ -144,7 +144,7 @@
 }
 
 .rounded-table {
-  @apply border-collapse rounded-lg p-10 border-solid overflow-hidden border-gray-300 shadow-[0_0_0_1px] shadow-gray-300;
+  @apply border-collapse p-10 border-solid rounded-lg border border-gray-300 shadow-[0_0_0_1px_#D2D6DB] overflow-hidden;
 }
 
 .task-new {
