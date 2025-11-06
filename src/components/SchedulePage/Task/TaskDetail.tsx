@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { TaskDetailProps } from '../../../models/task';
-import CalendarIcon from '../../icons/CalendarIcon';
 import BookIcon from '../../icons/Book';
+import CalendarIcon from '../../icons/CalendarIcon';
 import GroupIcon from '../../icons/Group';
 
 const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) => {
@@ -71,7 +71,7 @@ const TaskDetail = ({ isOpen, onClose, task, StatusConfig }: TaskDetailProps) =>
 
                             <div className="flex flex-col">
                                 <div className="flex items-center gap-2 mb-1.5">
-                                    <GroupIcon className="text-gray-600" />
+                                    <GroupIcon className="text-gray-600 font-semibold" />
                                     <span className="text-sm text-black font-medium">Class</span>
                                 </div>
                                 <a href="#" className="text-blue-600 hover:underline font-medium">
