@@ -2,12 +2,13 @@ import type { Course } from "../../models/course";
 import api from "../apiRequest";
 
 export const getAllCourseForStudent = async (
-    page: number,
-    limit: number,
-    departmentid?: number,
-    code?: string,
-    teacherid?: string,
-    level?: string
+  page: number,
+  limit: number,
+  departmentid?: number,
+  code?: string,
+  teacherid?: string,
+  level?: string,
+  studentId?: string
 ): Promise<Course> => {
   const response = await api.get<Course>("/courses", {
     params: {
@@ -16,7 +17,8 @@ export const getAllCourseForStudent = async (
       departmentid,
       code,
       teacherid,
-      level
+      level,
+      studentId,
     },
   });
   return response.data;

@@ -6,7 +6,7 @@ export interface UserInfo {
   avatar: string | null;
   campus: Campus;
   student?: student;
-  course?: string; 
+  course?: string;
   staff?: staff;
 }
 
@@ -24,7 +24,7 @@ interface Campus {
 type Role = {
   id: string;
   name: string;
-}
+};
 
 interface student {
   id: string;
@@ -33,11 +33,11 @@ interface student {
   startTerm: string;
   endTerm: string;
   studentCode: string;
-  startYear: number;
+  currentYear: number;
 }
 
 export type UserAuth = {
   user: UserInfo;
   accessToken: string;
   refreshToken: string;
-}
+};
