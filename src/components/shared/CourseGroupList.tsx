@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import type { CourseGroup, CourseState } from "../../models/course";
 import TimeSlotCard from "../CheckAttendancePage/TimeSlotCard";
 import CourseGroupCard from "./CourseGroupCard";
@@ -21,6 +21,26 @@ export type CourseGroupProps = {
 
 const CourseGroupList = (props: CourseGroupProps) => {
   const { courseGroupData, isAttendance, timeSlotData, selectedCourse, setSelectedCourse } = props;
+
+  useEffect(() => {
+    if (courseGroupData && courseGroupData.length > 0) {
+      setSelectedCourse((prev) => {
+        return {
+          ...prev,
+          index: 0,
+          id: courseGroupData[0].id,
+        };
+      });
+    } else {
+      setSelectedCourse((prev) => {
+      return {
+        ...prev,
+        index: undefined,
+        id: "",
+      };
+    })
+    }
+  }, [courseGroupData, setSelectedCourse]);
 
   const renderCourseGroup = () => {
     return courseGroupData?.map((item, index) => {
