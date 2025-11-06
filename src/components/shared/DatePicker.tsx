@@ -1,32 +1,40 @@
-import { useState, useEffect } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { useState } from "react";
+import CalendarIcon from "../icons/CalendarIcon";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
-import CalendarIcon from "../icons/CalendarIcon";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 type DatePickerProps = {
-  selected?: Date | undefined;
+  selected?: Date;
   onSelect?: (date?: Date) => void;
 };
 
 const DatePicker = ({ selected, onSelect }: DatePickerProps) => {
+  // Always use the prop if provided, fallback to internal state
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(selected);
+  const [internalDate, setInternalDate] = useState<Date | undefined>(selected);
 
-  // keep local state in sync if parent controls selected
-  useEffect(() => setDate(selected), [selected]);
+  const date = selected ?? internalDate;
+
+  const handleSelect = (d?: Date) => {
+    setInternalDate(d); // update internal state if uncontrolled
+    onSelect?.(d);      // notify parent if controlled
+    setOpen(false);
+  };
 
   return (
     <div className="flex flex-col gap-3">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild className={`hover:bg-transparent justify-start h-11 px-3.5 py-2.5 ${date ? "" : "hover:text-gray-400"}`}>
+        <PopoverTrigger
+          asChild
+          className={`hover:bg-transparent justify-start h-11 px-3.5 py-2.5 ${date ? "" : "hover:text-gray-400"}`}
+        >
           <Button
             variant="outline"
             id="date"
             className={`w-40 font-medium text-sm ${date ? "" : "text-gray-400"} cursor-pointer`}
           >
             <CalendarIcon className="size-6 text-primary" />
-
             {date ? date.toLocaleDateString() : "DD/MM/YY"}
           </Button>
         </PopoverTrigger>
@@ -35,12 +43,8 @@ const DatePicker = ({ selected, onSelect }: DatePickerProps) => {
             mode="single"
             selected={date}
             captionLayout="dropdown"
-            onSelect={(d) => {
-              setDate(d);
-              onSelect?.(d);
-              setOpen(false);
-            }}
-          ></Calendar>
+            onSelect={handleSelect}
+          />
         </PopoverContent>
       </Popover>
     </div>

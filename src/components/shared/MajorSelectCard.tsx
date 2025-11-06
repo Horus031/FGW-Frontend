@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   useCallback,
   useEffect,
@@ -7,13 +8,12 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import SummaryPicker from "../TeachingSummaryPage/SummaryPicker";
-import { useQuery } from "@tanstack/react-query";
 import { getAllProgrammes } from "../../api/requests/programme.api";
 import { getAllTerms } from "../../api/requests/term.api";
-import { uniqueSet } from "../../utils/uniqueSet";
-import SkeletonDemo from "./SkeletonLoading";
 import type { MajorState } from "../../models/major";
+import { uniqueSet } from "../../utils/uniqueSet";
+import SummaryPicker from "../TeachingSummaryPage/SummaryPicker";
+import SkeletonDemo from "./SkeletonLoading";
 
 type MajorSelectCardProps = {
   isSummary?: boolean;
@@ -85,60 +85,129 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
     majorRef.current = major;
   }, [major]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+  //   const currentProgrammeId = major.programme.id;
+  //   if (!currentProgrammeId) {
+  //     setUniqueYear([]);
+  //     setMajor((prev) => ({
+  //       ...prev,
+  //       year: { index: 0, academicYear: "" },
+  //       term: { index: 0, id: 0 },
+  //       semester: { index: 0, code: "" },
+  //       major: { index: 0, id: 0 },
+  //     }));
+  //     return;
+  //   }
+
+  //   if (!termData || termData.length === 0) {
+  //     setUniqueYear([]);
+  //     return;
+  //   }
+
+  //   if (lastProgrammeRef.current === currentProgrammeId) return;
+
+  //   const years = Array.from(
+  //     uniqueSet(termData.map((item) => item.academicYear || ""))
+  //   );
+  //   setUniqueYear(years);
+
+  //   // initialize selected year once per programme change (avoids repeated setMajor)
+  //   const firstYear = years[0] || "";
+  //   if (majorRef.current.year.academicYear !== firstYear) {
+  //     // try to pick a sensible default term + department for the initial year
+  //     const termsForYear = (termData || []).filter((t) => t.academicYear === firstYear);
+  //     if (termsForYear.length > 0) {
+  //       const firstTerm = termsForYear[0];
+  //       const firstDept = (firstTerm.departments && firstTerm.departments[0]) || null;
+  //       setMajor((prev) => ({
+  //         ...prev,
+  //         year: { index: 0, academicYear: firstYear },
+  //         semester: { index: 0, code: firstTerm.code || "" },
+  //         term: { index: 0, id: Number(firstTerm.id) || 0 },
+  //         major: { index: 0, id: Number(firstDept?.id) || 0 },
+  //       }));
+  //     } else {
+  //       setMajor((prev) => ({
+  //         ...prev,
+  //         year: { index: 0, academicYear: firstYear },
+  //         term: { index: 0, id: 0 },
+  //         semester: { index: 0, code: "" },
+  //         major: { index: 0, id: 0 },
+  //       }));
+  //     }
+  //   }
+
+  //   lastProgrammeRef.current = currentProgrammeId;
+  // }, [termData, major.programme.id, setMajor, major.year.academicYear]);
   useEffect(() => {
-    const currentProgrammeId = major.programme.id;
-    if (!currentProgrammeId) {
-      setUniqueYear([]);
-      setMajor((prev) => ({
-        ...prev,
-        year: { index: 0, academicYear: "" },
-        term: { index: 0, id: 0 },
-        semester: { index: 0, code: "" },
-        major: { index: 0, id: 0 },
-      }));
-      return;
-    }
-
-    if (!termData || termData.length === 0) {
-      setUniqueYear([]);
-      return;
-    }
-
-    if (lastProgrammeRef.current === currentProgrammeId) return;
-
-    const years = Array.from(
-      uniqueSet(termData.map((item) => item.academicYear || ""))
-    );
-    setUniqueYear(years);
-
-    // initialize selected year once per programme change (avoids repeated setMajor)
-    const firstYear = years[0] || "";
-    if (majorRef.current.year.academicYear !== firstYear) {
-      // try to pick a sensible default term + department for the initial year
-      const termsForYear = (termData || []).filter((t) => t.academicYear === firstYear);
-      if (termsForYear.length > 0) {
-        const firstTerm = termsForYear[0];
-        const firstDept = (firstTerm.departments && firstTerm.departments[0]) || null;
+    if (!major.programme.id) {
+      queueMicrotask(() => {
+        setUniqueYear([]);
         setMajor((prev) => ({
           ...prev,
-          year: { index: 0, academicYear: firstYear },
-          semester: { index: 0, code: firstTerm.code || "" },
-          term: { index: 0, id: Number(firstTerm.id) || 0 },
-          major: { index: 0, id: Number(firstDept?.id) || 0 },
-        }));
-      } else {
-        setMajor((prev) => ({
-          ...prev,
-          year: { index: 0, academicYear: firstYear },
+          year: { index: 0, academicYear: "" },
           term: { index: 0, id: 0 },
           semester: { index: 0, code: "" },
           major: { index: 0, id: 0 },
         }));
-      }
+      });
+      return;
     }
 
-    lastProgrammeRef.current = currentProgrammeId;
-  }, [termData, major.programme.id, setMajor, major.year.academicYear]);
+    if (!termData || termData.length === 0) {
+      queueMicrotask(() => setUniqueYear([]));
+      return;
+    }
+
+    if (lastProgrammeRef.current === major.programme.id) return;
+
+    const years = Array.from(
+      uniqueSet(termData.map((item) => item.academicYear || ""))
+    );
+    const firstYear = years[0] || "";
+
+    queueMicrotask(() => setUniqueYear(years));
+
+    if (major.year.academicYear !== firstYear) {
+      const termsForYear = termData.filter((t) => t.academicYear === firstYear);
+      const firstTerm = termsForYear[0];
+      const firstDept = firstTerm?.departments?.[0] || null;
+
+      queueMicrotask(() => {
+        setMajor((prev) => ({
+          ...prev,
+          year: { index: 0, academicYear: firstYear },
+          semester: { index: 0, code: firstTerm?.code || "" },
+          term: { index: 0, id: Number(firstTerm?.id) || 0 },
+          major: { index: 0, id: Number(firstDept?.id) || 0 },
+        }));
+      });
+    }
+
+    lastProgrammeRef.current = major.programme.id;
+  }, [major.programme.id, termData, major.year.academicYear, setMajor]);
+
+
+
+
+
+
+
+
+
 
   const handleSetMajor = useCallback(
     (
@@ -241,11 +310,10 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
       <button
         onClick={() => handleSetMajor("programme", "id", index, item.id)}
         key={item.id ?? index}
-        className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-          major.programme.index === index
-            ? "border-1 bg-gray/0 border-bright text-secondary"
-            : ""
-        }`}
+        className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.programme.index === index
+          ? "border-1 bg-gray/0 border-bright text-secondary"
+          : ""
+          }`}
       >
         {item.name}
       </button>
@@ -266,11 +334,10 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                   handleSetMajor("year", "academicYear", index, item)
                 }
                 key={item + index}
-                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                  major.year.index === index
-                    ? "border-1 bg-gray/0 border-bright text-secondary"
-                    : ""
-                }`}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.year.index === index
+                  ? "border-1 bg-gray/0 border-bright text-secondary"
+                  : ""
+                  }`}
               >
                 {item}
               </button>
@@ -289,11 +356,10 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                   handleSetMajor("semester", "code", index, s.code)
                 }
                 key={s.code + index}
-                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                  major.semester.index === index
-                    ? "border-1 bg-gray/0 border-bright text-secondary"
-                    : ""
-                }`}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.semester.index === index
+                  ? "border-1 bg-gray/0 border-bright text-secondary"
+                  : ""
+                  }`}
               >
                 {s.code}
               </button>
@@ -320,11 +386,10 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                 <button
                   onClick={() => handleSetMajor("major", "id", index, dep.id)}
                   key={dep.id}
-                  className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
-                    major.major.index === index
-                      ? "border-1 bg-gray/0 border-bright text-secondary"
-                      : ""
-                  }`}
+                  className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.major.index === index
+                    ? "border-1 bg-gray/0 border-bright text-secondary"
+                    : ""
+                    }`}
                 >
                   {dep.name}
                 </button>
@@ -348,13 +413,12 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
     summaryTo,
     setSummaryFrom,
     setSummaryTo,
-  ]); 
+  ]);
 
   return (
     <div
-      className={`${
-        !isSummary ? "basis-7/12" : "w-fit"
-      } px-3 py-2 border-1 h-57 border-gray-400 whitespace-nowrap rounded-lg`}
+      className={`${!isSummary ? "basis-7/12" : "w-fit"
+        } px-3 py-2 border-1 h-57 border-gray-400 whitespace-nowrap rounded-lg`}
     >
       {isLoading ? (
         <SkeletonDemo skeletonNum={9} />
