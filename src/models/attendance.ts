@@ -1,4 +1,6 @@
 import type { DayOfWeek, ScheduleStatus } from "./course";
+import type { Session } from "./session";
+import type { Student } from "./user";
 
 export interface AttendanceSlot {
   class?: string;
@@ -43,4 +45,14 @@ export type AttendanceStats = {
   pending?: number;
   attendanceRate: number;
   info?: string;
-}
+};
+
+export type AttendanceRecords = {
+  id: string;
+  studentId: string;
+  student: Student;
+  sessionId: string;
+  session: Session;
+  status: string;
+  note: string;
+};

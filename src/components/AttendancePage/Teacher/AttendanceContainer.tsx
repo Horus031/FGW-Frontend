@@ -1,22 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
+import { Info } from "lucide-react";
 import { useState } from "react";
+import { getStatsForStudents } from "../../../api/requests/attendance.api";
+import { getAllClasses, getAllCourseInClass } from "../../../api/requests/class.api";
+import type { AttendanceStats } from "../../../models/attendance";
+import type { ClassState } from "../../../models/class";
+import type { CourseState } from "../../../models/course";
+import type { MajorState } from "../../../models/major";
 import ClassGroupCard from "../../shared/ClassGroupCard";
 import CourseGroupList from "../../shared/CourseGroupList";
 import MajorSelectCard from "../../shared/MajorSelectCard";
+import SharedMajorProvider, { useSharedMajor } from "../../shared/SharedMajorContainer";
 import type { ColumnConfig } from "../../shared/Table";
 import Table from "../../shared/Table";
-import type { MajorState } from "../../../models/major";
-import { useQuery } from "@tanstack/react-query";
-import {
-  getAllClasses,
-  getAllCourseInClass,
-} from "../../../api/requests/class.api";
-import type { ClassState } from "../../../models/class";
-import type { CourseState } from "../../../models/course";
-import SharedMajorProvider, { useSharedMajor } from "../../shared/SharedMajorContainer";
-import { getStatsForStudents } from "../../../api/requests/attendance.api";
-import type { AttendanceStats } from "../../../models/attendance";
-import { Info } from "lucide-react";
-
 
 const defaultMajor: MajorState = {
   programme: { index: 0, id: 1 },
@@ -56,9 +52,7 @@ const AttendanceInner = () => {
       key: "attendanceRate",
       title: "Absent (%) so far",
       width: "300px",
-      render: (_, row) => (
-        <span className="font-medium">{row.attendanceRate}%</span>
-      ),
+      render: (_, row) => <span className="font-medium">{row.attendanceRate}%</span>,
     },
     {
       key: "info",
@@ -66,41 +60,33 @@ const AttendanceInner = () => {
       width: "60px",
       render: () => (
         <div className="mx-auto w-fit cursor-pointer hover:bg-gray-200 p-2 rounded-full active:scale-95">
-          <Info size={20}/>
+          <Info size={20} />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   // class/course queries use the shared `major`
   const { data: classGroupData } = useQuery({
-    queryKey: [
-      "class-group",
-      major.programme.id,
-      major.term.id,
-      major.major.id,
-    ],
-    queryFn: () =>
-      getAllClasses(major.programme.id, major.term.id, major.major.id),
+    queryKey: ["class-group", major.programme.id, major.term.id, major.major.id],
+    queryFn: () => getAllClasses(major.programme.id, major.term.id, major.major.id),
     enabled: !!major.programme.id,
-    staleTime: 2 * 60 * 1000
+    staleTime: 2 * 60 * 1000,
   });
 
   const { data: courseGroupData } = useQuery({
     queryKey: ["course-group", selectedClass.id],
     queryFn: () => getAllCourseInClass(selectedClass.id),
     enabled: !!selectedClass.id,
-    staleTime: 2 * 60 * 1000
+    staleTime: 2 * 60 * 1000,
   });
-
 
   const { data: attendanceStatsData } = useQuery({
     queryKey: ["attendance-stats", selectedClass.id, selectedCourse.id],
     queryFn: () => getStatsForStudents(selectedCourse.id, selectedClass.id),
     enabled: !!selectedCourse.id,
-    staleTime: 2 * 60 * 1000
-  })
-
+    staleTime: 2 * 60 * 1000,
+  });
 
   return (
     <div className="flex flex-col gap-5.5">
