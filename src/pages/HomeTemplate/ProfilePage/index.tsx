@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
-import PageTitle from "../../../components/shared/PageTitle";
-import ProfileCard from "../../../components/ProfilePage/ProfileCard";
 import { useEffect, useState } from "react";
-import type { Course } from "../../../models/course";
-import CourseOverviewCard from "../../../components/CourseOverviewPage/CourseOverviewCard";
+import { Link } from "react-router-dom";
 import { getAllCourseForStudent } from "../../../api/requests/course.api";
+import CourseOverviewCard from "../../../components/CourseOverviewPage/CourseOverviewCard";
+import ProfileCard from "../../../components/ProfilePage/ProfileCard";
 import CourseOverviewSkeleton from "../../../components/shared/CourseOverviewSkeleton";
+import PageTitle from "../../../components/shared/PageTitle";
+import type { Course } from "../../../models/course";
+import { useUserStore } from "../../../store/user";
 
 const ProfilePage = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -13,6 +14,7 @@ const ProfilePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage] = useState(1);
   const itemsPerPage = 3;
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -20,7 +22,16 @@ const ProfilePage = () => {
         setLoading(true);
         setError(null);
 
-        const response = await getAllCourseForStudent(currentPage, itemsPerPage);
+        const response = await getAllCourseForStudent(
+          currentPage,
+          itemsPerPage,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          user?.student?.id
+        );
+
 
         if (!Array.isArray(response)) {
           setCourses([]);
@@ -55,7 +66,7 @@ const ProfilePage = () => {
     };
 
     fetchCourses();
-  }, [currentPage]);
+  }, [currentPage, user?.student?.id]);
 
   return (
     <div className="space-y-8">

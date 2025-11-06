@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import LoadingPage from "../components/shared/LoadingPage";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { exchangeToken } from "../api/requests/auth.api";
-import { useEffect } from "react";
+import LoadingPage from "../components/shared/LoadingPage";
 import { useUserStore } from "../store/user";
 
 const AuthBridge = () => {

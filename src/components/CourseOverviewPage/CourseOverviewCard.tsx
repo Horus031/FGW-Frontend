@@ -1,7 +1,7 @@
 
-import type { Course } from '../../models/course'
-import type { UserInfo } from '../../models/user'
-import type { Term } from '../../models/term'
+import type { Course } from '../../models/course';
+import type { Term } from '../../models/term';
+import type { UserInfo } from '../../models/user';
 
 interface CourseOverviewCardProps {
   course?: Course;
@@ -19,11 +19,17 @@ const CourseOverviewCard = ({
   const remainingCount = students.length - maxVisibleAvatars;
 
   return (
-    <div className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full max-w-sm">
+    <div className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow h-fit">
       {/* Header */}
       <div className="mb-3">
         <p className="text-sm font-medium text-[var(--color-gray-weak)] mb-1">{course.courseTerm}</p>
-        <h5 className="text-2xl font-bold text-[var(--color-primary)] hover:opacity-70 cursor-pointer">{course.courseName}</h5>
+        <h5
+          className="text-2xl font-bold text-[var(--color-primary)] hover:opacity-70 cursor-pointer truncate"
+          title={course.courseName}
+        >
+          {course.courseName}
+        </h5>
+
       </div>
 
       {/* Instructor */}
