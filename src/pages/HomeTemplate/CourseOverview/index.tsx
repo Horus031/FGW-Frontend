@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import CourseOverviewCard from '../../../components/CourseOverviewPage/CourseOverviewCard';
-import type { Course } from '../../../models/course';
 import { Search } from "lucide-react";
-import { Input } from "../../../components/ui/input";
+import { useEffect, useState } from 'react';
+import { getAllCourseForStudent } from '../../../api/requests/course.api';
+import CourseOverviewCard from '../../../components/CourseOverviewPage/CourseOverviewCard';
+import CourseOverviewSkeleton from '../../../components/shared/CourseOverviewSkeleton';
 import FilterButton from '../../../components/shared/Filter';
 import Pagination from '../../../components/shared/Pagination';
-import { getAllCourseForStudent } from '../../../api/requests/course.api';
-import CourseOverviewSkeleton from '../../../components/shared/CourseOverviewSkeleton';
+import { Input } from "../../../components/ui/input";
+import type { Course } from '../../../models/course';
+import { useUserStore } from '../../../store/user';
 
 
 // Define the filter type for this component
@@ -25,6 +26,7 @@ const CourseOverview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<CourseFilters>({});
+  const user = useUserStore((state) => state.user);
 
   const itemsPerPage = 6;
 
@@ -68,8 +70,8 @@ const CourseOverview = () => {
         setLoading(true);
         setError(null);
 
-        const response = await getAllCourseForStudent(currentPage, itemsPerPage);
-
+        const response = await getAllCourseForStudent(currentPage, itemsPerPage, user?.student?.id, undefined, undefined, undefined, undefined);
+        // const response = await getAllCourseForStudent(currentPage, itemsPerPage);
         if (!Array.isArray(response)) {
           setCourses([]);
           return;
@@ -106,7 +108,7 @@ const CourseOverview = () => {
     };
 
     fetchCourses();
-  }, [currentPage, searchQuery, filters]);
+  }, [currentPage, filters, user?.student?.id]);
   // Handle search input
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -174,7 +176,7 @@ const CourseOverview = () => {
       {!loading && !error && (
         <>
           {courses.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
               {courses.map((course, index) => (
                 <CourseOverviewCard
                   key={`${course.classCode}-${index}`}

@@ -1,12 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { useUserStore } from "../../store/user";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 const ProfileCard = () => {
   const user = useUserStore((state) => state.user);
   const currentYear = new Date().getFullYear();
-  const yearOfStudy = currentYear - Number(user?.student?.startYear);
+  const yearOfStudy = Number(currentYear) - Number(user?.student?.currentYear);
 
   const isStudent = !!user?.student;
   const isStaff = !!user?.staff;

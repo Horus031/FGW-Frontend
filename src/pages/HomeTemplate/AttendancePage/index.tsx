@@ -14,7 +14,6 @@ const AttendancePage = () => {
       {user?.role.name === "Student" ? (
         <div className="space-y-6">
           <AttendanceCourseSelect />
-
           <AttendanceDetails studentId={user.student?.id} />
         </div>
       ) : (
