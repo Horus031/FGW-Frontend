@@ -1,17 +1,35 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { getStatsForStudents } from "../../api/requests/attendance.api";
+import type { AttendanceStats } from "../../models/attendance";
 import type { CourseGroup, CourseState } from "../../models/course";
+import { useUserStore } from "../../store/user";
 import ProgressCircle from "./ProgressCircle";
 
 type CourseCardProps = {
   courseInfo: CourseGroup;
-  percent?: number;
   active?: boolean;
   index: number;
   setCurrentCourse: Dispatch<SetStateAction<CourseState>>;
+  attendanceStatsProp?: AttendanceStats | AttendanceStats[] | null;
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const { percent, active, courseInfo, setCurrentCourse, index } = props;
+  const { user } = useUserStore();
+  const { active, courseInfo, setCurrentCourse, index } = props;
+
+  // If parent provided attendance stats (batched), use them. Otherwise fall back to per-card query.
+  const { data: attendanceStats } = useQuery({
+    queryKey: ["attendance-stats", user?.student?.id, courseInfo.id],
+    queryFn: () => getStatsForStudents(user?.student?.id, courseInfo.id, courseInfo.id),
+    enabled: typeof props.attendanceStatsProp === "undefined",
+  });
+
+  // If parent passed the prop (could be null while batching), use it and do NOT fall
+  // back to the per-card query. Only fall back when the prop is literally undefined.
+  const attendanceRaw =
+    props.attendanceStatsProp !== undefined ? props.attendanceStatsProp : attendanceStats;
+  const normalizedStats = Array.isArray(attendanceRaw) ? attendanceRaw[0] : attendanceRaw;
 
   const handleSelectCourse = (currentIndex: number, courseId: string) => {
     setCurrentCourse((prev) => ({
@@ -53,7 +71,7 @@ const CourseCard = (props: CourseCardProps) => {
           </div>
         </div>
 
-        {percent && <ProgressCircle percent={percent} />}
+        {normalizedStats && <ProgressCircle percent={normalizedStats.attendanceRate} />}
       </div>
     </div>
   );

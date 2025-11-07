@@ -37,7 +37,7 @@ const CourseGroupList = (props: CourseGroupProps) => {
       setSelectedCourse((prev) => {
         return {
           ...prev,
-          index: undefined,
+          index: 0,
           id: "",
         };
       });

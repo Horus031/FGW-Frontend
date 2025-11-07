@@ -22,11 +22,12 @@ export const getAttendanceByStudentID = async (
 };
 
 export const getStatsForStudents = async (
+  studentId: string | undefined,
   courseId: string,
   classId: string
-): Promise<AttendanceStats[]> => {
-  const response = await api.get<AttendanceStats[]>(
-    `/attendance/stats?courseId=${courseId}&classId=${classId}`
+): Promise<AttendanceStats | AttendanceStats[]> => {
+  const response = await api.get<AttendanceStats | AttendanceStats[]>(
+    `/attendance/stats?studentId=${studentId || ""}&courseId=${courseId}&classId=${classId}`
   );
 
   return response.data;

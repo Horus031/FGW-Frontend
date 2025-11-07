@@ -19,8 +19,6 @@ const AttendanceTable = (props: AttendanceTableProps) => {
     enabled: !!courseId,
   });
 
-  console.log(attendanceData);
-
   const renderStatusBadges = (row: AttendanceRecords) => {
     return (
       <div className="flex items-center gap-2">
