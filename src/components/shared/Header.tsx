@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import LogoWithName from "../icons/LogoWithName";
 import BellIcon from "../icons/BellIcon";
+import LogoWithName from "../icons/LogoWithName";
 import MagnifyClass from "../icons/MagnifyClass";
-import DropdownMenu from "./DropdownMenu";
 import UnderDevelopmentTooltip from "./Developing";
+import DropdownMenu from "./DropdownMenu";
 
 const Header = () => {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -75,6 +75,13 @@ const Header = () => {
     },
   ];
 
+  const links = [
+    { to: "/", label: "Home" },
+    { to: "/schedule", label: "Schedule" },
+    { to: "/thread", label: "Threads" },
+    { to: "/library", label: "Library" },
+  ];
+
   return (
     <div className="fixed top-0 w-full bg-white z-40 font-public">
       <div className="px-20 mx-auto md:max-w-screen-2xl flex items-center justify-between py-3">
@@ -84,6 +91,33 @@ const Header = () => {
           </NavLink>
 
           <div className="flex items-center gap-9 text-primary font-semibold text-lg h-full">
+            {links.map((link) => {
+              const linkElement = (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `py-2 cursor-pointer hover:text-secondary hover:border-b-2 hover:border-b-secondary ${isActive ? "text-secondary border-b-2 border-b-secondary" : ""
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              );
+
+              // Wrap only the "Library" link in the tooltip
+              if (link.label === "Library") {
+                return (
+                  <UnderDevelopmentTooltip key={link.to}>
+                    {linkElement}
+                  </UnderDevelopmentTooltip>
+                );
+              }
+
+              return linkElement;
+            })}
+          </div>
+          {/* <div className="flex items-center gap-9 text-primary font-semibold text-lg h-full">
             {[
               { to: "/", label: "Home" },
               { to: "/schedule", label: "Schedule" },
@@ -101,7 +135,7 @@ const Header = () => {
                 {link.label}
               </NavLink>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {/* --- Right Section --- */}
@@ -150,8 +184,8 @@ const Header = () => {
                           </p>
                           <p
                             className={`text-sm leading-snug ${n.isUnread
-                                ? "font-bold text-primary"
-                                : "font-medium text-primary"
+                              ? "font-bold text-primary"
+                              : "font-medium text-primary"
                               }`}
                           >
                             {n.title}

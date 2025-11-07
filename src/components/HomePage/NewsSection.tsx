@@ -1,3 +1,5 @@
+import UnderDevelopmentTooltip from "../shared/Developing";
+
 const newsItems = [
   {
     id: 1,
@@ -36,17 +38,19 @@ const NewsSection = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h5 className="font-semibold text-primary text-2xl">News</h5>
-          <button className="cursor-pointer font-semibold hover:opacity-50 transition-opacity text-secondary text-sm">
-            See more
-          </button>
+          <UnderDevelopmentTooltip>
+            <button className="cursor-pointer font-semibold hover:opacity-50 transition-opacity text-secondary text-sm">
+              See more
+            </button>
+          </UnderDevelopmentTooltip>
         </div>
         <div className="space-y-0">
           {newsItems.map((item, index) => (
+
             <div
               key={item.id}
-              className={`flex gap-4 py-4 cursor-pointer hover:bg-gray-50 transition-colors ${
-                index < newsItems.length - 1 ? "border-b border-gray-200" : ""
-              }`}
+              className={`flex gap-4 py-4 cursor-pointer hover:bg-gray-50 transition-colors ${index < newsItems.length - 1 ? "border-b border-gray-200" : ""
+                }`}
             >
               <div className="flex-1 min-w-0">
                 <div className="mb-1">
@@ -62,6 +66,9 @@ const NewsSection = () => {
                   <h4 className="font-semibold text-lg truncate flex-1 min-w-0">
                     {item.title}
                   </h4>
+                  <UnderDevelopmentTooltip>
+                    <button className="text-secondary text-lg font-base hover:underline">🛈</button>
+                  </UnderDevelopmentTooltip>
                 </div>
               </div>
             </div>
