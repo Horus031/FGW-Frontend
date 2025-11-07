@@ -70,7 +70,7 @@ const CourseOverview = () => {
         setLoading(true);
         setError(null);
 
-        const response = await getAllCourseForStudent(currentPage, itemsPerPage, undefined, undefined, undefined, undefined, user?.student?.id);
+        const response = await getAllCourseForStudent(currentPage, itemsPerPage, user?.student?.id, undefined, undefined, undefined, undefined);
         // const response = await getAllCourseForStudent(currentPage, itemsPerPage);
         if (!Array.isArray(response)) {
           setCourses([]);

@@ -11,6 +11,7 @@ const defaultMajor: MajorState = {
 };
 
 const AttendanceCourseSelect = () => {
+
   const [major, setMajor] = useState<MajorState>(defaultMajor);
   return (
     <div className="flex flex-col gap-4 w-fit">
