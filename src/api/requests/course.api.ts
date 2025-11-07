@@ -19,6 +19,7 @@ export const getAllCourseForStudent = async (
       code,
       teacherid,
       level,
+      order: "ASC",
     },
   });
   return response.data;

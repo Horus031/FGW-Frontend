@@ -237,8 +237,9 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
       <button
         onClick={() => handleSetMajor("programme", "id", index, item.id)}
         key={item.id ?? index}
-        className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.programme.index === index ? "border-1 bg-gray/0 border-bright text-secondary" : ""
-          }`}
+        className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+          major.programme.index === index ? "border-1 bg-gray/0 border-bright text-secondary" : ""
+        }`}
       >
         {item.name}
       </button>
@@ -257,10 +258,11 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
               <button
                 onClick={() => handleSetMajor("year", "academicYear", index, item)}
                 key={item + index}
-                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.year.index === index
-                  ? "border-1 bg-gray/0 border-bright text-secondary"
-                  : ""
-                  }`}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                  major.year.index === index
+                    ? "border-1 bg-gray/0 border-bright text-secondary"
+                    : ""
+                }`}
               >
                 {item}
               </button>
@@ -277,10 +279,11 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
               <button
                 onClick={() => handleSetMajor("semester", "code", index, s.code)}
                 key={s.code + index}
-                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.semester.index === index
-                  ? "border-1 bg-gray/0 border-bright text-secondary"
-                  : ""
-                  }`}
+                className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                  major.semester.index === index
+                    ? "border-1 bg-gray/0 border-bright text-secondary"
+                    : ""
+                }`}
               >
                 {s.code}
               </button>
@@ -309,10 +312,11 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
                   <button
                     onClick={() => handleSetMajor("major", "id", index, dep.id)}
                     key={dep.id}
-                    className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${major.major.index === index
-                      ? "border-1 bg-gray/0 border-bright text-secondary"
-                      : ""
-                      }`}
+                    className={`px-2 py-0.5 rounded-sm text-base cursor-pointer active:scale-95 ${
+                      major.major.index === index
+                        ? "border-1 bg-gray/0 border-bright text-secondary"
+                        : ""
+                    }`}
                   >
                     {dep.name}
                   </button>
@@ -341,14 +345,14 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
 
   return (
     <div
-      className={`${!isSummary ? "basis-7/12" : "w-fit"
-        } px-3 py-2 border-1 h-57 border-gray-400 whitespace-nowrap rounded-lg`}
+      className={`${
+        !isSummary ? "basis-7/12" : "w-fit h-57"
+      } px-3 py-2 border-1 border-gray-400 whitespace-nowrap rounded-lg`}
     >
       {isLoading ? (
-        <div className="w-sm h-full flex items-center justify-center">
+        <div className="w-full h-full flex items-center justify-center">
           <SkeletonDemo skeletonNum={9} />
         </div>
-
       ) : (
         <>
           <div className="pt-3 py-2">

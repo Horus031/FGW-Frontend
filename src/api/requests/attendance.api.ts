@@ -35,10 +35,11 @@ export const getStatsForStudents = async (
 
 export const listAttendanceRecords = async (
   studentId: string | undefined,
-  courseId: string
+  courseId: string,
+  page: number = 1
 ): Promise<AttendanceRecords[]> => {
   const response = await api.get<AttendanceRecords[]>(
-    `/attendance?studentId=${studentId || ""}&courseId=${courseId}`
+    `/attendance?studentId=${studentId || ""}&courseId=${courseId}&page=${page}&limit=8&sort=createdAt&order=ASC`
   );
 
   return response.data;

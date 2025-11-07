@@ -1,7 +1,9 @@
 // ...existing code...
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { listAttendanceRecords } from "../../../api/requests/attendance.api";
 import type { AttendanceRecords } from "../../../models/attendance";
+import Pagination from "../../shared/Pagination";
 import Table, { type ColumnConfig } from "../../shared/Table";
 import { Badge } from "../../ui/badge";
 
@@ -12,10 +14,11 @@ type AttendanceTableProps = {
 
 const AttendanceTable = (props: AttendanceTableProps) => {
   const { studentId, courseId } = props;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data: attendanceData } = useQuery({
-    queryKey: ["attendance-records", courseId],
-    queryFn: () => listAttendanceRecords(studentId, courseId),
+    queryKey: ["attendance-records", courseId, currentPage],
+    queryFn: () => listAttendanceRecords(studentId, courseId, currentPage),
     enabled: !!courseId,
   });
 
@@ -76,7 +79,7 @@ const AttendanceTable = (props: AttendanceTableProps) => {
   ];
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto flex flex-col gap-8">
       <Table
         columns={columns}
         data={attendanceData || []}
@@ -88,6 +91,8 @@ const AttendanceTable = (props: AttendanceTableProps) => {
         bodyHeight="h-14"
         padding="px-4 py-3"
       />
+
+      <Pagination currentPage={currentPage} onPageChange={setCurrentPage} />
     </div>
   );
 };

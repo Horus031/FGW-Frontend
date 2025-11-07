@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 import { getStatsForStudents } from "../../api/requests/attendance.api";
 import type { AttendanceStats } from "../../models/attendance";
 import type { CourseGroup, CourseState } from "../../models/course";
@@ -17,6 +17,7 @@ type CourseCardProps = {
 const CourseCard = (props: CourseCardProps) => {
   const { user } = useUserStore();
   const { active, courseInfo, setCurrentCourse, index } = props;
+  const initialRef = useRef<number>(0);
 
   // If parent provided attendance stats (batched), use them. Otherwise fall back to per-card query.
   const { data: attendanceStats } = useQuery({
@@ -40,19 +41,22 @@ const CourseCard = (props: CourseCardProps) => {
   };
 
   useEffect(() => {
+    if (index !== initialRef.current) return;
     if (courseInfo) {
       setCurrentCourse((prev) => ({
         ...prev,
-        index: index,
+        index: 0,
         id: courseInfo.id,
       }));
     } else {
       setCurrentCourse((prev) => ({
         ...prev,
-        index: index,
+        index: 0,
         id: "",
       }));
     }
+
+    initialRef.current = index;
   }, [courseInfo, index, setCurrentCourse]);
 
   return (

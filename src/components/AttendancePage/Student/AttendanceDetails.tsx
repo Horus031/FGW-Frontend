@@ -5,6 +5,7 @@ import { getAllCourseForStudent } from "../../../api/requests/course.api";
 import type { AttendanceStats } from "../../../models/attendance";
 import type { CourseState } from "../../../models/course";
 import CourseCard from "../../shared/CourseAttendanceCard";
+import SkeletonDemo from "../../shared/SkeletonLoading";
 import AttendanceTable from "./AttendanceTable";
 
 type AttendanceDetailsProps = {
@@ -20,7 +21,7 @@ const AttendanceDetails = (props: AttendanceDetailsProps) => {
   const { studentId } = props;
   const [currentCourse, setCurrentCourse] = useState(defaultState);
 
-  const { data: courseListData } = useQuery({
+  const { data: courseListData, isFetching: courseFetching } = useQuery({
     queryKey: ["course-list", studentId],
     queryFn: () => getAllCourseForStudent(undefined, undefined, studentId),
     enabled: !!studentId,
@@ -65,6 +66,8 @@ const AttendanceDetails = (props: AttendanceDetailsProps) => {
   const renderCourseCard = () => {
     if (!courseListData) return;
 
+    if (courseFetching) return <SkeletonDemo skeletonNum={8} />;
+
     return courseListData.map((item, index) => (
       <CourseCard
         index={index}
@@ -80,7 +83,7 @@ const AttendanceDetails = (props: AttendanceDetailsProps) => {
 
   return (
     <div className="flex gap-8.5">
-      <div className="space-y-3">{renderCourseCard()}</div>
+      <div className="space-y-3 basis-9/12">{renderCourseCard()}</div>
 
       <AttendanceTable studentId={studentId} courseId={currentCourse.id} />
     </div>

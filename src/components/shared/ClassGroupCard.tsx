@@ -23,15 +23,14 @@ const ClassGroupCard = (props: ClassGroupProps) => {
       });
     } else {
       setSelectedClass((prev) => {
-      return {
-        ...prev,
-        index: undefined,
-        id: "",
-        name: "",
-      };
-    })
+        return {
+          ...prev,
+          index: 0,
+          id: "",
+          name: "",
+        };
+      });
     }
-
   }, [data, setSelectedClass]);
 
   const handleSelectClass = (classId: string, index: number, name: string) => {
@@ -52,9 +51,7 @@ const ClassGroupCard = (props: ClassGroupProps) => {
           onClick={() => handleSelectClass(item.id, index, item.name)}
           key={item.id}
           className={`${
-            selectedClass.index === index
-              ? "text-secondary font-semibold"
-              : "text-gray-800"
+            selectedClass.index === index ? "text-secondary font-semibold" : "text-gray-800"
           } justify-self-start cursor-pointer active:scale-95 h-fit`}
         >
           {item.name}
