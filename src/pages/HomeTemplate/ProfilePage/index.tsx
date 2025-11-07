@@ -25,11 +25,11 @@ const ProfilePage = () => {
         const response = await getAllCourseForStudent(
           currentPage,
           itemsPerPage,
+          user?.student?.id,
           undefined,
           undefined,
           undefined,
           undefined,
-          user?.student?.id
         );
 
 
@@ -78,8 +78,8 @@ const ProfilePage = () => {
         <div className="flex justify-between items-center w-full pb-6">
           <h2 className="text-lg font-semibold">My Courses</h2>
 
-          {/* ✅ Only show 'View All' if more than 3 courses */}
-          {courses.length > 3 && (
+          {/* ✅ Only show 'View All' if exactly 3 courses */}
+          {courses.length === 3 && (
             <Link
               to="/course-overview"
               className="text-secondary px-4 py-2 font-medium hover:opacity-70"
