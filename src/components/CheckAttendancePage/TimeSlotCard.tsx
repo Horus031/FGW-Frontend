@@ -5,12 +5,20 @@ type Props = {
   startTime: string;
   endTime: string;
   status: string;
+  active?: boolean;
+  onClick?: () => void;
 };
 
 const TimeSlotCard = (props: Props) => {
-  const { slot, startTime, endTime, status } = props;
+  const { slot, startTime, endTime, status, active = false, onClick } = props;
   return (
-    <div className="border-1 border-gray-300 px-4 py-3 rounded-lg">
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-full text-left border-1 px-4 py-3 rounded-lg focus:outline-none ${
+        active ? "border-secondary bg-secondary/5" : "border-gray-300"
+      }`}
+    >
       <div className="flex flex-col gap-3 text-xs text-primary">
         <div className="flex items-center justify-between">
           <span className="font-semibold">Slot {slot}</span>
@@ -28,7 +36,7 @@ const TimeSlotCard = (props: Props) => {
           {startTime} AM - {endTime} AM
         </span>
       </div>
-    </div>
+    </button>
   );
 };
 

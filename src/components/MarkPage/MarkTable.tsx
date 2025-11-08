@@ -31,7 +31,7 @@ const MarkTable = ({ table }: MarkTableProps) => {
         </tr>
       </thead>
       <tbody className="text-primary text-base font-medium border">
-        {categories.map((category, _Index) =>
+        {categories.map((category) =>
           category.items.map((item, itemIndex) => (
             <tr key={itemIndex}>
               {itemIndex === 0 && (

@@ -1,29 +1,30 @@
-import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import type { CourseGroup } from "../../models/course";
 import CourseNormalCard from "../shared/CourseNormalCard";
 
-const data = [
-  {
-    courseCode: "COS1204",
-    courseName: "Computer Networks",
-  },
-  {
-    courseCode: "COS1205",
-    courseName: "Computer Networks",
-  },
-];
+export type AttendanceGroupListProps = {
+  courses?: CourseGroup[];
+  selectedCourseId?: string;
+  setSelectedCourseId?: Dispatch<SetStateAction<string>>;
+};
 
-const AttendanceGroupList = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+const AttendanceGroupList = ({
+  courses = [],
+  selectedCourseId,
+  setSelectedCourseId,
+}: AttendanceGroupListProps) => {
   const renderCourseGroup = () => {
-    return data.map((item, index) => {
+    return courses.map((item) => {
+      const active = selectedCourseId === item.id;
+
       return (
         <CourseNormalCard
-          handleActiveCard={() => setSelectedIndex(index)}
-          key={item.courseCode}
+          handleActiveCard={() => setSelectedCourseId?.(item.id)}
+          key={item.id}
           attendance
-          active={selectedIndex === index}
-          courseCode={item.courseCode}
-          courseName={item.courseName}
+          active={active}
+          courseCode={item.code}
+          courseName={item.title}
         />
       );
     });

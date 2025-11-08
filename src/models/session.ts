@@ -1,10 +1,11 @@
 import type { ClassGroup } from "./class";
 import type { CourseGroup } from "./course";
 import type { Room } from "./room";
+import type { Staff } from "./user";
 
 export type Session = {
   id: string;
-  class: ClassGroup;
+  class?: ClassGroup;
   classId: string;
   course: CourseGroup;
   courseId: string;
@@ -12,5 +13,6 @@ export type Session = {
   roomId: string;
   room: Room;
   teacherId: string;
+  teacher?: Staff;
   status: string;
 };
