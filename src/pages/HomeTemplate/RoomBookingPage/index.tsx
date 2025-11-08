@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { Button } from "../../../components/ui/button";
-import { Textarea } from "../../../components/ui/textarea";
-import BookingCalendar from "../../../components/shared/Calendar";
 import SlotButton from "../../../components/RoomBookingPage/BookingSlots";
+import BookingCalendar from "../../../components/shared/Calendar";
 import PageTitle from "../../../components/shared/PageTitle";
-import { useUserStore } from "../../../store/user";
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "../../../components/ui/alert-dialog";
+import { Button } from "../../../components/ui/button";
+import { Textarea } from "../../../components/ui/textarea";
+import { useUserStore } from "../../../store/user";
 
 const BookingForm = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

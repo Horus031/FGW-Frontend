@@ -35,7 +35,7 @@ const StudentFeedbackPage = React.lazy(
   () => import("../pages/HomeTemplate/StudentFeedbackPage")
 );
 const RoomBookingPage = React.lazy(
-  () => import("../pages/HomeTemplate/RoomBookingPage/RoomBooking")
+  () => import("../pages/HomeTemplate/RoomBookingPage")
 );
 const PendingFeedbackPage = React.lazy(
   () => import("../pages/HomeTemplate/PendingFeedbackPage")

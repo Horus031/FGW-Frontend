@@ -109,7 +109,7 @@ const Header = () => {
               if (link.label === "Library") {
                 return (
                   <UnderDevelopmentTooltip key={link.to}>
-                    {linkElement}
+                    {linkElement ? "Library" : null}
                   </UnderDevelopmentTooltip>
                 );
               }
