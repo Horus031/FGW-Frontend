@@ -1,7 +1,10 @@
 // ...existing code...
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { listAttendanceRecords } from "../../../api/requests/attendance.api";
 import type { AttendanceRecords } from "../../../models/attendance";
+import { getSessionIndex } from "../../../utils/indexedRenderer";
+import Pagination from "../../shared/Pagination";
 import Table, { type ColumnConfig } from "../../shared/Table";
 import { Badge } from "../../ui/badge";
 
@@ -12,14 +15,13 @@ type AttendanceTableProps = {
 
 const AttendanceTable = (props: AttendanceTableProps) => {
   const { studentId, courseId } = props;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data: attendanceData } = useQuery({
-    queryKey: ["attendance-records", courseId],
-    queryFn: () => listAttendanceRecords(studentId, courseId),
+    queryKey: ["attendance-records", courseId, currentPage],
+    queryFn: () => listAttendanceRecords(studentId, courseId, currentPage),
     enabled: !!courseId,
   });
-
-  console.log(attendanceData);
 
   const renderStatusBadges = (row: AttendanceRecords) => {
     return (
@@ -44,6 +46,12 @@ const AttendanceTable = (props: AttendanceTableProps) => {
       key: "id",
       title: "No.",
       width: "60px",
+      render: (_value: unknown, row: AttendanceRecords): React.ReactNode => {
+        // Add this above `const columns: ColumnConfig<Session>[] = [...]`
+        // Replace $SELECTION_PLACEHOLDER$ with this:
+        const idx = getSessionIndex(row.id, attendanceData);
+        return <span>{idx >= 0 ? idx + 1 : ""}</span>;
+      },
     },
     {
       key: "session",
@@ -62,7 +70,7 @@ const AttendanceTable = (props: AttendanceTableProps) => {
       key: "student",
       title: "Group name",
       width: "120px",
-      render: (_, row) => <span className="font-medium">{row.session.class.name}</span>,
+      render: (_, row) => <span className="font-medium">{row.session.class?.name}</span>,
     },
     {
       key: "status",
@@ -78,7 +86,7 @@ const AttendanceTable = (props: AttendanceTableProps) => {
   ];
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto flex flex-col gap-8">
       <Table
         columns={columns}
         data={attendanceData || []}
@@ -90,6 +98,8 @@ const AttendanceTable = (props: AttendanceTableProps) => {
         bodyHeight="h-14"
         padding="px-4 py-3"
       />
+
+      <Pagination currentPage={currentPage} onPageChange={setCurrentPage} />
     </div>
   );
 };

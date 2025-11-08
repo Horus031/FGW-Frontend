@@ -1,17 +1,18 @@
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const Select = () => {
+type Props = {
+  quickMarkAll?: (status: "Attend" | "Absent") => void;
+};
+
+const Select = ({ quickMarkAll }: Props) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -24,6 +25,13 @@ const Select = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+
+  const handleChoose = (value: "present" | "absent", label: string) => {
+    setSelected(label);
+    setOpen(false);
+    if (value === "present") quickMarkAll?.("Attend");
+    if (value === "absent") quickMarkAll?.("Absent");
+  };
 
   return (
     <div ref={selectRef} className="relative inline-block w-full text-sm">
@@ -39,20 +47,14 @@ const Select = () => {
         <ul className="absolute z-10 bg-white text-primary border border-gray-300 rounded-lg mt-1 shadow-lg whitespace-nowrap w-fit">
           <li
             className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex items-center gap-2 whitespace-nowrap"
-            onClick={() => {
-              setSelected("Mark as all attended");
-              setOpen(false);
-            }}
+            onClick={() => handleChoose("present", "Mark as all attended")}
           >
             Mark as all attended
             {selected === "Mark as all attended" && <Check />}
           </li>
           <li
             className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex items-center gap-2 whitespace-nowrap"
-            onClick={() => {
-              setSelected("Mark as all absent");
-              setOpen(false);
-            }}
+            onClick={() => handleChoose("absent", "Mark as all absent")}
           >
             Mark as all absent
             {selected === "Mark as all absent" && <Check />}

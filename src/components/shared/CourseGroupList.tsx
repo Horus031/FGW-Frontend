@@ -17,10 +17,21 @@ export type CourseGroupProps = {
   };
   selectedCourse?: CourseState;
   setSelectedCourse?: Dispatch<SetStateAction<CourseState>>;
+  // selected slot number when in attendance mode
+  selectedSlot?: number | undefined;
+  setSelectedSlot?: Dispatch<SetStateAction<number | undefined>>;
 };
 
 const CourseGroupList = (props: CourseGroupProps) => {
-  const { courseGroupData, isAttendance, timeSlotData, selectedCourse, setSelectedCourse } = props;
+  const {
+    courseGroupData,
+    isAttendance,
+    timeSlotData,
+    selectedCourse,
+    setSelectedCourse,
+    selectedSlot,
+    setSelectedSlot,
+  } = props;
 
   useEffect(() => {
     if (!setSelectedCourse) return;
@@ -37,12 +48,14 @@ const CourseGroupList = (props: CourseGroupProps) => {
       setSelectedCourse((prev) => {
         return {
           ...prev,
-          index: undefined,
+          index: 0,
           id: "",
         };
       });
     }
   }, [courseGroupData, setSelectedCourse]);
+
+  // NOTE: slot selection is managed by the parent container (`AttendanceContainer`).
 
   const renderCourseGroup = () => {
     return courseGroupData?.map((item, index) => {
@@ -69,6 +82,8 @@ const CourseGroupList = (props: CourseGroupProps) => {
           startTime={item.startTime}
           endTime={item.endTime}
           status={item.status}
+          active={selectedSlot === item.slot}
+          onClick={() => setSelectedSlot?.(item.slot)}
         />
       );
     });

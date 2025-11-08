@@ -82,8 +82,8 @@ const AttendanceInner = () => {
   });
 
   const { data: attendanceStatsData } = useQuery({
-    queryKey: ["attendance-stats", selectedClass.id, selectedCourse.id],
-    queryFn: () => getStatsForStudents(selectedCourse.id, selectedClass.id),
+    queryKey: ["attendance-stats", selectedCourse.id],
+    queryFn: () => getStatsForStudents(undefined, selectedCourse.id, selectedClass.id),
     enabled: !!selectedCourse.id,
     staleTime: 2 * 60 * 1000,
   });
@@ -111,7 +111,13 @@ const AttendanceInner = () => {
           <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
           <Table
             columns={columns}
-            data={attendanceStatsData || []}
+            data={
+              Array.isArray(attendanceStatsData)
+                ? attendanceStatsData
+                : attendanceStatsData
+                  ? [attendanceStatsData]
+                  : []
+            }
             bordered
             padding="px-4 py-3"
             textSize="text-sm"

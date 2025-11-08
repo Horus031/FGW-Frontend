@@ -7,15 +7,19 @@ export interface UserInfo {
   campus: Campus;
   student?: Student;
   course?: string;
-  staff?: staff;
+  staff?: Staff;
 }
 
-interface staff {
+export type Staff = {
   id?: string;
+  userId: string;
   staffCode?: string;
   role?: Role;
   faculty?: string;
-}
+  status?: string;
+  hireDate?: string;
+  endDate?: string;
+};
 interface Campus {
   id: string;
   name: string;

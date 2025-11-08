@@ -1,48 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import {
+  getAllClasses,
+  getAllCourseInClass,
+  listSessionOfClass,
+} from "../../api/requests/class.api";
+import type { ClassState } from "../../models/class";
+import type { CourseState } from "../../models/course";
+import type { Session } from "../../models/session";
+import { formatDate } from "../../utils/formatDate";
+import { getSessionIndex } from "../../utils/indexedRenderer";
 import ClassGroupCard from "../shared/ClassGroupCard";
 import CourseGroupList from "../shared/CourseGroupList";
 import MajorSelectCard from "../shared/MajorSelectCard";
 import SharedMajorProvider, { useSharedMajor } from "../shared/SharedMajorContainer";
 import Table, { type ColumnConfig } from "../shared/Table";
-import { useQuery } from "@tanstack/react-query";
-import { getAllClasses, getAllCourseInClass } from "../../api/requests/class.api";
-import type { ClassState } from "../../models/class";
-import type { CourseState } from "../../models/course";
-
-type TimetableRow = {
-  sessionNo: number;
-  day: string;
-  slot: string;
-  room: string;
-  teacher: string;
-  attendanceStatus: "Attended" | "Absent" | "Pending";
-};
-
-const timetableData: TimetableRow[] = [
-  { sessionNo: 1, day: "Mon 15 Oct, 2025", slot: "1", room: "F207", teacher: "TRANLT02", attendanceStatus: "Attended" },
-  { sessionNo: 2, day: "Tue 16 Oct, 2025", slot: "2", room: "F208", teacher: "NGUYEN01", attendanceStatus: "Pending" },
-  { sessionNo: 3, day: "Wed 17 Oct, 2025", slot: "3", room: "F209", teacher: "LETHI02", attendanceStatus: "Absent" },
-];
-
-const statusBadge = (status: TimetableRow["attendanceStatus"]) => {
-  const map = {
-    Attended: "bg-green-100 text-green-700 border-green-700",
-    Absent: "bg-red-100 text-red-700 border-red-700",
-    Pending: "bg-yellow-100 text-yellow-700 border-yellow-700",
-  } as const;
-  return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded border text-xs font-semibold ${map[status]}`}>{status}</span>
-  );
-};
-
-const columns: ColumnConfig<TimetableRow>[] = [
-  { key: "sessionNo", title: "Session No.", width: "95px" },
-  { key: "day", title: "Day", width: "240px" },
-  { key: "slot", title: "Slot", width: "80px" },
-  { key: "room", title: "Room", width: "89px" },
-  { key: "teacher", title: "Teacher", width: "223px" },
-  { key: "attendanceStatus", title: "Attendance Status", width: "223px", render: (v) => statusBadge(v as TimetableRow["attendanceStatus"]) },
-];
 
 const TimetableInner: React.FC = () => {
   const { major, setMajor } = useSharedMajor();
@@ -60,6 +32,47 @@ const TimetableInner: React.FC = () => {
     queryFn: () => getAllCourseInClass(selectedClass.id),
     enabled: !!selectedClass.id,
   });
+
+  const { data: timetableData } = useQuery({
+    queryKey: ["session-list", selectedClass.id, selectedCourse.id],
+    queryFn: () => listSessionOfClass(selectedClass.id, selectedCourse.id),
+    enabled: !!selectedClass.id && !!selectedCourse.id,
+  });
+
+  const columns: ColumnConfig<Session>[] = [
+    {
+      key: "id",
+      title: <span className="whitespace-nowrap">Session No</span>,
+      width: "106px",
+      render: (_value: unknown, row: Session): React.ReactNode => {
+        // Add this above `const columns: ColumnConfig<Session>[] = [...]`
+        // Replace $SELECTION_PLACEHOLDER$ with this:
+        const idx = getSessionIndex(row.id, timetableData);
+        return <span>{idx >= 0 ? idx + 1 : ""}</span>;
+      },
+    },
+    {
+      key: "dateOn",
+      title: "Day",
+      width: "240px",
+      render: (_, row) => {
+        return <span>{formatDate(row.dateOn)}</span>;
+      },
+    },
+    { key: "courseId", title: "Slot", width: "80px" },
+    {
+      key: "room",
+      title: "Room",
+      width: "89px",
+      render: (_, row) => <span>{row.room?.code}</span>,
+    },
+    {
+      key: "teacherId",
+      title: "Teacher",
+      width: "auto",
+      render: (_, row) => <span>{row.teacher?.staffCode}</span>,
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-5.5">
@@ -80,9 +93,17 @@ const TimetableInner: React.FC = () => {
           courseGroupData={courseGroupData}
         />
 
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
-          <Table columns={columns} data={timetableData} bordered padding="px-4 py-3" textSize="text-sm" centered headHeight="44px" grade />
+          <Table
+            columns={columns}
+            data={timetableData || []}
+            bordered
+            padding="px-4 py-3"
+            textSize="text-sm"
+            headHeight="44px"
+            grade
+          />
         </div>
       </div>
     </div>

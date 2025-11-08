@@ -1,10 +1,26 @@
 type ProgressCircleProps = {
-    percent: number;
-}
+  percent: number;
+};
 
 const ProgressCircle = (props: ProgressCircleProps) => {
-    const { percent } = props
+  const { percent } = props;
+  // radius must match the `r` attribute on the circles below
+  const radius = 16;
+  const normalizedPercent = Math.max(0, Math.min(percent, 100));
+  const circumference = 2 * Math.PI * radius;
+  // strokeDashoffset is how much of the circle is hidden. When percent === 100 => offset = 0 (full)
+  // When percent === 0 => offset = circumference (empty)
+  const strokeOffset = circumference - (normalizedPercent / 100) * circumference;
 
+  // Helpful debug
+  console.log(
+    "ProgressCircle percent:",
+    percent,
+    "normalized:",
+    normalizedPercent,
+    "offset:",
+    strokeOffset.toFixed(2)
+  );
   return (
     <div>
       <div className="relative size-23">
@@ -16,7 +32,7 @@ const ProgressCircle = (props: ProgressCircleProps) => {
           <circle
             cx={18}
             cy={18}
-            r={16}
+            r={radius}
             fill="none"
             className="stroke-current text-gray-200 dark:text-neutral-700"
             strokeWidth={4}
@@ -24,23 +40,23 @@ const ProgressCircle = (props: ProgressCircleProps) => {
           <circle
             cx={18}
             cy={18}
-            r={16}
+            r={radius}
             fill="none"
             className="stroke-current text-approve"
             strokeWidth={4}
-            strokeDasharray={100}
-            strokeDashoffset={percent}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeOffset}
             strokeLinecap="round"
           />
         </svg>
         <div className="absolute text-center top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
           <span className="text-center text-sm font-medium text-primary">
-            Absent <br /> 5%
+            Absent <br /> {percent}%
           </span>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default ProgressCircle
+export default ProgressCircle;

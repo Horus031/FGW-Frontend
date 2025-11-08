@@ -1,9 +1,10 @@
-
 export type ColumnConfig<T> = {
-  key: Extract<keyof T, Array<T> | string | number>;
+  // column key must be a string key of the row type
+  key: Extract<keyof T, string>;
   title: string | React.ReactNode;
   width?: string;
-  render?: (value: T[keyof T], row: T) => React.ReactNode;
+  // render receives the typed value for the given key and the full row
+  render?: (value: T[Extract<keyof T, string>], row: T) => React.ReactNode;
 };
 
 type TableProps<T> = {
@@ -53,21 +54,18 @@ const Table = <T extends object>(props: TableProps<T>) => {
         activity === true
           ? "lg:w-fit lg:scale-[99.1%] lg:origin-top-left xl:scale-100 xl:w-full 2xl:w-full xl:whitespace-nowrap"
           : "w-full"
-      } ${
-        centered === true ? "text-center" : "text-left"
-      } rounded-table`}
+      } ${centered === true ? "text-center" : "text-left"} rounded-table`}
     >
       <thead className={`${color || "bg-primary"}`}>
         <tr
-          className={`${textColor ? textColor : "text-white"} ${
-            textSize ? textSize : "text-base"
-          }`}
+          className={`${textColor ? textColor : "text-white"} ${textSize ? textSize : "text-base"}`}
         >
           {columns.map((col) => (
             <th
               className={`font-medium table-cell ${
                 padding ? `${padding}` : "custom-table py-2"
-              } ${bordered ? "" : ""} ${headHeight ? headHeight : ""
+              } ${bordered ? "" : ""} ${
+                headHeight ? headHeight : ""
               } ${col.title === "Attend" ? "text-center" : ""}`}
               key={col.key}
               style={{ width: col.width || "auto" }}
@@ -77,90 +75,65 @@ const Table = <T extends object>(props: TableProps<T>) => {
           ))}
         </tr>
       </thead>
-      { data && (
+      {data && (
         <tbody>
-        {data.map((row, rowIdx) => (
-          <tr
-            className={`text-primary ${textSize ? textSize : ""} ${
-              bodyHeight ? bodyHeight : ""
-            } ${
-              schedule || feedback
-                ? rowIdx % 2 !== 0
-                  ? "bg-[#F0F0F0]"
-                  : ""
-                : ""
-            }`}
-            key={rowIdx}
-          >
-            {columns.map((col) => (
-              <td
-                className={`${feedback || grade ? "font-medium" : ""}  ${
-                  padding ? `${padding}` : "custom-table"
-                } ${bordered ? "border border-[#D2D6DB]" : ""}`}
-                key={String(col.key)}
-              >
-                {col.render
-                  ? col.render(row[col.key], row)
-                  : (row[col.key] as React.ReactNode)}
+          {data.map((row, rowIdx) => (
+            <tr
+              className={`text-primary ${textSize ? textSize : ""} ${
+                bodyHeight ? bodyHeight : ""
+              } ${schedule || feedback ? (rowIdx % 2 !== 0 ? "bg-[#F0F0F0]" : "") : ""}`}
+              key={rowIdx}
+            >
+              {columns.map((col) => (
+                <td
+                  className={`${feedback || grade ? "font-medium" : ""}  ${
+                    padding ? `${padding}` : "custom-table"
+                  } ${bordered ? "border border-[#D2D6DB]" : ""}`}
+                  key={String(col.key)}
+                >
+                  {col.render ? col.render(row[col.key], row) : (row[col.key] as React.ReactNode)}
+                </td>
+              ))}
+            </tr>
+          ))}
+          {feedback && (
+            <tr className={`text-primary ${textSize ? textSize : ""} h-18 bg-[#F0F0F0]`}>
+              <td colSpan={2} className={`${padding ? `${padding}` : "custom-table"} font-bold`}>
+                Total GPA
               </td>
-            ))}
-          </tr>
-        ))}
-        {feedback && (
-          <tr
-            className={`text-primary ${
-              textSize ? textSize : ""
-            } h-18 bg-[#F0F0F0]`}
-          >
-            <td
-              colSpan={2}
-              className={`${
-                padding ? `${padding}` : "custom-table"
-              } font-bold`}
-            >
-              Total GPA
-            </td>
-            <td
-              colSpan={6}
-              className={`${
-                padding ? `${padding}` : "custom-table"
-              } font-semibold `}
-            >
-              4
-            </td>
-          </tr>
-        )}
-        {summary && (
-          <tr
-            className={`text-primary ${
-              textSize ? textSize : ""
-            } h-18 bg-[#F0F0F0]`}
-          >
-            <td
-              className={`${
-                padding ? `${padding}` : "custom-table"
-              } text-gray-weak text-sm`}
-              colSpan={2}
-            >
-              Summary (26 days ≈ 3.7 weeks) · Average: 3.8 slots/week
-            </td>
-            <td
-              className={`${
-                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
-              } text-primary text-2xl font-bold`}
-            >
-              14
-            </td>
-            <td
-              className={`${
-                padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
-              } text-primary text-2xl font-bold`}
-            >
-              14
-            </td>
-          </tr>
-        )}
-      </tbody>
+              <td
+                colSpan={6}
+                className={`${padding ? `${padding}` : "custom-table"} font-semibold `}
+              >
+                4
+              </td>
+            </tr>
+          )}
+          {summary && (
+            <tr className={`text-primary ${textSize ? textSize : ""} h-18 bg-[#F0F0F0]`}>
+              <td
+                className={`${padding ? `${padding}` : "custom-table"} text-gray-weak text-sm`}
+                colSpan={2}
+              >
+                Summary (26 days ≈ 3.7 weeks) · Average: 3.8 slots/week
+              </td>
+              <td
+                className={`${
+                  padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+                } text-primary text-2xl font-bold`}
+              >
+                14
+              </td>
+              <td
+                className={`${
+                  padding ? `${padding} border border-[#D2D6DB]` : "custom-table"
+                } text-primary text-2xl font-bold`}
+              >
+                14
+              </td>
+            </tr>
+          )}
+        </tbody>
       )}
     </table>
   );

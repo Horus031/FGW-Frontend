@@ -22,11 +22,12 @@ export const getAttendanceByStudentID = async (
 };
 
 export const getStatsForStudents = async (
+  studentId: string | undefined,
   courseId: string,
   classId: string
-): Promise<AttendanceStats[]> => {
-  const response = await api.get<AttendanceStats[]>(
-    `/attendance/stats?courseId=${courseId}&classId=${classId}`
+): Promise<AttendanceStats | AttendanceStats[]> => {
+  const response = await api.get<AttendanceStats | AttendanceStats[]>(
+    `/attendance/stats?studentId=${studentId || ""}&courseId=${courseId}&classId=${classId}`
   );
 
   return response.data;
@@ -34,10 +35,11 @@ export const getStatsForStudents = async (
 
 export const listAttendanceRecords = async (
   studentId: string | undefined,
-  courseId: string
+  courseId: string,
+  page: number = 1
 ): Promise<AttendanceRecords[]> => {
   const response = await api.get<AttendanceRecords[]>(
-    `/attendance?studentId=${studentId || ""}&courseId=${courseId}`
+    `/attendance?studentId=${studentId || ""}&courseId=${courseId}&page=${page}&limit=8&sort=createdAt&order=ASC`
   );
 
   return response.data;
