@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useUserStore } from "../../store/user";
+import UnderDevelopmentTooltip from "../shared/Developing";
 const RegistrationAndFeedback = () => {
   const { user } = useUserStore();
   return (
@@ -15,9 +16,11 @@ const RegistrationAndFeedback = () => {
               <div className="w-full h-1 bg-[#3ABFF0] mb-4"></div>
             </div>
             <div className="text-secondary font-medium text-xl leading-8">
-              <button className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left justify-center items-center">
-                Course Re-registration
-              </button>
+              <UnderDevelopmentTooltip>
+                <button className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left justify-center items-center">
+                  Course Re-registration
+                </button>
+              </UnderDevelopmentTooltip>
               <NavLink
                 to="/request/document"
                 className="hover:opacity-50  cursor-pointer block hover:text-secondary/80 transition-colors text-left justify-center items-center"
