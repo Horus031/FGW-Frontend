@@ -124,7 +124,7 @@ const MarkPage = () => {
           </div>
 
           {/* RIGHT: Table */}
-          <div className="w-[900px]">
+          <div className="w-[950px]">
             {rightLoading ? (
               <div className="space-y-2 border-gray-600 border rounded-lg p-4 h-96">
                 <SkeletonDemo skeletonNum={15} />

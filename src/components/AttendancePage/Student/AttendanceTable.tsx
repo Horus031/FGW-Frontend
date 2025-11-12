@@ -27,13 +27,12 @@ const AttendanceTable = (props: AttendanceTableProps) => {
     return (
       <div className="flex items-center gap-2">
         <Badge
-          className={`px-3 py-1 text-xs rounded-sm select-none font-semibold mx-auto ${
-            row.status === "PRESENT"
+          className={`px-3 py-1 text-xs rounded-sm select-none font-semibold mx-auto ${row.status === "PRESENT"
               ? "bg-green-100 text-green-700 border-green-700"
               : row.status === "ABSENT"
                 ? "bg-red-100 border-red-700 text-red-700"
                 : "bg-gray-100 border-gray-weak text-gray-weak"
-          }`}
+            }`}
         >
           {row.status}
         </Badge>

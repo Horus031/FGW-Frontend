@@ -80,7 +80,7 @@ const RegistrationAndFeedback = () => {
                 to="/attendance"
                 className="hover:opacity-50  cursor-pointer block  hover:text-secondary/80 transition-colors text-left"
               >
-                Report Attendance
+                Attendance Report
               </NavLink>
             </div>
           </div>

@@ -20,17 +20,18 @@ const SummaryContainer = () => {
 
   return (
     <div>
-      <MajorSelectCard
-        isSummary
-        major={major}
-        setMajor={setMajor}
-        // provide controls for SummaryPicker date range
-        summaryFrom={fromDate}
-        summaryTo={toDate}
-        setSummaryFrom={setFromDate}
-        setSummaryTo={setToDate}
-      />
-
+      <div className="w-3xl">
+        <MajorSelectCard
+          isSummary
+          major={major}
+          setMajor={setMajor}
+          // provide controls for SummaryPicker date range
+          summaryFrom={fromDate}
+          summaryTo={toDate}
+          setSummaryFrom={setFromDate}
+          setSummaryTo={setToDate}
+        />
+      </div>
       <SummaryTableContainer major={major} fromDate={fromDate} toDate={toDate} />
     </div>
   );

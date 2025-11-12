@@ -100,15 +100,16 @@ const AttendanceInner = () => {
         />
       </div>
 
-      <div className="flex items-start gap-6">
-        <CourseGroupList
-          selectedCourse={selectedCourse}
-          setSelectedCourse={setSelectedCourse}
-          courseGroupData={courseGroupData}
-        />
-
+      <div className="flex items-start gap-6 justify-between">
+        <div className="w-[360px]">
+          <CourseGroupList
+            selectedCourse={selectedCourse}
+            setSelectedCourse={setSelectedCourse}
+            courseGroupData={courseGroupData}
+          />
+        </div>
         <div className="flex flex-col">
-          <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
+          <span className="text-sm text-gray-800 pb-2 w-[970px]">Total 24 slots</span>
           <Table
             columns={columns}
             data={

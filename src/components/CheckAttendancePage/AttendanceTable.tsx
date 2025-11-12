@@ -68,13 +68,13 @@ const AttendanceTable = ({ selectedSlot, attendanceData, setAttendanceData }: Pr
 
         const attendClass = slotSelected
           ? row.status === "Attend"
-            ? "bg-green-700/10 border-green-700 text-green-700"
+            ? "bg-green-100 border-green-700 text-green-700"
             : "bg-gray-100 border-gray-weak hover:bg-gray-300 text-gray-weak"
           : "bg-gray-100 border-gray-weak text-gray-weak";
 
         const absentClass = slotSelected
           ? row.status === "Absent"
-            ? "bg-red-700/10  text-red-700 border-red-700"
+            ? "bg-red-100  text-red-700 border-red-700"
             : "bg-gray-100 border-gray-weak hover:bg-gray-300 text-gray-weak"
           : "bg-gray-100 border-gray-weak text-gray-weak";
 

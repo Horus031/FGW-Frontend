@@ -94,7 +94,7 @@ const TimetableInner: React.FC = () => {
         />
 
         <div className="flex flex-col w-full">
-          <span className="text-sm text-gray-800 py-2">Total 24 slot</span>
+          <span className="text-sm text-gray-800 py-2">Total 24 slots</span>
           <Table
             columns={columns}
             data={timetableData || []}

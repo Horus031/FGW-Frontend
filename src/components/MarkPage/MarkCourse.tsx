@@ -22,7 +22,7 @@ const MarkCourse = (props: MarkCourseProps) => {
         }  shadow-md rounded-lg cursor-pointer active:scale-98`}
     >
       <div className="flex flex-col flex-1 gap-2">
-        <span className="font-semibold text-xl text-primary">{courseName}</span>
+        <span className="font-semibold text-xl text-primary truncate w-full overflow-ellipsis">{courseName}</span>
         <span className="font-medium text-[14px] text-gray-primary">Class: {classCode}</span>
       </div>
       <div className="flex flex-col items-center gap-2 ">

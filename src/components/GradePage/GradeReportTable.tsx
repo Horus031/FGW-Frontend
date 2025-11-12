@@ -82,7 +82,7 @@ const GradeReportTable = () => {
             : row.status === "Failed"
               ? "border-red-700 bg-red-100 text-red-700"
               : "border-yellow-700 bg-yellow-100 text-yellow-700"
-            } border-1`}
+            } border-1 rounded-[6px]`}
         >
           {row.status}
         </Badge>

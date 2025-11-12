@@ -98,14 +98,15 @@ const Table = <T extends object>(props: TableProps<T>) => {
           ))}
           {feedback && (
             <tr className={`text-primary ${textSize ? textSize : ""} h-18 bg-[#F0F0F0]`}>
-              <td colSpan={2} className={`${padding ? `${padding}` : "custom-table"} font-bold`}>
+              <td colSpan={columns.length - 2} className={`${padding ? `${padding}` : "custom-table"} font-bold`}>
                 Total GPA
               </td>
               <td
-                colSpan={6}
                 className={`${padding ? `${padding}` : "custom-table"} font-semibold `}
               >
                 4
+              </td>
+              <td className={`${padding ? `${padding}` : "custom-table"}`}>
               </td>
             </tr>
           )}

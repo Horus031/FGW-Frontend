@@ -82,8 +82,8 @@ const AttendanceDetails = (props: AttendanceDetailsProps) => {
   };
 
   return (
-    <div className="flex gap-8.5">
-      <div className="space-y-3 basis-9/12">{renderCourseCard()}</div>
+    <div className="flex">
+      <div className="space-y-3 basis-5/12">{renderCourseCard()}</div>
 
       <AttendanceTable studentId={studentId} courseId={currentCourse.id} />
     </div>

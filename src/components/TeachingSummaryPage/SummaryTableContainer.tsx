@@ -1,7 +1,7 @@
+import { SUMMARY_SLOTS } from "../../constants/summaryMock";
+import type { MajorState } from "../../models/major";
 import MainSummaryTable from "./MainSummaryTable";
 import SubTableDetails from "./SubTableDetails";
-import type { MajorState } from "../../models/major";
-import { SUMMARY_SLOTS } from "../../constants/summaryMock";
 
 type Props = {
   major: MajorState;
@@ -61,7 +61,7 @@ const SummaryTableContainer = ({ major, fromDate, toDate }: Props) => {
   }));
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-4">
       <SubTableDetails classData={classData} />
 
       <MainSummaryTable slotData={slotData} />

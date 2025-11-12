@@ -127,7 +127,7 @@ const CourseOverview = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto pt-6">
+    <div className="max-w-8xl mx-auto">
       <div className="flex items-center mb-6">
         {/* Search bar */}
         <div className="relative w-full max-w-4/17">

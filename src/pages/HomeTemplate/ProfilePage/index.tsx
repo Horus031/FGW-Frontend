@@ -76,7 +76,9 @@ const ProfilePage = () => {
       <div className="max-w-7xl">
         {/* Header section */}
         <div className="flex justify-between items-center w-full pb-6">
-          <h2 className="text-lg font-semibold">My Courses</h2>
+          <h2 className="text-lg font-semibold">
+            {user?.student ? "My Courses" : "My Classes"}
+          </h2>
 
           {/* ✅ Only show 'View All' if exactly 3 courses */}
           {courses.length === 3 && (

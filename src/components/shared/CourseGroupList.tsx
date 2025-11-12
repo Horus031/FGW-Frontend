@@ -93,7 +93,6 @@ const CourseGroupList = (props: CourseGroupProps) => {
     <div className="p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-3/12 2xl:basis-4/12">
       <div className="flex items-center justify-between">
         <span className="font-semibold text-sm">{timeSlotData?.className || "Course"}</span>
-
         {isAttendance && <span className="font-semibold text-sm text-secondary">16 Oct, 2025</span>}
       </div>
       {isAttendance ? renderTimeSlot() : renderCourseGroup()}

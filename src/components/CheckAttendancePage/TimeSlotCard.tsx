@@ -15,19 +15,17 @@ const TimeSlotCard = (props: Props) => {
     <button
       type="button"
       onClick={onClick}
-      className={`w-full text-left border-1 px-4 py-3 rounded-lg focus:outline-none ${
-        active ? "border-secondary bg-secondary/5" : "border-gray-300"
-      }`}
+      className={`w-full text-left border-1 px-4 py-3 rounded-lg focus:outline-none cursor-pointer ${active ? "border-primary bg-gray-100 " : "border-gray-300"
+        }`}
     >
       <div className="flex flex-col gap-3 text-xs text-primary">
         <div className="flex items-center justify-between">
           <span className="font-semibold">Slot {slot}</span>
           <Badge
-            className={`${
-              status === "Completed"
-                ? "border-approve bg-approve/10 text-approve"
-                : "border-gray-400 bg-gray-500/10 text-primary"
-            } border-1`}
+            className={`${status === "Completed"
+              ? "border-green-700 bg-green-100 text-green-700"
+              : "border-gray-700 bg-gray-100 text-gray-700"
+              } border-1 px-2 rounded-[6px] `}
           >
             {status}
           </Badge>

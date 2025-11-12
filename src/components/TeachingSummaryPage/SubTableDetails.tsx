@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "../ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 import Table, { type ColumnConfig } from "../shared/Table";
+import { Button } from "../ui/button";
 
 type ClassData = {
   no: number;
