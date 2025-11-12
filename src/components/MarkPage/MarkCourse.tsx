@@ -16,22 +16,20 @@ const MarkCourse = (props: MarkCourseProps) => {
   return (
     <div
       onClick={onclick}
-      className={`flex gap-3 px-4 py-6 ${
-        active
-          ? "border-secondary border-2  bg-blue-50"
-          : "border-gray-300 border-1"
-      }  shadow-md rounded-lg cursor-pointer active:scale-98`}
+      className={`flex gap-3 px-4 py-6 ${active
+        ? "border-primary border-2 bg-gray-100"
+        : "border-gray-300 border-1"
+        }  shadow-md rounded-lg cursor-pointer active:scale-98`}
     >
-      <div className="flex flex-col flex-1">
-        <span className="font-medium text-base text-gray-800/60">{classCode}</span>
+      <div className="flex flex-col flex-1 gap-2">
         <span className="font-semibold text-xl text-primary">{courseName}</span>
+        <span className="font-medium text-[14px] text-gray-primary">Class: {classCode}</span>
       </div>
-      <div className="flex flex-col items-center gap-1">
+      <div className="flex flex-col items-center gap-2 ">
         <span className="font-bold text-base">{grade}/100</span>
         <Badge
-          className={`${
-            gradeStatus == "pass" ? "bg-approve" : "bg-danger"
-          } capitalize px-2.5 text-sm w-18`}
+          className={`${gradeStatus == "passed" ? "bg-green-100 text-green-700 border-green-700 border-[0.5px] rounded-[6px]" : "bg-red-100 text-red-700 border-red-700 border-[0.5px] rounded-[6px]"
+            } capitalize px-2.5 text-sm `}
         >
           {gradeStatus}
         </Badge>

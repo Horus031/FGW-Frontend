@@ -1,5 +1,5 @@
-import type { ColumnConfig } from "../shared/Table";
 import type { GradeReportRow } from "../../models/grade";
+import type { ColumnConfig } from "../shared/Table";
 import Table from "../shared/Table";
 import { Badge } from "../ui/badge";
 
@@ -77,13 +77,12 @@ const GradeReportTable = () => {
       width: "160px",
       render: (_, row) => (
         <Badge
-          className={`${
-            row.status === "Passed"
-              ? "border-approve bg-approve/10 text-approve"
-              : row.status === "Failed"
-              ? "border-danger bg-danger/10 text-danger"
-              : "border-amber-500 bg-amber-500/10 text-amber-500"
-          } border-1`}
+          className={`${row.status === "Passed"
+            ? "border-green-700 bg-green-100 text-green-700"
+            : row.status === "Failed"
+              ? "border-red-700 bg-red-100 text-red-700"
+              : "border-yellow-700 bg-yellow-100 text-yellow-700"
+            } border-1`}
         >
           {row.status}
         </Badge>

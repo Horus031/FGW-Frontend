@@ -1,9 +1,8 @@
 import type { UserInfo } from "./user";
 
 export type ScheduleStatus = "PRESENT" | "ABSENT" | "PENDING";
-export type GradeStatus = "pass" | "fail";
+export type GradeStatus = "passed" | "not pass";
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6 | null;
-
 
 export type CourseSchedule = {
   classCode: string;
@@ -12,7 +11,7 @@ export type CourseSchedule = {
   startTime: string;
   endTime: string;
   dayOfWeek: DayOfWeek;
-  date: string ;
+  date: string;
   room: string;
   instructor: string;
 };
@@ -39,16 +38,18 @@ export type CourseGroup = {
   teacherId: string;
   slot: number;
   status: string;
-}
+};
 
 export type CourseState = {
-    index: number | undefined;
-    id: string | "";
-}
-
+  index: number | undefined;
+  id: string | "";
+};
 
 // Course card display (summary view)
-export type CourseAttendance = Pick<Course, "courseName" | "classCode" | "totalSlots" | "attendancePercent"> & {
+export type CourseAttendance = Pick<
+  Course,
+  "courseName" | "classCode" | "totalSlots" | "attendancePercent"
+> & {
   termLabel: string;
 };
 
@@ -56,7 +57,7 @@ export type CourseMark = Pick<Course, "courseName" | "classCode" | "grade" | "gr
   termLabel?: string;
 };
 
-export type CourseFeedback = Pick<Course, "classCode" | "courseName">
+export type CourseFeedback = Pick<Course, "classCode" | "courseName">;
 
 export type ScheduleRowData = {
   timeSlot: string;
@@ -68,4 +69,3 @@ export type ScheduleRowData = {
   saturday?: CourseSchedule;
   sunday?: CourseSchedule;
 };
-

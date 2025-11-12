@@ -62,14 +62,14 @@ const CourseCard = (props: CourseCardProps) => {
   return (
     <div
       onClick={() => handleSelectCourse(index, courseInfo.id)}
-      className={`${active ? "border-primary border-2" : "border-gray-400 border-1"} p-5 rounded-lg w-full cursor-pointer active:scale-95`}
+      className={`${active ? "border-primary border-2 bg-gray-100" : "border-gray-400 border-1"} p-3.5 rounded-lg w-[360px] cursor-pointer active:scale-95`}
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex flex-col gap-2">
-          <span className="text-base font-semibold text-primary text-nowrap">
+          <span className="text-base font-semibold text-primary text-nowrap overflow-hidden text-ellipsis w-48">
             {courseInfo.title}
           </span>
-          <div className="text-gray-400 text-sm flex flex-col gap-1">
+          <div className="text-gray-weak text-sm flex flex-col gap-1">
             <span>Class: COS1204</span>
             <span>Total Slots: {courseInfo.slot}</span>
           </div>

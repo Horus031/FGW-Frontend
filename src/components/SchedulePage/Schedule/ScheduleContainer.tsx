@@ -170,26 +170,24 @@ const ScheduleContainer = ({
         const course = value as CourseSchedule | undefined;
         return course ? (
           <div
-            className={`lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 lg:px-1 xl:px-2 flex flex-col justify-between gap-1 font-semibold rounded-sm border px-3 pb-1 py-1.5 mx-auto ${
-              course.status === "PRESENT"
-                ? "border-green-700 bg-green-700/10"
-                : course.status === "ABSENT"
-                  ? "border-danger bg-danger/10"
-                  : "border-gray-500 bg-gray-500/10"
-            }`}
+            className={`lg:w-full 2xl:max-w-40 lg:min-h-14 xl:min-h-20 lg:px-1 xl:px-2 flex flex-col justify-between gap-1 font-semibold rounded-sm border px-3 pb-1 py-1.5 mx-auto ${course.status === "PRESENT"
+              ? "border-green-500 bg-green-100"
+              : course.status === "ABSENT"
+                ? "border-red-500 bg-red-100"
+                : "border-gray-500 bg-white"
+              }`}
           >
             <div className="flex items-center leading-0 justify-between lg:text-[8px] xl:text-[11px]">
               <span className="text-secondary font-semibold lg:text-[10px] xl:text-[11px]">
                 {course.classCode}
               </span>
               <Badge
-                className={`px-1 py-0 lg:text-[8px] xl:text-[11px] font-medium rounded-sm ${
-                  course.status === "PRESENT"
-                    ? "border-approve text-approve bg-approve/10"
-                    : course.status === "ABSENT"
-                      ? "border-danger text-danger bg-danger/10"
-                      : "border-gray-500 text-gray-500 bg-gray-500/10"
-                }`}
+                className={`px-1 py-0 lg:text-[8px] xl:text-[11px] font-medium rounded-[4px] ${course.status === "PRESENT"
+                  ? "border-green-700 text-green-700 bg-green-100"
+                  : course.status === "ABSENT"
+                    ? "border-red-700 text-red-700 bg-red-100"
+                    : "border-gray-700 text-gray-700 bg-gray-100"
+                  }`}
               >
                 {course.status === "PRESENT"
                   ? "Attended"

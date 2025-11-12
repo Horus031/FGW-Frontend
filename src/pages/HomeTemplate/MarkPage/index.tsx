@@ -66,9 +66,9 @@ const mockMarkData = [
 ];
 
 const data: CourseMark[] = [
-  { courseName: "Design Research Project", classCode: "TDS1512", grade: 80, gradeStatus: "pass" },
-  { courseName: "Web Application Development", classCode: "CSD201", grade: 74, gradeStatus: "pass" },
-  { courseName: "Database Systems", classCode: "DBI202", grade: 43, gradeStatus: "fail" },
+  { courseName: "Design Research Project", classCode: "TDS1512", grade: 80, gradeStatus: "passed" },
+  { courseName: "Web Application Development", classCode: "CSD201", grade: 74, gradeStatus: "passed" },
+  { courseName: "Database Systems", classCode: "DBI202", grade: 43, gradeStatus: "not pass" },
 ];
 
 const MarkPage = () => {
@@ -120,7 +120,7 @@ const MarkPage = () => {
         <div className="flex gap-8.5 justify-between">
           {/* LEFT: Course list */}
           <div className="flex flex-col gap-2.5 ">
-            {leftLoading ? <div className="border-gray-600 border rounded-lg  w-[400px] h-[300px]"> <SkeletonDemo skeletonNum={12} /> </div> : renderCourse()}
+            {leftLoading ? <div className="border-gray-700 border rounded-lg  w-[400px] h-[300px]"> <SkeletonDemo skeletonNum={12} /> </div> : renderCourse()}
           </div>
 
           {/* RIGHT: Table */}
