@@ -1,5 +1,5 @@
-import InstructorCard from "./InstructorCard";
 import type { FeedbackForm } from "../../models/feedback";
+import InstructorCard from "./InstructorCard";
 
 type InstructorListProps = {
   forms: FeedbackForm[];

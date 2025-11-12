@@ -43,6 +43,9 @@ const PendingFeedbackPage = React.lazy(
 const NotFoundPage = React.lazy(
   () => import("../pages/HomeTemplate/NotFoundPage")
 );
+const CourseDetailPage = React.lazy(
+  () => import("../pages/HomeTemplate/CourseDetail")
+);
 
 // Authentication Bridge
 const AuthBridge = React.lazy(() => import("../router/AuthBridge"));
@@ -93,6 +96,7 @@ export const routes: RouteObject[] = [
           { path: "feedback", element: <StudentFeedbackPage /> },
           { path: "booking", element: <RoomBookingPage /> },
           { path: "course-overview", element: <CourseOverview /> },
+          { path: "course-detail", element: <CourseDetailPage /> },
           {
             path: "pending-feedback",
             element: <ProtectedRoute allowedRoles={["Student"]} />,

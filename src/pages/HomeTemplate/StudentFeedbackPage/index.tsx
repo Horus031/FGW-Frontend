@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getStudentFeedbackForms, submitStudentFeedback, updateStudentFeedback } from "../../../api/requests/feedback.api";
+import { getCurrentTerm } from "../../../api/requests/term.api";
 import FeedbackContainer from "../../../components/FeedbackPage/FeedbackContainer";
 import PageTitle from "../../../components/shared/PageTitle";
 import FeedbackForm from "../../../components/StudentFeedbackPage/FeedbackForm";
 import InstructorList from "../../../components/StudentFeedbackPage/InstructorList";
-import { useUserStore } from "../../../store/user";
-import { getStudentFeedbackForms, submitStudentFeedback, updateStudentFeedback } from "../../../api/requests/feedback.api";
-import type { StudentFeedbackFormsResponse, FeedbackAnswer } from "../../../models/feedback";
 import { Skeleton } from "../../../components/ui/skeleton";
-import { getCurrentTerm } from "../../../api/requests/term.api";
+import type { FeedbackAnswer, StudentFeedbackFormsResponse } from "../../../models/feedback";
+import { useUserStore } from "../../../store/user";
 
 const StudentFeedbackPage = () => {
   const { user } = useUserStore();
@@ -30,7 +30,7 @@ const StudentFeedbackPage = () => {
       const term = await getCurrentTerm();
       const data = await getStudentFeedbackForms(term.id);
       setFeedbackData(data);
-      
+
       if (data.forms.length > 0) {
         setActiveFormIndex(0);
       }
@@ -69,7 +69,7 @@ const StudentFeedbackPage = () => {
       } else {
         await submitStudentFeedback(feedbackPayload);
       }
-      
+
       // Update the form status and submission data in local state
       setFeedbackData(prev => {
         if (!prev) return prev;

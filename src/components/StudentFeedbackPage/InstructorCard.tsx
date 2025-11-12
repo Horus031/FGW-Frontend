@@ -1,5 +1,5 @@
-import EditPencilIcon from "../icons/EditPencilIcon";
 import type { FeedbackForm } from "../../models/feedback";
+import EditPencilIcon from "../icons/EditPencilIcon";
 
 type InstructorCardProps = {
   active?: boolean;

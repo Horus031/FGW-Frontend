@@ -1,4 +1,8 @@
 import { useState } from "react";
+import {
+  DOCUMENT_OPTIONS,
+  VERIFICATION_OPTIONS,
+} from "../../constants/constants";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -11,10 +15,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import {
-  VERIFICATION_OPTIONS,
-  DOCUMENT_OPTIONS,
-} from "../../constants/constants";
 
 type RequestFormProps = {
   requestType: string;
@@ -91,7 +91,7 @@ const RequestForm = (props: RequestFormProps) => {
             />
             <label
               htmlFor="file-input"
-              className="cursor-pointer px-4 py-2 border border-blue-600 rounded-full h-8 leading-none text-blue-600 font-semibold hover:bg-blue-600 hover:text-white"
+              className="cursor-pointer px-4 py-2 border border-blue-600 rounded-full h-8 leading-none text-blue-600 font-semibold hover:bg-blue-100 hover:secondary"
             >
               Choose File
             </label>

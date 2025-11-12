@@ -222,7 +222,7 @@ const BookingForm = () => {
           <AlertDialogHeader className="text-center">
             <AlertDialogTitle>Please select a date first!</AlertDialogTitle>
             <AlertDialogDescription>
-              To process your booking, please select a date.
+              To continue, choose a date before selecting a slot or entering a purpose
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -232,7 +232,7 @@ const BookingForm = () => {
               onClick={() => setIsWarning(false)}
               className="w-full py-3 text-lg cursor-pointer rounded-lg bg-secondary text-white hover:opacity-80 transition"
             >
-              Confirm
+              Select a date
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

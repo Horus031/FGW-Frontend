@@ -1,7 +1,6 @@
 
 import PageTitle from "../../../components/shared/PageTitle";
-import { type ColumnConfig } from "../../../components/shared/Table";
-import Table from "../../../components/shared/Table";
+import Table, { type ColumnConfig } from "../../../components/shared/Table";
 
 type RequestData = {
   refId: number;
@@ -23,9 +22,9 @@ const RequestStatusPage = () => {
       width: "216px",
       render: (row) => (
         row === true ? (
-          <span className="bg-approve text-white p-2 rounded-md">Approved</span>
+          <span className="bg-green-100 text-[var(--color-green-700)] border-[0.5px] border-green-700 p-1 rounded-[5px] w-[79px] h-[24px] px-2">Approved</span>
         ) : (
-          <span className="bg-danger text-white p-2 rounded-md">Rejected</span>
+          <span className="bg-red-100 text-[var(--color-red-700)] border-[0.5px] border-red-700 p-1 rounded-[5px] w-[79px] h-[24px] px-2">Rejected</span>
         )
       ),
     },

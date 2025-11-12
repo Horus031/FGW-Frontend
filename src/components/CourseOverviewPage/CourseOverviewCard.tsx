@@ -1,4 +1,5 @@
 
+import { useNavigate } from 'react-router-dom';
 import type { Course } from '../../models/course';
 import type { Term } from '../../models/term';
 import type { UserInfo } from '../../models/user';
@@ -8,15 +9,31 @@ interface CourseOverviewCardProps {
   term?: Term;
   students?: Pick<UserInfo, "avatar">[];
 }
-
 const CourseOverviewCard = ({
   course,
   students = []
 }: CourseOverviewCardProps) => {
+  const navigate = useNavigate();
+  if (!course) return null;
   if (!course) return null;
   const maxVisibleAvatars = 4;
   const visibleAvatars = students.slice(0, maxVisibleAvatars);
   const remainingCount = students.length - maxVisibleAvatars;
+
+  const handleClick = () => {
+    // Pass the full course data via state
+    navigate('/course-detail', {
+      state: {
+        course: {
+          code: course.classCode,
+          title: course.courseName,
+          teacherId: course.instructor,
+          slot: course.totalSlots,
+          // Add other fields from your API
+        }
+      }
+    });
+  };
 
   return (
     <div className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow h-fit">
@@ -26,6 +43,7 @@ const CourseOverviewCard = ({
         <h5
           className="text-2xl font-bold text-[var(--color-primary)] hover:opacity-70 cursor-pointer truncate"
           title={course.courseName}
+          onClick={handleClick}
         >
           {course.courseName}
         </h5>
