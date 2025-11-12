@@ -130,7 +130,7 @@ const CourseOverview = () => {
     <div className="max-w-7xl mx-auto pt-6">
       <div className="flex items-center mb-6">
         {/* Search bar */}
-        <div className="relative w-full max-w-3/13">
+        <div className="relative w-full max-w-4/17">
           <Search
             className="absolute top-1/2 -translate-y-1/2 left-2 text-gray-500"
             size={24}
