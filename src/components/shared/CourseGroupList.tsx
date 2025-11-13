@@ -5,6 +5,7 @@ import CourseGroupCard from "./CourseGroupCard";
 
 export type CourseGroupProps = {
   isAttendance?: boolean;
+  isTimetable?: boolean;
   courseGroupData?: CourseGroup[];
   timeSlotData?: {
     className: string;
@@ -90,7 +91,9 @@ const CourseGroupList = (props: CourseGroupProps) => {
   };
 
   return (
-    <div className="p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-3/12 2xl:basis-4/12">
+    <div
+      className={`p-4 border-1 border-gray-300 flex flex-col gap-4 text-primary rounded-lg h-fit lg:basis-[274px] 2xl:basis-4/12`}
+    >
       <div className="flex items-center justify-between">
         <span className="font-semibold text-sm">{timeSlotData?.className || "Course"}</span>
 

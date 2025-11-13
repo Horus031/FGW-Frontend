@@ -346,8 +346,8 @@ const MajorSelectCard = (props: MajorSelectCardProps) => {
   return (
     <div
       className={`${
-        !isSummary ? "basis-7/12" : "w-fit h-57"
-      } px-3 py-2 border-1 border-gray-400 whitespace-nowrap rounded-lg`}
+        !isSummary ? "basis-7/12" : "w-fit "
+      } px-3 py-2 h-57 border-1 border-gray-400 whitespace-nowrap rounded-lg`}
     >
       {isLoading ? (
         <div className="w-full h-full flex items-center justify-center">

@@ -69,7 +69,7 @@ const TimetableInner: React.FC = () => {
     {
       key: "teacherId",
       title: "Teacher",
-      width: "auto",
+      width: "120px",
       render: (_, row) => <span>{row.teacher?.staffCode}</span>,
     },
   ];
@@ -86,8 +86,9 @@ const TimetableInner: React.FC = () => {
         />
       </div>
 
-      <div className="flex items-start gap-6">
+      <div className="flex items-start justify-between gap-6">
         <CourseGroupList
+          isTimetable
           selectedCourse={selectedCourse}
           setSelectedCourse={setSelectedCourse}
           courseGroupData={courseGroupData}

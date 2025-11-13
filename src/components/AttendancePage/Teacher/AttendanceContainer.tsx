@@ -100,7 +100,7 @@ const AttendanceInner = () => {
         />
       </div>
 
-      <div className="flex items-start gap-6">
+      <div className="flex items-start justify-between gap-6">
         <CourseGroupList
           selectedCourse={selectedCourse}
           setSelectedCourse={setSelectedCourse}
